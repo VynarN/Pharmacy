@@ -1,6 +1,6 @@
 ﻿namespace Pharmacy.Application.Common.Models
 {
-    public class Token
+    public class TokenModel
     {
         public string AccessToken { get; set; }
 

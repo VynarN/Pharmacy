@@ -20,7 +20,7 @@ namespace Pharmacy.Application.Middlewares
             var cookieValue = context.Request.Cookies?[configuration["CookieConfiguration:TokenCookieName"]];
             if (!string.IsNullOrEmpty(cookieValue))
             {
-                Token deserializedTokens = JsonConvert.DeserializeObject<Token>(cookieValue);
+                TokenModel deserializedTokens = JsonConvert.DeserializeObject<TokenModel>(cookieValue);
                 context.Request.Headers.Add("Authorization", "Bearer " + deserializedTokens.AccessToken);
             }
             await _next.Invoke(context);
