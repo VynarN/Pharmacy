@@ -2,11 +2,11 @@
 {
     public class Image
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public byte[] ImageData { get; set; }
 
-        public long MedicamentId { get; set; }
+        public int MedicamentId { get; set; }
 
         public Medicament Medicament { get; set; }
     }

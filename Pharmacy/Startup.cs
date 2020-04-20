@@ -16,8 +16,8 @@ using Pharmacy.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Pharmacy.Infrastructure.Interfaces;
 using Pharmacy.Infrastructure.Services;
+using Pharmacy.Infrastructure.Common.Interfaces;
 
 namespace Pharmacy
 {
@@ -94,7 +94,7 @@ namespace Pharmacy
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, SendGridService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,55 @@
+﻿using System;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
+
+namespace Pharmacy.Application.Common.Exceptions
+{
+    [Serializable]
+    public class ObjectException : Exception
+    {
+        public string ObjectIdentifier { get; } = "Object identifier: ";
+
+        public ObjectException()
+        {
+        }
+
+        public ObjectException(string message)
+            : base(message)
+        {
+        }
+
+        public ObjectException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+        public ObjectException(string message, string objectIdentifier) : base(message)
+        {
+            ObjectIdentifier += objectIdentifier;
+        }
+
+        public ObjectException(string message, string objectIdentifier, Exception inner) : base(message, inner)
+        {
+            ObjectIdentifier += objectIdentifier;
+        }
+
+        protected ObjectException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            ObjectIdentifier = info.GetString("ObjectIdentifier");
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+
+            info.AddValue("ObjectIdentifier", ObjectIdentifier);
+
+            base.GetObjectData(info, context);
+        }
+    }
+}

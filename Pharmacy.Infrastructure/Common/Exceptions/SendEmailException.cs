@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace Pharmacy.Application.Common.Exceptions
+namespace Pharmacy.Infrastructure.Common.Exceptions
 {
     [Serializable]
     public class SendEmailException: Exception

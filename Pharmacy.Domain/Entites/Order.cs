@@ -5,19 +5,20 @@ namespace Pharmacy.Domain.Entites
 {
     public class Order
     {
-        public long Id { get; set; }
-
-        public string UserId { get; set; }
-        public User User { get; set; }
-
-        public long MedicamentId { get; set; }
-        public Medicament Medicament { get; set; }
+        public int Id { get; set; }
 
         public int ProductQuantity { get; set; }
 
         public decimal Total { get; set; }
 
-        public string Address { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
+
+        public int MedicamentId { get; set; }
+        public Medicament Medicament { get; set; }
+
+        public string AddressId { get; set; }
+        public Address Address { get; set; }
 
         public OrderStatus Status { get; set; }
 

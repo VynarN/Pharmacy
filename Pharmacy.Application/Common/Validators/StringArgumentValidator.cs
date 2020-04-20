@@ -1,7 +1,5 @@
 ﻿using Pharmacy.Application.Common.Constants;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pharmacy.Application.Common.Validators
 {

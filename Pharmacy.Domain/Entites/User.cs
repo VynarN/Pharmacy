@@ -12,12 +12,13 @@ namespace Pharmacy.Domain.Entites
 
         public string RefreshToken { get; set; }
 
-        public DateTime LastActive { get; set; } = DateTime.MinValue;
+        public List<BasketItem> BasketItems { get; set; }
 
         public List<Order> Orders { get; set; }
 
         public User()
         {
+            BasketItems = new List<BasketItem>();
             Orders = new List<Order>();
         }
     }

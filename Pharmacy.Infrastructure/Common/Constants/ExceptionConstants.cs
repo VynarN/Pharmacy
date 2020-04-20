@@ -1,4 +1,4 @@
-﻿namespace Pharmacy.Infrastructure.Constants
+﻿namespace Pharmacy.Infrastructure.Common.Constants
 {
     public static class ExceptionConstants
     {

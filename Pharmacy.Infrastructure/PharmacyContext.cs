@@ -4,7 +4,7 @@ using Pharmacy.Domain.Entites;
 
 namespace Pharmacy.Infrastructure
 {
-    public class PharmacyContext: IdentityDbContext<User>
+    public class PharmacyContext : IdentityDbContext<User>
     {
         public DbSet<AllowedForEntity> AllowedForEntities { get; set; }
 
@@ -22,6 +22,11 @@ namespace Pharmacy.Infrastructure
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+
+        public DbSet<Address> Addresses { get; set; }
+
+        public DbSet<Instruction> Instructions { get; set; }
 
         public PharmacyContext(DbContextOptions options) : base(options) { }
 

@@ -4,7 +4,7 @@ namespace Pharmacy.Domain.Entites
 {
     public class AllowedForEntity
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public bool ForAdults { get; set; }
 
@@ -19,12 +19,5 @@ namespace Pharmacy.Domain.Entites
         public bool ForDiabetics { get; set; }
 
         public bool ForAllergist { get; set; }
-
-        public List<Medicament> Medicaments { get; set; }
-
-        public AllowedForEntity()
-        {
-            Medicaments = new List<Medicament>();
-        }
     }
 }
