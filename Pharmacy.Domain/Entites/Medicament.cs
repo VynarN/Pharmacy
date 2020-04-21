@@ -15,14 +15,12 @@ namespace Pharmacy.Domain.Entites
 
         public int Offtake { get; set; }
 
-        public int InstructionId { get; set; }
         public Instruction Instruction { get; set; }
+
+        public AllowedForEntity AllowedForEntity { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
-        public int AllowedForEntityId { get; set; }
-        public AllowedForEntity AllowedForEntity { get; set; }
 
         public int MedicamentFormId { get; set; }
         public MedicamentForm MedicamentForm { get; set; }

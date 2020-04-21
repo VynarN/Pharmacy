@@ -2,6 +2,6 @@
 {
     public static class RoleStrings
     {
-        public static readonly string[] Roles = { "User", "Manager", "Admin", "MainAdmin" };
+        public static readonly string[] Roles = { "user", "manager", "admin", "mainadmin" };
     }
 }

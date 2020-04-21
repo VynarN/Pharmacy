@@ -15,7 +15,7 @@ namespace Pharmacy.Application.Tests.Services
             var configMock = IConfigMock.MockIConfigurationEmailSection();
             var configMockObject = configMock.Object;
 
-            var receiver = configMockObject["SendGrid.Sender"];
+            var receiver = configMockObject["SendGrid:Sender"];
             var subject = configMockObject["EmailSettings:ConfirmEmailSubject"];
             var body = "<html><b><h1> Test SendGrid service</h1></b></html>";
 

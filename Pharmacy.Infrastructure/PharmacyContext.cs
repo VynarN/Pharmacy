@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Pharmacy.Domain.Entites;
+using Pharmacy.Infrastructure.Persistence.Configurations;
 
 namespace Pharmacy.Infrastructure
 {
     public class PharmacyContext : IdentityDbContext<User>
     {
         public DbSet<AllowedForEntity> AllowedForEntities { get; set; }
-
+        
         public DbSet<ApplicationMethod> ApplicationMethods { get; set; }
 
         public DbSet<BasketItem> BasketItems { get; set; }
@@ -37,18 +38,12 @@ namespace Pharmacy.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<BasketItem>().HasKey(prop => new { prop.UserId, prop.MedicamentId });
-
-            modelBuilder.Entity<Order>().Property(prop => prop.Total).HasColumnType("decimal(7,2)");
-            modelBuilder.Entity<Medicament>().Property(prop => prop.Price).HasColumnType("decimal(7,2)");
-
-            modelBuilder.Entity<Order>().HasOne(sc => sc.User)
-                                        .WithMany(s => s.Orders)
-                                        .HasForeignKey(sc => sc.UserId);
-
-            modelBuilder.Entity<Order>().HasOne(sc => sc.Medicament)
-                                        .WithMany(c => c.Orders)
-                                        .HasForeignKey(sc => sc.MedicamentId);
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new MedicamentConfiguration());
+            modelBuilder.ApplyConfiguration(new BasketItemConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
         }
     }
 }

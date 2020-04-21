@@ -17,7 +17,6 @@ namespace Pharmacy.Domain.Entites
         public int MedicamentId { get; set; }
         public Medicament Medicament { get; set; }
 
-        public string AddressId { get; set; }
         public Address Address { get; set; }
 
         public OrderStatus Status { get; set; }

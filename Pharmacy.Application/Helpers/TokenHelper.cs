@@ -32,12 +32,12 @@ namespace Pharmacy.Application.Helpers
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuth:JwtKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfiguration:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expire = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["JwtAuth:JwtExpireMinutes"]));
+            var expire = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["JwtConfiguration:ExpireMinutes"]));
             var token = new JwtSecurityToken(
-                configuration["JwtAuth:JwtIssuer"],
-                configuration["JwtAuth:JwtIssuer"],
+                configuration["JwtConfiguration:Issuer"],
+                configuration["JwtConfiguration:Issuer"],
                 claims,
                 expires: expire,
                 signingCredentials: creds
@@ -61,11 +61,11 @@ namespace Pharmacy.Application.Helpers
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
-                ValidAudience = configuration["JwtAuth:JwtIssuer"],
+                ValidAudience = configuration["JwtConfiguration:Issuer"],
                 ValidateIssuer = true,
-                ValidIssuer = configuration["JwtAuth:JwtIssuer"],
+                ValidIssuer = configuration["JwtConfiguration:Issuer"],
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuth:JwtKey"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfiguration:Key"])),
                 ValidateLifetime = false
             };
 

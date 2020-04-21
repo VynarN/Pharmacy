@@ -14,5 +14,20 @@ namespace Pharmacy.Domain.Entites
         {
             Medicaments = new List<Medicament>();
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as MedicamentForm);
+        }
+
+        public bool Equals(MedicamentForm medicamentForm)
+        {
+            return medicamentForm != null && medicamentForm.Form.Equals(Form);
+        }
+
+        public override int GetHashCode()
+        {
+            return Form.GetHashCode() * 12;
+        }
     }
 }

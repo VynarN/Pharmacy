@@ -39,5 +39,8 @@
         public string Packaging { get; set; }
 
         public bool ByPrescription { get; set; }
+
+        public int MedicamentId { get; set; }
+        public Medicament Medicament { get; set; }
     }
 }

@@ -8,42 +8,6 @@ namespace Pharmacy.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ZipCode = table.Column<int>(nullable: false),
-                    Country = table.Column<string>(nullable: true),
-                    Region = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    Street = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AllowedForEntities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ForAdults = table.Column<bool>(nullable: false),
-                    ForChildren = table.Column<bool>(nullable: false),
-                    ForPregnants = table.Column<bool>(nullable: false),
-                    ForNurses = table.Column<bool>(nullable: false),
-                    ForDrivers = table.Column<bool>(nullable: false),
-                    ForDiabetics = table.Column<bool>(nullable: false),
-                    ForAllergist = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AllowedForEntities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ApplicationMethods",
                 columns: table => new
                 {
@@ -112,33 +76,18 @@ namespace Pharmacy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Instructions",
+                name: "Manufacturers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ActiveSubstance = table.Column<string>(nullable: true),
-                    AuxiliarySubstances = table.Column<string>(nullable: true),
-                    MedicamentForm = table.Column<string>(nullable: true),
-                    PhysicoChemicalProperties = table.Column<string>(nullable: true),
-                    PharmacotherapeuticGroup = table.Column<string>(nullable: true),
-                    Pharmacodynamics = table.Column<string>(nullable: true),
-                    Pharmacokinetics = table.Column<string>(nullable: true),
-                    Indication = table.Column<string>(nullable: true),
-                    Contraindication = table.Column<string>(nullable: true),
-                    InteractionWithOthersMedicaments = table.Column<string>(nullable: true),
-                    FeaturesOfApplication = table.Column<string>(nullable: true),
-                    ApplicationMethodAndDose = table.Column<string>(nullable: true),
-                    Overdose = table.Column<string>(nullable: true),
-                    AverseReactions = table.Column<string>(nullable: true),
-                    ExpirationDate = table.Column<string>(nullable: true),
-                    StorageConditions = table.Column<string>(nullable: true),
-                    Packaging = table.Column<string>(nullable: true),
-                    ByPrescription = table.Column<bool>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    WebSite = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Instructions", x => x.Id);
+                    table.PrimaryKey("PK_Manufacturers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,28 +101,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MedicamentForms", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Manufacturers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    WebSite = table.Column<string>(nullable: true),
-                    AddressId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Manufacturers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Manufacturers_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -296,9 +223,7 @@ namespace Pharmacy.Infrastructure.Migrations
                     Price = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     QuantityInStock = table.Column<int>(nullable: false),
                     Offtake = table.Column<int>(nullable: false),
-                    InstructionId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
-                    AllowedForEntityId = table.Column<int>(nullable: false),
                     MedicamentFormId = table.Column<int>(nullable: false),
                     ApplicationMethodId = table.Column<int>(nullable: false),
                     ManufacturerId = table.Column<int>(nullable: false)
@@ -306,12 +231,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicaments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Medicaments_AllowedForEntities_AllowedForEntityId",
-                        column: x => x.AllowedForEntityId,
-                        principalTable: "AllowedForEntities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Medicaments_ApplicationMethods_ApplicationMethodId",
                         column: x => x.ApplicationMethodId,
@@ -325,12 +244,6 @@ namespace Pharmacy.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Medicaments_Instructions_InstructionId",
-                        column: x => x.InstructionId,
-                        principalTable: "Instructions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Medicaments_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
@@ -340,6 +253,32 @@ namespace Pharmacy.Infrastructure.Migrations
                         name: "FK_Medicaments_MedicamentForms_MedicamentFormId",
                         column: x => x.MedicamentFormId,
                         principalTable: "MedicamentForms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AllowedForEntities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ForAdults = table.Column<bool>(nullable: false),
+                    ForChildren = table.Column<bool>(nullable: false),
+                    ForPregnants = table.Column<bool>(nullable: false),
+                    ForNurses = table.Column<bool>(nullable: false),
+                    ForDrivers = table.Column<bool>(nullable: false),
+                    ForDiabetics = table.Column<bool>(nullable: false),
+                    ForAllergist = table.Column<bool>(nullable: false),
+                    MedicamentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AllowedForEntities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AllowedForEntities_Medicaments_MedicamentId",
+                        column: x => x.MedicamentId,
+                        principalTable: "Medicaments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -390,6 +329,43 @@ namespace Pharmacy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Instructions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ActiveSubstance = table.Column<string>(nullable: true),
+                    AuxiliarySubstances = table.Column<string>(nullable: true),
+                    MedicamentForm = table.Column<string>(nullable: true),
+                    PhysicoChemicalProperties = table.Column<string>(nullable: true),
+                    PharmacotherapeuticGroup = table.Column<string>(nullable: true),
+                    Pharmacodynamics = table.Column<string>(nullable: true),
+                    Pharmacokinetics = table.Column<string>(nullable: true),
+                    Indication = table.Column<string>(nullable: true),
+                    Contraindication = table.Column<string>(nullable: true),
+                    InteractionWithOthersMedicaments = table.Column<string>(nullable: true),
+                    FeaturesOfApplication = table.Column<string>(nullable: true),
+                    ApplicationMethodAndDose = table.Column<string>(nullable: true),
+                    Overdose = table.Column<string>(nullable: true),
+                    AverseReactions = table.Column<string>(nullable: true),
+                    ExpirationDate = table.Column<string>(nullable: true),
+                    StorageConditions = table.Column<string>(nullable: true),
+                    Packaging = table.Column<string>(nullable: true),
+                    ByPrescription = table.Column<bool>(nullable: false),
+                    MedicamentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Instructions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Instructions_Medicaments_MedicamentId",
+                        column: x => x.MedicamentId,
+                        principalTable: "Medicaments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -399,8 +375,6 @@ namespace Pharmacy.Infrastructure.Migrations
                     Total = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     MedicamentId = table.Column<int>(nullable: false),
-                    AddressId = table.Column<string>(nullable: true),
-                    AddressId1 = table.Column<int>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     OrderedAt = table.Column<DateTime>(nullable: false),
                     DispatchedAt = table.Column<DateTime>(nullable: false),
@@ -409,12 +383,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Addresses_AddressId1",
-                        column: x => x.AddressId1,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Medicaments_MedicamentId",
                         column: x => x.MedicamentId,
@@ -428,6 +396,68 @@ namespace Pharmacy.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ZipCode = table.Column<int>(nullable: false),
+                    Country = table.Column<string>(nullable: true),
+                    Region = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    ManufacturerId = table.Column<int>(nullable: true),
+                    OrderId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Manufacturers_ManufacturerId",
+                        column: x => x.ManufacturerId,
+                        principalTable: "Manufacturers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1", "be1f1d84-2dfe-4c7c-bbaf-c832d9d79cfa", "mainadmin", "MAINADMIN" },
+                    { "2", "1f336fa8-5c30-4b06-8e2a-ff495a72019e", "admin", "ADMIN" },
+                    { "3", "0bb1d850-f692-468a-b129-5a4d1ca2772e", "manager", "MANAGER" },
+                    { "4", "baea449c-441c-47a9-8f74-c5374b8c8c96", "user", "USER" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_ManufacturerId",
+                table: "Addresses",
+                column: "ManufacturerId",
+                unique: true,
+                filter: "[ManufacturerId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_OrderId",
+                table: "Addresses",
+                column: "OrderId",
+                unique: true,
+                filter: "[OrderId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AllowedForEntities_MedicamentId",
+                table: "AllowedForEntities",
+                column: "MedicamentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -479,14 +509,10 @@ namespace Pharmacy.Infrastructure.Migrations
                 column: "MedicamentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Manufacturers_AddressId",
-                table: "Manufacturers",
-                column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Medicaments_AllowedForEntityId",
-                table: "Medicaments",
-                column: "AllowedForEntityId");
+                name: "IX_Instructions_MedicamentId",
+                table: "Instructions",
+                column: "MedicamentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medicaments_ApplicationMethodId",
@@ -499,11 +525,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medicaments_InstructionId",
-                table: "Medicaments",
-                column: "InstructionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Medicaments_ManufacturerId",
                 table: "Medicaments",
                 column: "ManufacturerId");
@@ -512,11 +533,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 name: "IX_Medicaments_MedicamentFormId",
                 table: "Medicaments",
                 column: "MedicamentFormId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_AddressId1",
-                table: "Orders",
-                column: "AddressId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_MedicamentId",
@@ -531,6 +547,12 @@ namespace Pharmacy.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "AllowedForEntities");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -553,6 +575,9 @@ namespace Pharmacy.Infrastructure.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
+                name: "Instructions");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -565,25 +590,16 @@ namespace Pharmacy.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AllowedForEntities");
-
-            migrationBuilder.DropTable(
                 name: "ApplicationMethods");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Instructions");
-
-            migrationBuilder.DropTable(
                 name: "Manufacturers");
 
             migrationBuilder.DropTable(
                 name: "MedicamentForms");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
         }
     }
 }

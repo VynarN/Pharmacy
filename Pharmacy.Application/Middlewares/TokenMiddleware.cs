@@ -17,7 +17,7 @@ namespace Pharmacy.Application.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IConfiguration configuration)
         {
-            var cookieValue = context.Request.Cookies?[configuration["CookieConfiguration:TokenCookieName"]];
+            var cookieValue = context.Request.Cookies?[configuration["CookieSettings:TokenCookieName"]];
             if (!string.IsNullOrEmpty(cookieValue))
             {
                 TokenModel deserializedTokens = JsonConvert.DeserializeObject<TokenModel>(cookieValue);

@@ -4,6 +4,7 @@ using Pharmacy.Infrastructure.Common.Exceptions;
 using Pharmacy.Infrastructure.Common.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Infrastructure.Services
@@ -21,11 +22,11 @@ namespace Pharmacy.Infrastructure.Services
         {
             var response = await Execute(Configuration["SendGrid:Key"], subject, body, email);
 
-            if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
-                throw new SendEmailException(ExceptionConstants.SendEmailException, email, Configuration["SendGrid:Sender"]);
+            if (response.StatusCode != HttpStatusCode.Accepted)
+                throw new SendEmailException(ExceptionConstants.SendEmailException + " " + response.StatusCode, email, Configuration["SendGrid:Sender"]);
         }
 
-        private async Task<Response> Execute(string apiKey, string subject, string body, string email)
+        private Task<Response> Execute(string apiKey, string subject, string body, string email)
         {
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
@@ -38,7 +39,7 @@ namespace Pharmacy.Infrastructure.Services
             msg.AddTo(new EmailAddress(email));
             msg.SetClickTracking(false, false);
 
-            return await client.SendEmailAsync(msg);
+            return client.SendEmailAsync(msg);
         }
     }
 }

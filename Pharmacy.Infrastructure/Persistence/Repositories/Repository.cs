@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Pharmacy.Infrastructure.Common.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
         public Repository(PharmacyContext context)
         {
             this.context = context;
+        }
+
+        public async Task<IDbContextTransaction> BeginTransaction()
+        {
+            return await context.Database.BeginTransactionAsync();
         }
 
         public DbSet<TEntity> Records => context.Set<TEntity>();

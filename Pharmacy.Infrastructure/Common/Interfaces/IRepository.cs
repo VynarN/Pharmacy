@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Pharmacy.Infrastructure.Common.Interfaces
     public interface IRepository<TEntity> where TEntity : class
     {
         DbSet<TEntity> Records { get; }
+
+        Task<IDbContextTransaction> BeginTransaction();
 
         ValueTask<TEntity> GetByIdAsync(long id);
 

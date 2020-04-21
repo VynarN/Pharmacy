@@ -18,6 +18,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Pharmacy.Infrastructure.Services;
 using Pharmacy.Infrastructure.Common.Interfaces;
+using Pharmacy.Application.Middlewares.MiddlewareExtensions;
+using Microsoft.AspNetCore.Antiforgery;
+using Pharmacy.Application.Middlewares;
+using Pharmacy.Application.Common.Interfaces;
+using Pharmacy.Application.Services;
+using Pharmacy.Infrastructure.Persistence.Repositories;
 
 namespace Pharmacy
 {
@@ -39,6 +45,8 @@ namespace Pharmacy
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddAntiforgery(options => { options.HeaderName = "x-xsrf-token"; });
+            services.AddMvc();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -50,14 +58,12 @@ namespace Pharmacy
 
             });
             services.AddControllers();
-
             services.AddDbContext<PharmacyContext>(cfg =>
             {
                 cfg.UseSqlServer(
                     Configuration
                     .GetConnectionString("SqlServerConnectionString"));
             });
-
             services.AddIdentity<User, IdentityRole>(
                   options =>
                   {
@@ -94,11 +100,13 @@ namespace Pharmacy
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddSingleton<IEmailSender, SendGridService>();
+            services.AddScoped<IEmailSender, SendGridService>();
+            services.AddScoped<IAccountService, AccountService>(); 
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAntiforgery antiforgery)
         {
             if (env.IsDevelopment())
             {
@@ -115,7 +123,9 @@ namespace Pharmacy
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
             });
 
+            app.UseMiddleware<TokenMiddleware>();
             app.UseAuthentication();
+            app.UseXsrfProtection(antiforgery);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
