@@ -45,4 +45,6 @@ steps:
     SlotName: 'production'
     packageForLinux: 'Pharmacy/'
 
+- task: PublishBuildArtifacts@1
+
 
