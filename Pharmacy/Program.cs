@@ -22,5 +22,6 @@ namespace Pharmacy
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
