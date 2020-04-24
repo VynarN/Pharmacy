@@ -7,7 +7,7 @@ namespace Pharmacy.Application.Common.Exceptions
     [Serializable]
     public class ObjectUpdateException : ObjectException
     {
-        public string UpdateValue { get; } = " Value that was tried to set: ";
+        public string UpdateValue { get; } = "Value that was tried to set: ";
 
         public ObjectUpdateException()
         {
@@ -62,6 +62,11 @@ namespace Pharmacy.Application.Common.Exceptions
             info.AddValue("UpdateValue", UpdateValue);
 
             base.GetObjectData(info, context);
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name + ": " + Message + UpdateValue + ". " + ObjectIdentifier;
         }
     }
 }

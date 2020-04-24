@@ -9,8 +9,6 @@ namespace Pharmacy.Infrastructure.Common.Exceptions
     {
         public string EmailReceiver = "Receiver: ";
 
-        public string EmailSender = "Sender: ";
-
         public SendEmailException()
         {
         }
@@ -20,18 +18,16 @@ namespace Pharmacy.Infrastructure.Common.Exceptions
         {
         }
 
-        public SendEmailException(string message, string receiver, string sender)
+        public SendEmailException(string message, string receiver)
             : base(message)
         {
             EmailReceiver += receiver;
-            EmailSender += sender;
         }
         
-        public SendEmailException(string message, string receiver, string sender, Exception inner)
+        public SendEmailException(string message, string receiver, Exception inner)
             : base(message, inner)
         {
             EmailReceiver += receiver;
-            EmailSender += sender;
         }
 
         public SendEmailException(string message, Exception inner)
@@ -42,7 +38,6 @@ namespace Pharmacy.Infrastructure.Common.Exceptions
         protected SendEmailException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
-            EmailSender = info.GetString("EmailSender");
             EmailReceiver = info.GetString("EmailReceiver");
         }
 
@@ -54,10 +49,14 @@ namespace Pharmacy.Infrastructure.Common.Exceptions
                 throw new ArgumentNullException("info");
             }
 
-            info.AddValue("EmailSender", EmailSender);
             info.AddValue("EmailReceiver", EmailReceiver);
 
             base.GetObjectData(info, context);
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name + ": " + Message + EmailReceiver;
         }
     }
 }

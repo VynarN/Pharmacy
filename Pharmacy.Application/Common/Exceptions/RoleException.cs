@@ -56,5 +56,10 @@ namespace Pharmacy.Application.Common.Exceptions
 
             base.GetObjectData(info, context);
         }
+
+        public override string ToString()
+        {
+            return GetType().Name + ": " + Role + ". " + Message + ObjectIdentifier;
+        }
     }
 }

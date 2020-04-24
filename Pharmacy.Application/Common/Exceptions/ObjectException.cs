@@ -7,7 +7,7 @@ namespace Pharmacy.Application.Common.Exceptions
     [Serializable]
     public class ObjectException : Exception
     {
-        public string ObjectIdentifier { get; } = "Object identifier: ";
+        public string ObjectIdentifier { get; } = "Identifier: ";
 
         public ObjectException()
         {
@@ -50,6 +50,11 @@ namespace Pharmacy.Application.Common.Exceptions
             info.AddValue("ObjectIdentifier", ObjectIdentifier);
 
             base.GetObjectData(info, context);
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name + ": " + Message + ObjectIdentifier;
         }
     }
 }

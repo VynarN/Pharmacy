@@ -44,7 +44,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (ObjectUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.ToString());
             }
             catch (IOException ex)
             {
@@ -52,7 +52,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (SendEmailException ex)
             {
-                return BadRequest(ex.Message + ex.EmailReceiver + " " + ex.EmailSender);
+                return BadRequest(ex.ToString());
             }
             catch (Exception ex)
             {
@@ -72,11 +72,15 @@ namespace Pharmacy.Api.Controllers
             }
             catch (ObjectNotFoundException ex)
             {
-                return NotFound(ex.Message + ex.ObjectIdentifier);
+                return NotFound(ex.ToString());
             }
             catch (UserLoginException ex)
             {
-                return BadRequest(ex.Message + ex.ObjectIdentifier);
+                return BadRequest(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
@@ -104,7 +108,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (UserRegistrationException ex)
             {
-                return BadRequest(ex.Message + ex.ObjectIdentifier);
+                return BadRequest(ex.ToString());
             }
             catch (ArgumentException ex)
             {
@@ -116,7 +120,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (SendEmailException ex)
             {
-                return BadRequest(ex.Message + ex.EmailReceiver + " " + ex.EmailSender);
+                return BadRequest(ex.ToString());
             }
             catch (Exception ex)
             {
@@ -135,12 +139,12 @@ namespace Pharmacy.Api.Controllers
             catch (ObjectNotFoundException ex)
             {
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
-                await Response.WriteAsync(ex.Message + ex.ObjectIdentifier);
+                await Response.WriteAsync(ex.ToString());
             }
             catch (ObjectUpdateException ex)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await Response.WriteAsync(ex.Message + ex.ObjectIdentifier + ex.UpdateValue);
+                await Response.WriteAsync(ex.ToString());
             }
             catch (ArgumentException ex)
             {
@@ -165,11 +169,11 @@ namespace Pharmacy.Api.Controllers
             }
             catch (ObjectNotFoundException ex)
             {
-                return NotFound(ex.Message + ex.ObjectIdentifier);
+                return NotFound(ex.ToString());
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message + ex.ParamName);
+                return BadRequest(ex.Message);
             }
             catch(IOException ex)
             {
@@ -177,7 +181,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch(SendEmailException ex)
             {
-                return BadRequest(ex.Message + ex.EmailReceiver + " " + ex.EmailSender);
+                return BadRequest(ex.ToString());
             }
             catch(Exception ex)
             {
@@ -195,15 +199,15 @@ namespace Pharmacy.Api.Controllers
             }
             catch (ObjectNotFoundException ex)
             {
-                return NotFound(ex.Message + ex.ObjectIdentifier);
+                return NotFound(ex.ToString());
             }
             catch (ObjectUpdateException ex)
             {
-                return BadRequest(ex.Message + ex.ObjectIdentifier + ex.UpdateValue);
+                return BadRequest(ex.ToString());
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message + " " + ex.ParamName);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -219,11 +223,15 @@ namespace Pharmacy.Api.Controllers
             }
             catch (ObjectNotFoundException ex)
             {
-                return NotFound(ex.Message + ex.ObjectIdentifier);
+                return NotFound(ex.ToString());
             }
             catch (ObjectDeleteException ex)
             {
-                return BadRequest(ex.Message + ex.ObjectIdentifier);
+                return BadRequest(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

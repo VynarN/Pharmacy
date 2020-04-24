@@ -23,7 +23,7 @@ namespace Pharmacy.Infrastructure.Services
             var response = await Execute(Configuration["SendGrid:Key"], subject, body, email);
 
             if (response.StatusCode != HttpStatusCode.Accepted)
-                throw new SendEmailException(ExceptionConstants.SendEmailException + " " + response.StatusCode, email, Configuration["SendGrid:Sender"]);
+                throw new SendEmailException(ExceptionConstants.SendEmailException + " " + response.StatusCode, email);
         }
 
         private Task<Response> Execute(string apiKey, string subject, string body, string email)
