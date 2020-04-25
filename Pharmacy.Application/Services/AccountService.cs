@@ -228,13 +228,22 @@ namespace Pharmacy.Application.Services
                             _configuration,
                             _emailSender,
                             link);
-
-                        await transaction.CommitAsync();
                     }
                 }
+
+                if (!userToBeUpdated.FirstName.Equals(model.FirstName))
+                    userToBeUpdated.FirstName = model.FirstName;
+
+                if (!userToBeUpdated.SecondName.Equals(model.SecondName))
+                    userToBeUpdated.SecondName = model.SecondName;
+
                 var updateUserResult = await _userManager.UpdateAsync(userToBeUpdated);
 
-                if (!updateUserResult.Succeeded)
+                if (updateUserResult.Succeeded)
+                {
+                    await transaction.CommitAsync();
+                }
+                else
                 {
                     await transaction.RollbackAsync();
                     throw new ObjectUpdateException(ExceptionStrings.UserUpdateException, userToBeUpdated.Id, model.FirstName + " " + model.SecondName);
