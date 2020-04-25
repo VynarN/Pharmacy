@@ -86,9 +86,9 @@ namespace Pharmacy
                 cfg.SaveToken = true;
                 cfg.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = Configuration["JwtConfiguration:JwtIssuer"],
-                    ValidAudience = Configuration["JwtConfiguration:JwtIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtConfiguration:JwtKey"])),
+                    ValidIssuer = Configuration["JwtConfiguration:Issuer"],
+                    ValidAudience = Configuration["JwtConfiguration:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtConfiguration:Key"])),
                     ClockSkew = TimeSpan.Zero
                 };
             });
