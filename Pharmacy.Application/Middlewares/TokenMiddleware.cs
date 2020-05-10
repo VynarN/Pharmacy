@@ -17,11 +17,11 @@ namespace Pharmacy.Application.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IConfiguration configuration)
         {
-            var cookieValue = context.Request.Cookies?[configuration["CookieSettings:TokenCookieName"]];
+            var cookieValue = context.Request.Cookies?[configuration["CookieSettings:AccessTokenCookieName"]];
+
             if (!string.IsNullOrEmpty(cookieValue))
             {
-                TokenModel deserializedTokens = JsonConvert.DeserializeObject<TokenModel>(cookieValue);
-                context.Request.Headers.Add("Authorization", "Bearer " + deserializedTokens.AccessToken);
+                context.Request.Headers.Add("Authorization", "Bearer " + cookieValue);
             }
             await _next.Invoke(context);
         }

@@ -49,28 +49,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "be1f1d84-2dfe-4c7c-bbaf-c832d9d79cfa",
+                            ConcurrencyStamp = "813b77b0-c00d-430a-9cc8-042647ff0b2e",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "1f336fa8-5c30-4b06-8e2a-ff495a72019e",
+                            ConcurrencyStamp = "5dfe44ea-ff39-481d-a9fe-b7b05fccb181",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "0bb1d850-f692-468a-b129-5a4d1ca2772e",
+                            ConcurrencyStamp = "45758819-8027-457c-b0af-54642e266d14",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "baea449c-441c-47a9-8f74-c5374b8c8c96",
+                            ConcurrencyStamp = "6ef71f91-ceb9-408c-b5be-63186bddfde5",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -196,9 +196,6 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.Property<int?>("ManufacturerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Region")
                         .HasColumnType("nvarchar(max)");
 
@@ -213,10 +210,6 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.HasIndex("ManufacturerId")
                         .IsUnique()
                         .HasFilter("[ManufacturerId] IS NOT NULL");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique()
-                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.ToTable("Addresses");
                 });
@@ -306,6 +299,33 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Pharmacy.Domain.Entites.DeliveryAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryAddresses");
                 });
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.Image", b =>
@@ -502,6 +522,9 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.Property<DateTime>("DeliveredAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DeliveryAddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DispatchedAt")
                         .HasColumnType("datetime2");
 
@@ -510,9 +533,6 @@ namespace Pharmacy.Infrastructure.Migrations
 
                     b.Property<DateTime>("OrderedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductQuantity")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -525,11 +545,49 @@ namespace Pharmacy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeliveryAddressId");
+
                     b.HasIndex("MedicamentId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Pharmacy.Domain.Entites.PaymentRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DeliveryAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicamentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReceiverEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RequestedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliveryAddressId");
+
+                    b.HasIndex("MedicamentId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("PaymentRequests");
                 });
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.User", b =>
@@ -662,10 +720,6 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.HasOne("Pharmacy.Domain.Entites.Manufacturer", "Manufacturer")
                         .WithOne("Address")
                         .HasForeignKey("Pharmacy.Domain.Entites.Address", "ManufacturerId");
-
-                    b.HasOne("Pharmacy.Domain.Entites.Order", "Order")
-                        .WithOne("Address")
-                        .HasForeignKey("Pharmacy.Domain.Entites.Address", "OrderId");
                 });
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.AllowedForEntity", b =>
@@ -739,6 +793,12 @@ namespace Pharmacy.Infrastructure.Migrations
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.Order", b =>
                 {
+                    b.HasOne("Pharmacy.Domain.Entites.DeliveryAddress", "DeliveryAddress")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Pharmacy.Domain.Entites.Medicament", "Medicament")
                         .WithMany("Orders")
                         .HasForeignKey("MedicamentId")
@@ -748,6 +808,25 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.HasOne("Pharmacy.Domain.Entites.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Pharmacy.Domain.Entites.PaymentRequest", b =>
+                {
+                    b.HasOne("Pharmacy.Domain.Entites.Address", "DeliveryAddress")
+                        .WithMany()
+                        .HasForeignKey("DeliveryAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pharmacy.Domain.Entites.Medicament", "Medicament")
+                        .WithMany()
+                        .HasForeignKey("MedicamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pharmacy.Domain.Entites.User", "Sender")
+                        .WithMany("PaymentRequests")
+                        .HasForeignKey("SenderId");
                 });
 #pragma warning restore 612, 618
         }

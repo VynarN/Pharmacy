@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 
-namespace Pharmacy.Infrastructure.Common.Extensions
+namespace Pharmacy.Application.Common.Extensions
 {
     public static class StringExtension
     {

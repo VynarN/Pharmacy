@@ -76,6 +76,23 @@ namespace Pharmacy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeliveryAddresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ZipCode = table.Column<int>(nullable: false),
+                    Country = table.Column<string>(nullable: true),
+                    Region = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryAddresses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Manufacturers",
                 columns: table => new
                 {
@@ -207,6 +224,30 @@ namespace Pharmacy.Infrastructure.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ZipCode = table.Column<int>(nullable: false),
+                    Country = table.Column<string>(nullable: true),
+                    Region = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    ManufacturerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Manufacturers_ManufacturerId",
+                        column: x => x.ManufacturerId,
+                        principalTable: "Manufacturers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -371,10 +412,10 @@ namespace Pharmacy.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductQuantity = table.Column<int>(nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     MedicamentId = table.Column<int>(nullable: false),
+                    DeliveryAddressId = table.Column<int>(nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     Status = table.Column<int>(nullable: false),
                     OrderedAt = table.Column<DateTime>(nullable: false),
                     DispatchedAt = table.Column<DateTime>(nullable: false),
@@ -383,6 +424,12 @@ namespace Pharmacy.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_DeliveryAddresses_DeliveryAddressId",
+                        column: x => x.DeliveryAddressId,
+                        principalTable: "DeliveryAddresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Medicaments_MedicamentId",
                         column: x => x.MedicamentId,
@@ -398,32 +445,37 @@ namespace Pharmacy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Addresses",
+                name: "PaymentRequests",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ZipCode = table.Column<int>(nullable: false),
-                    Country = table.Column<string>(nullable: true),
-                    Region = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    Street = table.Column<string>(nullable: true),
-                    ManufacturerId = table.Column<int>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true)
+                    SenderId = table.Column<string>(nullable: true),
+                    ReceiverEmail = table.Column<string>(nullable: true),
+                    MedicamentId = table.Column<int>(nullable: false),
+                    DeliveryAddressId = table.Column<int>(nullable: false),
+                    Total = table.Column<decimal>(nullable: false),
+                    RequestedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.PrimaryKey("PK_PaymentRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Manufacturers_ManufacturerId",
-                        column: x => x.ManufacturerId,
-                        principalTable: "Manufacturers",
+                        name: "FK_PaymentRequests_Addresses_DeliveryAddressId",
+                        column: x => x.DeliveryAddressId,
+                        principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Addresses_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
+                        name: "FK_PaymentRequests_Medicaments_MedicamentId",
+                        column: x => x.MedicamentId,
+                        principalTable: "Medicaments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PaymentRequests_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -433,10 +485,10 @@ namespace Pharmacy.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "be1f1d84-2dfe-4c7c-bbaf-c832d9d79cfa", "mainadmin", "MAINADMIN" },
-                    { "2", "1f336fa8-5c30-4b06-8e2a-ff495a72019e", "admin", "ADMIN" },
-                    { "3", "0bb1d850-f692-468a-b129-5a4d1ca2772e", "manager", "MANAGER" },
-                    { "4", "baea449c-441c-47a9-8f74-c5374b8c8c96", "user", "USER" }
+                    { "1", "813b77b0-c00d-430a-9cc8-042647ff0b2e", "mainadmin", "MAINADMIN" },
+                    { "2", "5dfe44ea-ff39-481d-a9fe-b7b05fccb181", "admin", "ADMIN" },
+                    { "3", "45758819-8027-457c-b0af-54642e266d14", "manager", "MANAGER" },
+                    { "4", "6ef71f91-ceb9-408c-b5be-63186bddfde5", "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -445,13 +497,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 column: "ManufacturerId",
                 unique: true,
                 filter: "[ManufacturerId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_OrderId",
-                table: "Addresses",
-                column: "OrderId",
-                unique: true,
-                filter: "[OrderId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AllowedForEntities_MedicamentId",
@@ -535,6 +580,11 @@ namespace Pharmacy.Infrastructure.Migrations
                 column: "MedicamentFormId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_DeliveryAddressId",
+                table: "Orders",
+                column: "DeliveryAddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_MedicamentId",
                 table: "Orders",
                 column: "MedicamentId");
@@ -543,13 +593,25 @@ namespace Pharmacy.Infrastructure.Migrations
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentRequests_DeliveryAddressId",
+                table: "PaymentRequests",
+                column: "DeliveryAddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentRequests_MedicamentId",
+                table: "PaymentRequests",
+                column: "MedicamentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentRequests_SenderId",
+                table: "PaymentRequests",
+                column: "SenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Addresses");
-
             migrationBuilder.DropTable(
                 name: "AllowedForEntities");
 
@@ -581,7 +643,16 @@ namespace Pharmacy.Infrastructure.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "PaymentRequests");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryAddresses");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Medicaments");

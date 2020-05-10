@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Exceptions;
+using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,21 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Helpers
 {
-    public static class TokenHelper
+    public class TokenHelper: ITokenHelper
     {
+        private readonly UserManager<User> _userManager;
 
-        public static async Task<string> GenerateAccessToken(User user, UserManager<User> userManager, IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+
+        public TokenHelper(UserManager<User> userManager, IConfiguration configuration)
         {
-            var roles = await userManager.GetRolesAsync(user);
+            _userManager = userManager;
+            _configuration = configuration;
+        }
+
+        public async Task<string> GenerateAccessToken(User user)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
@@ -32,12 +42,12 @@ namespace Pharmacy.Application.Helpers
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfiguration:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtConfiguration:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expire = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["JwtConfiguration:ExpireMinutes"]));
+            var expire = DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["JwtConfiguration:ExpireMinutes"]));
             var token = new JwtSecurityToken(
-                configuration["JwtConfiguration:Issuer"],
-                configuration["JwtConfiguration:Issuer"],
+                _configuration["JwtConfiguration:Issuer"],
+                _configuration["JwtConfiguration:Issuer"],
                 claims,
                 expires: expire,
                 signingCredentials: creds
@@ -46,7 +56,7 @@ namespace Pharmacy.Application.Helpers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public static string GenerateRefreshToken()
+        public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
             using (var generator = RandomNumberGenerator.Create())
@@ -56,16 +66,16 @@ namespace Pharmacy.Application.Helpers
             }
         }
 
-        public static async Task<User> GetUserFromExpiredToken(string token,UserManager<User> userManager, IConfiguration configuration)
+        public async Task<User> GetUserFromExpiredToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
-                ValidAudience = configuration["JwtConfiguration:Issuer"],
+                ValidAudience = _configuration["JwtConfiguration:Issuer"],
                 ValidateIssuer = true,
-                ValidIssuer = configuration["JwtConfiguration:Issuer"],
+                ValidIssuer = _configuration["JwtConfiguration:Issuer"],
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfiguration:Key"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtConfiguration:Key"])),
                 ValidateLifetime = false
             };
 
@@ -79,7 +89,8 @@ namespace Pharmacy.Application.Helpers
                 throw new SecurityTokenException(ExceptionStrings.AccessTokenException);
 
             var userId = principal.Identity.Name;
-            var user = await userManager.FindByIdAsync(userId);
+
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
                 throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, userId);

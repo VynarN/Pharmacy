@@ -1,65 +1,72 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces;
 using Pharmacy.Application.Common.Models;
-using Pharmacy.Application.Helpers;
 using Pharmacy.Domain.Entites;
-using Pharmacy.Infrastructure.Common.Extensions;
-using Pharmacy.Infrastructure.Common.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Pharmacy.Application.Common.DTO.In;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
+using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
+using Pharmacy.Application.Common.Extensions;
+using System.Linq;
+using System;
+using System.Transactions;
 
 namespace Pharmacy.Application.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly IRepository<User> _repo;
+        private readonly IUserManager _userManager;
+        private readonly ISignInManager _signInManager;
+        private readonly IUserHelper _userHelper;
         private readonly IConfiguration _configuration;
-        private readonly IHostingEnvironment _environment;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailHelper _emailHelper;
+        private readonly ITokenHelper _tokenHelper;
+        private readonly IRepository<User> _repository;
 
-        public AccountService(UserManager<User> userManager,
-                           SignInManager<User> signInManager,
-                           IRepository<User> repo,
+        public AccountService(IUserManager userManager,
+                           IUserHelper userHelper,
+                           ISignInManager signInManager,
                            IConfiguration configuration,
-                           IHostingEnvironment environment,
-                           IEmailSender emailSender)
+                           IEmailHelper emailHelper,
+                           ITokenHelper tokenHelper,
+                           IRepository<User> repository)
         {
             _userManager = userManager;
+            _userHelper = userHelper;
             _signInManager = signInManager;
             _configuration = configuration;
-            _emailSender = emailSender;
-            _environment = environment;
-            _repo = repo;
+            _emailHelper = emailHelper;
+            _tokenHelper = tokenHelper;
+            _repository = repository;
         }
 
         public async Task RegisterAsync(RegisterModel model, string returnUrl)
         {
-            using (var transaction = await _repo.BeginTransaction())
+            var correctedUserEmail = model?.Email?.ToLower();
+
+            var normalizedUserEmail = model?.Email?.ToUpper();
+
+            var newUser = new User
             {
-                var normalizedUserEmail = model.Email.ToUpper();
-                var newUser = new User
-                {
-                    FirstName = model.FirstName,
-                    SecondName = model.SecondName,
-                    Email = model.Email,
-                    NormalizedEmail = normalizedUserEmail,
-                    UserName = model.Email,
-                    NormalizedUserName = normalizedUserEmail,
-                    PhoneNumber = model.PhoneNumber
-                };
+                FirstName = model?.FirstName,
+                SecondName = model?.SecondName,
+                Email = correctedUserEmail,
+                NormalizedEmail = normalizedUserEmail,
+                UserName = correctedUserEmail,
+                NormalizedUserName = normalizedUserEmail,
+                PhoneNumber = model?.PhoneNumber
+            };
 
-                var createResult = await _userManager.CreateAsync(newUser, model.Password);
+            using (var transaction = await _repository.BeginTransactionAsync())
+            {
+                await _userManager.CreateUserAsync(newUser, model?.Password);
 
-                if (createResult.Succeeded)
+                try
                 {
-                    var user = await _userManager.FindByEmailAsync(normalizedUserEmail);
+                    var user = await _userHelper.FindUserByEmailAsync(newUser.Email);
 
                     var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -67,69 +74,58 @@ namespace Pharmacy.Application.Services
 
                     var link = string.Format(_configuration["Server:ConfirmEmailEndpoint"], user.Id, encodedToken, returnUrl);
 
-                    await EmailHelper.SendEmail(user.Email,
+                    await _emailHelper.Send(user.Email,
                            "EmailSettings:ConfirmEmailPathToTemplate",
                            "EmailSettings:ConfirmEmailSubject",
-                           _environment.WebRootPath,
-                           _configuration,
-                           _emailSender,
-                           link);
+                            link);
 
-                    await transaction.CommitAsync();
+                    await _repository.CommitTransactionAsync(transaction);
                 }
-                else 
+                catch (Exception)
                 {
-                    transaction.Rollback();
-                    throw new UserRegistrationException(ExceptionStrings.CreateUserException, newUser.Email);
+                   await _repository.RollbackTransactionAsync(transaction);
+                   throw;
                 }
             }
         }
 
         public async Task<TokenModel> LoginAsync(LoginModel model)
         {
-            var signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
-
-            if (signInResult.Succeeded)
+            if (await _signInManager.SignInAsync(model.Email, model.Password))
             {
-                var user = await _userManager.FindByEmailAsync(model.Email.ToUpper());
+                var user = await _userHelper.FindUserByEmailAsync(model.Email);
 
-                user.RefreshToken = TokenHelper.GenerateRefreshToken();
+                user.RefreshToken = _tokenHelper.GenerateRefreshToken();
 
-                var updateResult = await _userManager.UpdateAsync(user);
-                if (updateResult.Succeeded)
-                {
-                    var accessToken = await TokenHelper.GenerateAccessToken(user, _userManager, _configuration);
-                    return new TokenModel() { AccessToken = accessToken, RefreshToken = user.RefreshToken };
-                }
-                throw new UserLoginException(ExceptionStrings.LoginException, user.Email);
+                await _userManager.UpdateAsync(user);
+
+                var accessToken = await _tokenHelper.GenerateAccessToken(user);
+
+                return new TokenModel() { AccessToken = accessToken, RefreshToken = user.RefreshToken };
             }
-            throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, model.Email);
+
+            throw new UserLoginException(ExceptionStrings.LoginException, model.Email);
         }
 
         public async Task ConfirmEmailAsync(string userId, string token)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-                throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, userId);
+            var user = await _userHelper.FindUserByIdAsync(userId);
 
-            var userRoles = await _userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetUserRolesAsync(user);
+
             if (userRoles.Count == 0)
-            {
                 await AddUserToDefaultRole(user);
-            }
-
+            
             var decodedToken = token.Base64UrlDecodeString();
 
-            var confirmEmailResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
-
-            if (!confirmEmailResult.Succeeded)
-                throw new ConfirmationException(ExceptionStrings.EmailConfirmException, user.Email);
+            await _userManager.ConfirmEmailAsync(user, decodedToken);
         }
 
         public async Task ForgotPasswordAsync(string email, string returnUrl)
         {
-            var user = await _userManager.FindByEmailAsync(email.ToUpper());
-            if (user == null || !user.EmailConfirmed)
+            var user = await _userHelper.FindUserByEmailAsync(email);
+
+            if (!user.EmailConfirmed)
                 throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, email);
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -138,130 +134,93 @@ namespace Pharmacy.Application.Services
 
             var link = string.Format(_configuration["Server:ForgotPasswordEndpoint"], returnUrl, user.Id, encodedEmailToken);
 
-             await EmailHelper.SendEmail(user.Email, 
+             await _emailHelper.Send(user.Email, 
                    "EmailSettings:ResetPasswordPathToTemplate", 
                    "EmailSettings:ResetPasswordSubject",
-                    _environment.WebRootPath, 
-                    _configuration, 
-                    _emailSender,
                     link);
         }          
 
         public async Task ResetPasswordAsync(ResetPasswordModel model, string userId, string token)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-                throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, userId);
+            var user = await _userHelper.FindUserByIdAsync(userId);
 
             var decodedToken = token.Base64UrlDecodeString();
 
-            var resetPassResult = await _userManager.ResetPasswordAsync(user, decodedToken, model.Password);
-
-            if (!resetPassResult.Succeeded)
-                throw new ObjectUpdateException(ExceptionStrings.ResetPasswordException, user.Email);
-        }
-
-        private async Task<IdentityResult> AddUserToDefaultRole(User user)
-        {
-            var usersInRoles = await _userManager.GetUsersInRoleAsync(RoleStrings.Roles[3]);
-
-            IdentityResult addedToRole;
-
-            if (usersInRoles == null || usersInRoles.Count < 1)
-            {
-                addedToRole = await _userManager.AddToRoleAsync(user, RoleStrings.Roles[3]);
-            }
-            else
-            {
-                addedToRole = await _userManager.AddToRoleAsync(user, RoleStrings.Roles[0]);
-            }
-
-            if (!addedToRole.Succeeded)
-                throw new RoleException(ExceptionStrings.AddToRoleException);
-            return addedToRole;
+             await _userManager.ResetPasswordAsync(user, decodedToken, model.Password);
         }
 
         public async Task<IList<string>> GetUserRoles(string userEmail)
         {
-            var user = await _userManager.FindByEmailAsync(userEmail.ToUpper());
+            var user = await _userHelper.FindUserByEmailAsync(userEmail);
 
-            if (user == null)
-                throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, userEmail);
-
-            return await _userManager.GetRolesAsync(user);
+            return await _userManager.GetUserRolesAsync(user);
         }
 
         public async Task UpdateProfile(UserInDto model, string userId, string returnUrl)
         {
-            using (var transaction = await _repo.BeginTransaction())
+            var userToBeUpdated = await _userHelper.FindUserByIdAsync(userId);
+
+            await _userManager.SetPhoneNumberAsync(userToBeUpdated, model.PhoneNumber);
+
+            if (model.Email != userToBeUpdated.Email)
             {
-                var userToBeUpdated = await _userManager.FindByIdAsync(userId);
-
-                var changePhoneNumberResult = await _userManager.SetPhoneNumberAsync(userToBeUpdated, model.PhoneNumber);
-
-                if (!changePhoneNumberResult.Succeeded)
-                    throw new ObjectUpdateException(ExceptionStrings.UserUpdateException, userToBeUpdated.Id, model.PhoneNumber);
-
-                if (model.Email != userToBeUpdated.Email)
+                using (var transaction = await _repository.BeginTransactionAsync())
                 {
-                    var changeEmailResult = await _userManager.SetEmailAsync(userToBeUpdated, model.Email);
-                    if (!changeEmailResult.Succeeded)
-                    {
-                        await transaction.RollbackAsync();
-                        throw new ObjectUpdateException(ExceptionStrings.UserUpdateException, userToBeUpdated.Id, model.Email);
-                    }
-                    else
-                    {
-                        await _userManager.SetUserNameAsync(userToBeUpdated, model.Email);
+                    await _userManager.SetEmailAsync(userToBeUpdated, model.Email);
 
-                        var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(userToBeUpdated);
+                    await _userManager.SetUserNameAsync(userToBeUpdated, model.Email);
 
+                    var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(userToBeUpdated);
+                    try
+                    {
                         var encodedToken = confirmEmailToken.Base64UrlEncodeString();
 
                         var link = string.Format(_configuration["Server:ConfirmEmailEndpoint"], userId, encodedToken, returnUrl);
 
-                        await EmailHelper.SendEmail(userToBeUpdated.Email,
+                        await _emailHelper.Send(userToBeUpdated.Email,
                             "EmailSettings:ConfirmEmailPathToTemplate",
                             "EmailSettings:ConfirmEmailSubject",
-                            _environment.WebRootPath,
-                            _configuration,
-                            _emailSender,
-                            link);
+                                link);
+
+                        await _repository.CommitTransactionAsync(transaction);
+                    }
+                    catch (Exception)
+                    {
+                        await _repository.RollbackTransactionAsync(transaction);
+                        throw;
                     }
                 }
-
-                if (!userToBeUpdated.FirstName.Equals(model.FirstName))
-                    userToBeUpdated.FirstName = model.FirstName;
-
-                if (!userToBeUpdated.SecondName.Equals(model.SecondName))
-                    userToBeUpdated.SecondName = model.SecondName;
-
-                var updateUserResult = await _userManager.UpdateAsync(userToBeUpdated);
-
-                if (updateUserResult.Succeeded)
-                {
-                    await transaction.CommitAsync();
-                }
-                else
-                {
-                    await transaction.RollbackAsync();
-                    throw new ObjectUpdateException(ExceptionStrings.UserUpdateException, userToBeUpdated.Id, model.FirstName + " " + model.SecondName);
-                }
             }
+
+            if (!userToBeUpdated.FirstName.Equals(model.FirstName))
+                userToBeUpdated.FirstName = model.FirstName;
+
+            if (!userToBeUpdated.SecondName.Equals(model.SecondName))
+                userToBeUpdated.SecondName = model.SecondName;
+
+            await _userManager.UpdateAsync(userToBeUpdated);
+
         }
 
         public async Task DeleteProfile(string userId)
         {
-            var tempUser = await _userManager.FindByIdAsync(userId);
+            var user = await _userHelper.FindUserByIdAsync(userId);
 
-            if (tempUser == null)
-                throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, userId);
+             await _userManager.DeleteAsync(user);
+        }
 
-            var result = await _userManager.DeleteAsync(tempUser);
+        private async Task AddUserToDefaultRole(User user)
+        {
+            var usersInRoles = (await _userManager.GetUsersInRoleAsync(RoleStrings.Roles[3])).ToList();
 
-            if (!result.Succeeded)
-                throw new ObjectDeleteException(ExceptionStrings.DeleteUserException, userId);
+            if (usersInRoles == null || usersInRoles.Count < 1)
+            {
+                await _userManager.AddUserToRoleAsync(user, RoleStrings.Roles[3]);
+            }
+            else
+            {
+                await _userManager.AddUserToRoleAsync(user, RoleStrings.Roles[0]);
+            }
         }
     }
 }

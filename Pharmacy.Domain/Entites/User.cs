@@ -16,6 +16,8 @@ namespace Pharmacy.Domain.Entites
 
         public List<Order> Orders { get; set; }
 
+        public List<PaymentRequest> PaymentRequests { get; set; }
+
         public User()
         {
             BasketItems = new List<BasketItem>();

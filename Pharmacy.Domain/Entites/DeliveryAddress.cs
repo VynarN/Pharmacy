@@ -1,6 +1,8 @@
-﻿namespace Pharmacy.Domain.Entites
+﻿using System.Collections.Generic;
+
+namespace Pharmacy.Domain.Entites
 {
-    public class Address
+    public class DeliveryAddress
     {
         public int Id { get; set; }
 
@@ -14,8 +16,12 @@
 
         public string Street { get; set; }
 
-        public int? ManufacturerId { get; set; }
-        public Manufacturer Manufacturer{ get; set; }
+        public List<Order> Orders { get; set; }
+
+        public DeliveryAddress()
+        {
+            Orders = new List<Order>();
+        }
 
         public override bool Equals(object obj)
         {

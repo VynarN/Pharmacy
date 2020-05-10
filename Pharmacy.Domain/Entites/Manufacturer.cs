@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Pharmacy.Domain.Entites
 {
@@ -19,6 +20,21 @@ namespace Pharmacy.Domain.Entites
         public Manufacturer()
         {
             Medicaments = new List<Medicament>();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Manufacturer manufacturer &&
+                   Id == manufacturer.Id &&
+                   Name == manufacturer.Name &&
+                   PhoneNumber == manufacturer.PhoneNumber &&
+                   WebSite == manufacturer.WebSite &&
+                   Address.Equals(manufacturer.Address);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, PhoneNumber, WebSite, Address);
         }
     }
 }

@@ -9,7 +9,9 @@ namespace Pharmacy.Application.Middlewares
     public class XsrfProtectionMiddleware
     {
         private readonly IAntiforgery _antiforgery;
+
         private readonly IConfiguration _configuration;
+
         private readonly RequestDelegate _next;
 
         public XsrfProtectionMiddleware(RequestDelegate next, IAntiforgery antiforgery, IConfiguration configuration)

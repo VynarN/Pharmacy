@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Pharmacy.Application.Tests.BuiltinServicesMocks;
@@ -13,13 +13,13 @@ namespace Pharmacy.Application.Tests.Services
         public void SendEmail_DoesNotThrowSendEmailException()
         {
             var configMock = IConfigMock.MockIConfigurationEmailSection();
-            var configMockObject = configMock.Object;
+            var logger = new Mock<ILogger<SendGridService>>();
 
-            var receiver = configMockObject["SendGrid:Sender"];
-            var subject = configMockObject["EmailSettings:ConfirmEmailSubject"];
+            var receiver = configMock.Object["SendGrid:Sender"];
+            var subject = configMock.Object["EmailSettings:ConfirmEmailSubject"];
             var body = "<html><b><h1> Test SendGrid service</h1></b></html>";
 
-            var emailSenderService = new SendGridService(configMockObject);
+            var emailSenderService = new SendGridService(configMock.Object, logger.Object);
 
             Assert.DoesNotThrowAsync(async () => await emailSenderService.SendEmailAsync(receiver, subject, body));
         }

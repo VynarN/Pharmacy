@@ -27,9 +27,13 @@ namespace Pharmacy.Infrastructure
 
         public DbSet<Address> Addresses { get; set; }
 
+        public DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
+
+        public DbSet<PaymentRequest> PaymentRequests { get; set; }
+
         public DbSet<Instruction> Instructions { get; set; }
 
-        public PharmacyContext(DbContextOptions options) : base(options) { }
+        public PharmacyContext(DbContextOptions<PharmacyContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { }

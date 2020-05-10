@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Pharmacy.Infrastructure.Common.Interfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Infrastructure.Persistence.Repositories
@@ -18,26 +19,31 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
             this.context = context;
         }
 
-        public async Task<IDbContextTransaction> BeginTransaction()
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
         {
             return await context.Database.BeginTransactionAsync();
         }
 
-        public DbSet<TEntity> Records => context.Set<TEntity>();
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+        {
+            await transaction.CommitAsync();
+        }
 
-        public async Task AddAsync(TEntity entity)
+        public async Task RollbackTransactionAsync(IDbContextTransaction transaction)
+        {
+            await transaction.RollbackAsync();
+        }
+
+        public async Task Create(TEntity entity)
         {
             await context.Set<TEntity>().AddAsync(entity);
+            await context.SaveChangesAsync();
         }
 
-        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public async Task Create(IEnumerable<TEntity> entities)
         {
             await context.Set<TEntity>().AddRangeAsync(entities);
-        }
-
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return context.Set<TEntity>().Where(predicate);
+            await context.SaveChangesAsync();
         }
 
         public IQueryable<TEntity> GetAllQueryable()
@@ -45,39 +51,56 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
             return context.Set<TEntity>().AsQueryable();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await context.Set<TEntity>().ToListAsync();
-        }
-
         public async ValueTask<TEntity> GetByIdAsync(long id)
         {
             return await context.Set<TEntity>().FindAsync(id);
         }
 
-        public void Remove(TEntity entity)
+        public IEnumerable<TEntity> GetByPredicate(Expression<Func<TEntity, bool>> predicate)
         {
-            context.Set<TEntity>().Remove(entity);
+            return context.Set<TEntity>().Where(predicate);
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
-        {
-            context.Set<TEntity>().RemoveRange(entities);
-        }
-
-        public async ValueTask<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public async ValueTask<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
 
-        public async Task SaveAsync()
+        public async Task Delete(TEntity entity)
         {
+            context.Set<TEntity>().Remove(entity);
             await context.SaveChangesAsync();
         }
 
-        public void Update(TEntity obj)
+        public async Task Delete(IEnumerable<TEntity> entities)
         {
-            context.Set<TEntity>().Update(obj);
+            context.Set<TEntity>().RemoveRange(entities);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Update(TEntity entity)
+        {
+            context.Set<TEntity>().Update(entity);
+            await context.SaveChangesAsync();
+        }
+
+        public IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<TEntity> GetWithInclude(Func<TEntity, bool> predicate,
+            params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
+        private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = context.Set<TEntity>().AsNoTracking();
+            return includeProperties
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }
