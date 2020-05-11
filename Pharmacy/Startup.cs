@@ -1,14 +1,9 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Pharmacy.Domain.Entites;
 using Pharmacy.Infrastructure;
 using Microsoft.OpenApi.Models;
@@ -19,6 +14,9 @@ using Microsoft.AspNetCore.Antiforgery;
 using Pharmacy.Application.Middlewares;
 using Pharmacy.Api.ServicesConfiguration;
 using Serilog;
+using FluentValidation.AspNetCore;
+using System.Reflection;
+using Pharmacy.Application.Common.DTO.In.Auth.Register;
 
 namespace Pharmacy
 {
@@ -36,6 +34,8 @@ namespace Pharmacy
         {
             services.AddCors();
 
+            services.AddHttpContextAccessor();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -44,7 +44,8 @@ namespace Pharmacy
 
             services.AddAntiforgery(options => { options.HeaderName = "x-xsrf-token"; });
 
-            services.AddMvc();
+            services.AddMvc()
+                    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterDtoValidator>());
 
             services.AddSwaggerGen(c =>
             {
@@ -74,25 +75,7 @@ namespace Pharmacy
                     .AddEntityFrameworkStores<PharmacyContext>()
                     .AddDefaultTokenProviders();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
-            {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = Configuration["JwtConfiguration:Issuer"],
-                    ValidAudience = Configuration["JwtConfiguration:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtConfiguration:Key"])),
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
-
+            AuthenticationRegistration.RegisterAuthenticationService(services, Configuration);
             ServicesRegistration.RegistereApplicationServices(services);
         }
 

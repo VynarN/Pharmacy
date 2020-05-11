@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy.Application.Common.Constants;
+using System;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -54,7 +55,9 @@ namespace Pharmacy.Application.Common.Exceptions
 
         public override string ToString()
         {
-            return GetType().Name + ": " + Message + ObjectIdentifier;
+            var identifier = ObjectIdentifier.Length > IntegerConstants.OBJECT_IDENTIFIER_LENGTH ? ObjectIdentifier : " ";
+
+            return GetType().Name + ": " + Message + identifier;
         }
     }
 }

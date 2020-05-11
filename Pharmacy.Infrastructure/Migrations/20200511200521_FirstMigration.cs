@@ -414,8 +414,9 @@ namespace Pharmacy.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: true),
                     MedicamentId = table.Column<int>(nullable: false),
-                    DeliveryAddressId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     Total = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
+                    DeliveryAddressId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     OrderedAt = table.Column<DateTime>(nullable: false),
                     DispatchedAt = table.Column<DateTime>(nullable: false),
@@ -453,6 +454,7 @@ namespace Pharmacy.Infrastructure.Migrations
                     SenderId = table.Column<string>(nullable: true),
                     ReceiverEmail = table.Column<string>(nullable: true),
                     MedicamentId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     DeliveryAddressId = table.Column<int>(nullable: false),
                     Total = table.Column<decimal>(nullable: false),
                     RequestedAt = table.Column<DateTime>(nullable: false)
@@ -485,10 +487,10 @@ namespace Pharmacy.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "813b77b0-c00d-430a-9cc8-042647ff0b2e", "mainadmin", "MAINADMIN" },
-                    { "2", "5dfe44ea-ff39-481d-a9fe-b7b05fccb181", "admin", "ADMIN" },
-                    { "3", "45758819-8027-457c-b0af-54642e266d14", "manager", "MANAGER" },
-                    { "4", "6ef71f91-ceb9-408c-b5be-63186bddfde5", "user", "USER" }
+                    { "1", "7ca0ecf5-f616-4ce2-95b5-7dab0eb95228", "mainadmin", "MAINADMIN" },
+                    { "2", "9c18c285-f57c-4c84-aacc-68291cbc9bdd", "admin", "ADMIN" },
+                    { "3", "44ee2b02-d2ec-4a38-a382-b8a9f2195f97", "manager", "MANAGER" },
+                    { "4", "45158161-e979-4e09-b9d7-b6396ca11351", "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

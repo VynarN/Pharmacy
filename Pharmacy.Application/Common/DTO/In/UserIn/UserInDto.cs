@@ -1,4 +1,4 @@
-﻿namespace Pharmacy.Application.Common.DTO.In
+﻿namespace Pharmacy.Application.Common.DTO.In.UserIn
 {
     public class UserInDto
     {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Pharmacy.Api.Services;
 using Pharmacy.Application.Common.Interfaces;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
@@ -35,6 +36,7 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IUserManager, IdentityUserManager>();
             services.AddTransient<ISignInManager, IdentitySignInManager>();
             services.AddTransient<IEmailSender, SendGridService>();
+            services.AddScoped<ICurrentUser, CurrentUserService>();
         }   
     }
 }

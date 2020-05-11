@@ -14,6 +14,8 @@ namespace Pharmacy.Domain.Entites
         public int MedicamentId { get; set; }
         public Medicament Medicament { get; set; }
 
+        public int Quantity { get; set; }
+
         public int DeliveryAddressId { get; set; }
         public Address DeliveryAddress { get; set; }
 
@@ -28,13 +30,14 @@ namespace Pharmacy.Domain.Entites
                    ReceiverEmail == request.ReceiverEmail &&
                    MedicamentId == request.MedicamentId &&
                    DeliveryAddress == request.DeliveryAddress &&
+                   Quantity == request.Quantity &&
                    Total == request.Total &&
                    RequestedAt == request.RequestedAt;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(SenderId, ReceiverEmail, MedicamentId, DeliveryAddressId, Total, RequestedAt);
+            return HashCode.Combine(SenderId, ReceiverEmail, Quantity, MedicamentId, DeliveryAddressId, Total, RequestedAt);
         }
     }
 }

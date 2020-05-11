@@ -2,17 +2,19 @@
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces;
-using Pharmacy.Application.Common.Models;
 using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Pharmacy.Application.Common.DTO.In;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Extensions;
 using System.Linq;
 using System;
-using System.Transactions;
+using Pharmacy.Application.Common.DTO.In.Auth.Register;
+using Pharmacy.Application.Common.DTO.In.Auth;
+using Pharmacy.Application.Common.DTO.In.Auth.ResetPassword;
+using Pharmacy.Application.Common.DTO.In.UserIn;
+using Pharmacy.Application.Common.AppObjects;
 
 namespace Pharmacy.Application.Services
 {
@@ -43,12 +45,12 @@ namespace Pharmacy.Application.Services
             _repository = repository;
         }
 
-        public async Task RegisterAsync(RegisterModel model, string returnUrl)
+        public async Task RegisterAsync(RegisterDto model, string returnUrl)
         {
             var correctedUserEmail = model?.Email?.ToLower();
 
             var normalizedUserEmail = model?.Email?.ToUpper();
-
+            
             var newUser = new User
             {
                 FirstName = model?.FirstName,
@@ -89,7 +91,7 @@ namespace Pharmacy.Application.Services
             }
         }
 
-        public async Task<TokenModel> LoginAsync(LoginModel model)
+        public async Task<Tokens> LoginAsync(LoginDto model)
         {
             if (await _signInManager.SignInAsync(model.Email, model.Password))
             {
@@ -101,7 +103,7 @@ namespace Pharmacy.Application.Services
 
                 var accessToken = await _tokenHelper.GenerateAccessToken(user);
 
-                return new TokenModel() { AccessToken = accessToken, RefreshToken = user.RefreshToken };
+                return new Tokens() { AccessToken = accessToken, RefreshToken = user.RefreshToken };
             }
 
             throw new UserLoginException(ExceptionStrings.LoginException, model.Email);
@@ -118,7 +120,8 @@ namespace Pharmacy.Application.Services
             
             var decodedToken = token.Base64UrlDecodeString();
 
-            await _userManager.ConfirmEmailAsync(user, decodedToken);
+            if (!await _userManager.ConfirmEmailAsync(user, decodedToken))
+                throw new ConfirmationException(ExceptionStrings.EmailConfirmException, userId);
         }
 
         public async Task ForgotPasswordAsync(string email, string returnUrl)
@@ -140,13 +143,14 @@ namespace Pharmacy.Application.Services
                     link);
         }          
 
-        public async Task ResetPasswordAsync(ResetPasswordModel model, string userId, string token)
+        public async Task ResetPasswordAsync(ResetPasswordDto model, string userId, string token)
         {
             var user = await _userHelper.FindUserByIdAsync(userId);
 
             var decodedToken = token.Base64UrlDecodeString();
 
-             await _userManager.ResetPasswordAsync(user, decodedToken, model.Password);
+            if (!await _userManager.ResetPasswordAsync(user, decodedToken, model.Password))
+                throw new ConfirmationException(ExceptionStrings.ResetPasswordException, userId);
         }
 
         public async Task<IList<string>> GetUserRoles(string userEmail)

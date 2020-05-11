@@ -1,6 +1,6 @@
-﻿namespace Pharmacy.Application.Common.Models
+﻿namespace Pharmacy.Application.Common.DTO.In.Auth.Register
 {
-    public class RegisterModel
+    public class RegisterDto
     {
         public string FirstName { get; set; }
 

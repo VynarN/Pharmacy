@@ -1,6 +1,6 @@
-﻿namespace Pharmacy.Application.Common.Models
+﻿namespace Pharmacy.Application.Common.DTO.In.Auth
 {
-    public class LoginModel
+    public class LoginDto
     {
         public string Email { get; set; }
 

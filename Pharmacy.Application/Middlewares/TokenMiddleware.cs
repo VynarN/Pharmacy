@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Pharmacy.Application.Common.Models;
 
 namespace Pharmacy.Application.Middlewares
 {

@@ -13,10 +13,12 @@ namespace Pharmacy.Domain.Entites
         public int MedicamentId { get; set; }
         public Medicament Medicament { get; set; }
 
-        public int DeliveryAddressId { get; set; }
-        public DeliveryAddress DeliveryAddress { get; set; }
+        public int Quantity { get; set; }
 
         public decimal Total { get; set; }
+
+        public int DeliveryAddressId { get; set; }
+        public DeliveryAddress DeliveryAddress { get; set; }
 
         public OrderStatus Status { get; set; }
 
@@ -32,6 +34,7 @@ namespace Pharmacy.Domain.Entites
                    UserId == order.UserId &&
                    MedicamentId == order.MedicamentId &&
                    DeliveryAddressId == order.DeliveryAddressId &&
+                   Quantity == order.Quantity &&
                    Total == order.Total &&
                    Status == order.Status &&
                    OrderedAt == order.OrderedAt &&
@@ -41,7 +44,7 @@ namespace Pharmacy.Domain.Entites
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(UserId, MedicamentId, DeliveryAddressId, Total, Status, OrderedAt, DispatchedAt, DeliveredAt);
+            return HashCode.Combine(UserId, MedicamentId, DeliveryAddressId, Total, Status, OrderedAt, DispatchedAt, DeliveredAt) + Quantity.GetHashCode();
         }
     }
 }

@@ -49,28 +49,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "813b77b0-c00d-430a-9cc8-042647ff0b2e",
+                            ConcurrencyStamp = "7ca0ecf5-f616-4ce2-95b5-7dab0eb95228",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "5dfe44ea-ff39-481d-a9fe-b7b05fccb181",
+                            ConcurrencyStamp = "9c18c285-f57c-4c84-aacc-68291cbc9bdd",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "45758819-8027-457c-b0af-54642e266d14",
+                            ConcurrencyStamp = "44ee2b02-d2ec-4a38-a382-b8a9f2195f97",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "6ef71f91-ceb9-408c-b5be-63186bddfde5",
+                            ConcurrencyStamp = "45158161-e979-4e09-b9d7-b6396ca11351",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -534,6 +534,9 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.Property<DateTime>("OrderedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -565,6 +568,9 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("MedicamentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("ReceiverEmail")

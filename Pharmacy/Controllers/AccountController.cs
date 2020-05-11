@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
-using Pharmacy.Application.Common.DTO.In;
+using Pharmacy.Application.Common.DTO.In.Auth;
+using Pharmacy.Application.Common.DTO.In.Auth.Register;
+using Pharmacy.Application.Common.DTO.In.Auth.ResetPassword;
+using Pharmacy.Application.Common.DTO.In.UserIn;
 using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
-using Pharmacy.Application.Common.Models;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 
 namespace Pharmacy.Api.Controllers
 {
@@ -20,12 +23,14 @@ namespace Pharmacy.Api.Controllers
     {
         private readonly IAccountService _service;
         private readonly ICookieHelper _cookieHelper;
+        private readonly ICurrentUser _currentUser;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService service,ICookieHelper cookieHelper, ILogger<AccountController> logger)
+        public AccountController(IAccountService service,ICookieHelper cookieHelper, ICurrentUser currentUser, ILogger<AccountController> logger)
         {
             _service = service;
             _cookieHelper = cookieHelper;
+            _currentUser = currentUser;
             _logger = logger;
         }
 
@@ -35,7 +40,7 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                var userId = User.Identity.Name;
+                var userId = _currentUser.UserId;
 
                 await _service.UpdateProfile(user, userId, returnUrl);
 
@@ -43,14 +48,15 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
-                return BadRequest(ExceptionStrings.Exception);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
             }
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginModel user)
+        public async Task<IActionResult> Login(LoginDto user)
         {
             try
             {
@@ -68,9 +74,10 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
-                return BadRequest(ExceptionStrings.Exception);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
             }
         }
 
@@ -85,14 +92,15 @@ namespace Pharmacy.Api.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
-                return BadRequest(ExceptionStrings.Exception);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
             }
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterModel model, string returnUrl)
+        public async Task<IActionResult> Register(RegisterDto model, string returnUrl)
         {
             try
             {
@@ -102,9 +110,10 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
-                return BadRequest(ExceptionStrings.Exception);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
             }
         }
 
@@ -123,9 +132,15 @@ namespace Pharmacy.Api.Controllers
 
                 await Response.WriteAsync(ex.ToString());
             }
+            catch (ConfirmationException ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.NotFound;
+
+                await Response.WriteAsync(ex.ToString());
+            }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message); 
+                _logger.LogError(ex, ex.Message); 
 
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
@@ -152,14 +167,15 @@ namespace Pharmacy.Api.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
-                return BadRequest(ExceptionStrings.Exception);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
             }
         }
 
         [HttpPost("reset")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordModel model, string userId, string token)
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto model, string userId, string token)
         {
             try
             {
@@ -171,9 +187,13 @@ namespace Pharmacy.Api.Controllers
             {
                 return NotFound(ex.ToString());
             }
+            catch (ConfirmationException ex)
+            {
+                return BadRequest(ex.ToString());
+            }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
                 return BadRequest(ExceptionStrings.Exception);
             }
@@ -185,7 +205,7 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                var userId = User.Identity.Name;
+                var userId = _currentUser.UserId;
 
                 await _service.DeleteProfile(userId);
 
@@ -197,9 +217,10 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
 
-                return BadRequest(ExceptionStrings.Exception);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
             }
         }
     }

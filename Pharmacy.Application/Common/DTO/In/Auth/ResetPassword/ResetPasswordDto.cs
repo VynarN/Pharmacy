@@ -1,6 +1,6 @@
-﻿namespace Pharmacy.Application.Common.Models
+﻿namespace Pharmacy.Application.Common.DTO.In.Auth.ResetPassword
 {
-    public class ResetPasswordModel
+    public class ResetPasswordDto
     {
         public string Password { get; set; }
 

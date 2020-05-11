@@ -15,7 +15,7 @@ namespace Pharmacy
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                .WriteTo.File("Logs/OnlinePharmacy-{Date}.txt", outputTemplate: "{Timestamp:G} [{Level}] {ActionName} {Message}{NewLine:1}{Exception:1}")
+                .WriteTo.RollingFile("Logs/OnlinePharmacy-{Date}.txt", outputTemplate: "{Timestamp:G} [{Level}] {ActionName} {Message}{NewLine:1}{Exception:1}")
                 .CreateLogger();
 
             Log.Information("App is starting up.");

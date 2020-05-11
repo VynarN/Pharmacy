@@ -1,0 +1,161 @@
+05/11/2020 21:50:45 [Information]  App is starting up.
+05/11/2020 21:50:53 [Error]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 1707.3133 ms
+System.InvalidOperationException: Sequence contains more than one matching element
+   at System.Linq.ThrowHelper.ThrowMoreThanOneMatchException()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Pharmacy.Application.Common.DTO.In.Auth.Register.RegisterDtoValidator.<>c.<.ctor>b__0_5(String phone) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\DTO\In\Auth\Register\RegisterDtoValidator.cs:line 19
+   at FluentValidation.DefaultValidatorExtensions.<>c__DisplayClass22_0`2.<Must>b__0(T x, TProperty val) in /home/jskinner/code/FluentValidation/src/FluentValidation/DefaultValidatorExtensions.cs:line 349
+   at FluentValidation.DefaultValidatorExtensions.<>c__DisplayClass23_0`2.<Must>b__0(T x, TProperty val, PropertyValidatorContext propertyValidatorContext) in /home/jskinner/code/FluentValidation/src/FluentValidation/DefaultValidatorExtensions.cs:line 365
+   at FluentValidation.DefaultValidatorExtensions.<>c__DisplayClass24_0`2.<Must>b__0(Object instance, Object property, PropertyValidatorContext propertyValidatorContext) in /home/jskinner/code/FluentValidation/src/FluentValidation/DefaultValidatorExtensions.cs:line 381
+   at FluentValidation.Validators.PredicateValidator.IsValid(PropertyValidatorContext context) in /home/jskinner/code/FluentValidation/src/FluentValidation/Validators/PredicateValidator.cs:line 34
+   at FluentValidation.Validators.PropertyValidator.Validate(PropertyValidatorContext context) in /home/jskinner/code/FluentValidation/src/FluentValidation/Validators/PropertyValidator.cs:line 55
+   at FluentValidation.Internal.PropertyRule.InvokePropertyValidator(ValidationContext context, IPropertyValidator validator, String propertyName) in /home/jskinner/code/FluentValidation/src/FluentValidation/Internal/PropertyRule.cs:line 423
+   at FluentValidation.Internal.PropertyRule.Validate(ValidationContext context)+MoveNext() in /home/jskinner/code/FluentValidation/src/FluentValidation/Internal/PropertyRule.cs:line 282
+   at System.Linq.Enumerable.SelectManySingleSelectorIterator`2.MoveNext()
+   at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   at FluentValidation.AbstractValidator`1.Validate(ValidationContext`1 context) in /home/jskinner/code/FluentValidation/src/FluentValidation/AbstractValidator.cs:line 115
+   at FluentValidation.AbstractValidator`1.FluentValidation.IValidator.Validate(ValidationContext context) in /home/jskinner/code/FluentValidation/src/FluentValidation/AbstractValidator.cs:line 69
+   at FluentValidation.AspNetCore.FluentValidationModelValidator.Validate(ModelValidationContext mvContext) in /home/jskinner/code/FluentValidation/src/FluentValidation.AspNetCore/FluentValidationModelValidatorProvider.cs:line 91
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.ValidateNode()
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.VisitComplexType(IValidationStrategy defaultStrategy)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Visit(ModelMetadata metadata, String key, Object model)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel)
+   at FluentValidation.AspNetCore.FluentValidationVisitor.Validate(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel) in /home/jskinner/code/FluentValidation/src/FluentValidation.AspNetCore/FluentValidationVisitor.cs:line 48
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ObjectModelValidator.Validate(ActionContext actionContext, ValidationStateDictionary validationState, String prefix, Object model, ModelMetadata metadata)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.EnforceBindRequiredAndValidate(ObjectModelValidator baseObjectValidator, ActionContext actionContext, ParameterDescriptor parameter, ModelMetadata metadata, ModelBindingContext modelBindingContext, ModelBindingResult modelBindingResult)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.XsrfProtectionMiddleware.InvokeAsync(HttpContext context) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\XsrfProtectionMiddleware.cs:line 33
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+05/11/2020 21:50:53 [Error]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Sequence contains more than one matching element
+   at System.Linq.ThrowHelper.ThrowMoreThanOneMatchException()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Pharmacy.Application.Common.DTO.In.Auth.Register.RegisterDtoValidator.<>c.<.ctor>b__0_5(String phone) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\DTO\In\Auth\Register\RegisterDtoValidator.cs:line 19
+   at FluentValidation.DefaultValidatorExtensions.<>c__DisplayClass22_0`2.<Must>b__0(T x, TProperty val) in /home/jskinner/code/FluentValidation/src/FluentValidation/DefaultValidatorExtensions.cs:line 349
+   at FluentValidation.DefaultValidatorExtensions.<>c__DisplayClass23_0`2.<Must>b__0(T x, TProperty val, PropertyValidatorContext propertyValidatorContext) in /home/jskinner/code/FluentValidation/src/FluentValidation/DefaultValidatorExtensions.cs:line 365
+   at FluentValidation.DefaultValidatorExtensions.<>c__DisplayClass24_0`2.<Must>b__0(Object instance, Object property, PropertyValidatorContext propertyValidatorContext) in /home/jskinner/code/FluentValidation/src/FluentValidation/DefaultValidatorExtensions.cs:line 381
+   at FluentValidation.Validators.PredicateValidator.IsValid(PropertyValidatorContext context) in /home/jskinner/code/FluentValidation/src/FluentValidation/Validators/PredicateValidator.cs:line 34
+   at FluentValidation.Validators.PropertyValidator.Validate(PropertyValidatorContext context) in /home/jskinner/code/FluentValidation/src/FluentValidation/Validators/PropertyValidator.cs:line 55
+   at FluentValidation.Internal.PropertyRule.InvokePropertyValidator(ValidationContext context, IPropertyValidator validator, String propertyName) in /home/jskinner/code/FluentValidation/src/FluentValidation/Internal/PropertyRule.cs:line 423
+   at FluentValidation.Internal.PropertyRule.Validate(ValidationContext context)+MoveNext() in /home/jskinner/code/FluentValidation/src/FluentValidation/Internal/PropertyRule.cs:line 282
+   at System.Linq.Enumerable.SelectManySingleSelectorIterator`2.MoveNext()
+   at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   at FluentValidation.AbstractValidator`1.Validate(ValidationContext`1 context) in /home/jskinner/code/FluentValidation/src/FluentValidation/AbstractValidator.cs:line 115
+   at FluentValidation.AbstractValidator`1.FluentValidation.IValidator.Validate(ValidationContext context) in /home/jskinner/code/FluentValidation/src/FluentValidation/AbstractValidator.cs:line 69
+   at FluentValidation.AspNetCore.FluentValidationModelValidator.Validate(ModelValidationContext mvContext) in /home/jskinner/code/FluentValidation/src/FluentValidation.AspNetCore/FluentValidationModelValidatorProvider.cs:line 91
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.ValidateNode()
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.VisitComplexType(IValidationStrategy defaultStrategy)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Visit(ModelMetadata metadata, String key, Object model)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel)
+   at FluentValidation.AspNetCore.FluentValidationVisitor.Validate(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel) in /home/jskinner/code/FluentValidation/src/FluentValidation.AspNetCore/FluentValidationVisitor.cs:line 48
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ObjectModelValidator.Validate(ActionContext actionContext, ValidationStateDictionary validationState, String prefix, Object model, ModelMetadata metadata)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.EnforceBindRequiredAndValidate(ObjectModelValidator baseObjectValidator, ActionContext actionContext, ParameterDescriptor parameter, ModelMetadata metadata, ModelBindingContext modelBindingContext, ModelBindingResult modelBindingResult)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.XsrfProtectionMiddleware.InvokeAsync(HttpContext context) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\XsrfProtectionMiddleware.cs:line 33
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/11/2020 21:54:05 [Information]  App is starting up.
+05/11/2020 21:54:14 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 1667.8216 ms
+05/11/2020 22:25:26 [Information]  App is starting up.
+05/11/2020 22:27:53 [Warning] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) No type was specified for the decimal column '"Total"' on entity type '"PaymentRequest"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+05/11/2020 22:27:55 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 2985.7177 ms
+05/11/2020 22:30:55 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 108.2684 ms
+05/11/2020 22:32:01 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 49.7058 ms
+05/11/2020 22:32:11 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 67.8038 ms
+05/11/2020 22:33:29 [Information]  App is starting up.
+05/11/2020 22:34:35 [Information]  App is starting up.
+05/11/2020 22:35:38 [Warning] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) No type was specified for the decimal column '"Total"' on entity type '"PaymentRequest"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+05/11/2020 22:35:39 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 2515.7327 ms
+05/11/2020 22:39:26 [Information]  App is starting up.
+05/11/2020 22:40:14 [Warning] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) No type was specified for the decimal column '"Total"' on entity type '"PaymentRequest"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+05/11/2020 22:40:15 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 3144.6427 ms
+05/11/2020 22:40:29 [Error] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: VYNAR137@GMAIL.COM
+05/11/2020 22:40:29 [Error]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 319.6596 ms
+05/11/2020 22:44:07 [Error] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: VYNAR137@GMAIL.COM
+05/11/2020 22:44:07 [Error]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 210.4676 ms
+05/11/2020 22:44:11 [Error] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: VYNAR137@GMAIL.COM
+05/11/2020 22:44:11 [Error]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 266.4429 ms
+05/11/2020 22:45:29 [Information]  App is starting up.
+05/11/2020 22:45:41 [Warning] Pharmacy.Api.Controllers.AccountController.Register (Pharmacy.Api) No type was specified for the decimal column '"Total"' on entity type '"PaymentRequest"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+05/11/2020 22:45:43 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 202 in 3635.4804 ms
+05/11/2020 22:46:35 [Information]  HTTP "GET" "/api/Account/confirm?userId=55af4a44-fc52-42f9-adef-96a0ac29fb27&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25qb2ZTZUdKZWZmOWxRUUJhNFRlRHk1akhMaFQ4bS9ZU1lpanJ1c2M3QXY2UEZsdnlSVmdEK21lSDJSd2tnL2F1YTc3ZmRIQTNsc3ZTZk5YYlc2SWM5SEpFNms4Qis4M2sybFVhdkh6WXpwMEhDNytBbmh0M2ZuOE9BSi9pTzF2WjVPWis2WEpmK0hkN1NpY3cwQ09XdER6NkUxUEo1Mi9kaTlkWWtjVUQ4YkdJSG5pQ3VnZGZOZUJHMEE1TjE2NFk1MzNTaUxuZnhRQndvWmROY1NSOUtBQnhnQzh2RldkUm56VGFCaGtWS0l4Zz09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 749.3967 ms
+05/11/2020 22:47:18 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 244.0916 ms
+05/11/2020 22:47:39 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 66.0749 ms
+05/11/2020 22:47:53 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 13.1125 ms
+05/11/2020 22:48:01 [Error] Pharmacy.Api.Controllers.AccountController.Update (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'id')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'id')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 12
+   at Pharmacy.Application.Helpers.UserHelper.FindUserByIdAsync(String id) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Helpers\UserHelper.cs:line 22
+   at Pharmacy.Application.Services.AccountService.UpdateProfile(UserInDto model, String userId, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\AccountService.cs:line 165
+   at Pharmacy.Api.Controllers.AccountController.Update(UserInDto user, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\AccountController.cs:line 45
+05/11/2020 22:48:01 [Error]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 272.5531 ms
+05/11/2020 22:48:32 [Error] Pharmacy.Api.Controllers.AccountController.Update (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'id')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'id')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 12
+   at Pharmacy.Application.Helpers.UserHelper.FindUserByIdAsync(String id) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Helpers\UserHelper.cs:line 22
+   at Pharmacy.Application.Services.AccountService.UpdateProfile(UserInDto model, String userId, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\AccountService.cs:line 165
+   at Pharmacy.Api.Controllers.AccountController.Update(UserInDto user, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\AccountController.cs:line 45
+05/11/2020 22:48:32 [Error]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 249.4258 ms
+05/11/2020 22:49:48 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 21.9978 ms
+05/11/2020 22:49:58 [Error] Pharmacy.Api.Controllers.AccountController.Delete (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'id')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'id')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 12
+   at Pharmacy.Application.Helpers.UserHelper.FindUserByIdAsync(String id) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Helpers\UserHelper.cs:line 22
+   at Pharmacy.Application.Services.AccountService.DeleteProfile(String userId) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\AccountService.cs:line 211
+   at Pharmacy.Api.Controllers.AccountController.Delete() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\AccountController.cs:line 210
+05/11/2020 22:49:58 [Error]  HTTP "DELETE" "/api/Account/delete" responded 500 in 173.7481 ms
+05/11/2020 22:50:20 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 111.1939 ms
+05/11/2020 22:50:28 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 12.5115 ms
+05/11/2020 22:50:42 [Error] Pharmacy.Api.Controllers.AccountController.Update (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'id')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'id')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 12
+   at Pharmacy.Application.Helpers.UserHelper.FindUserByIdAsync(String id) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Helpers\UserHelper.cs:line 22
+   at Pharmacy.Application.Services.AccountService.UpdateProfile(UserInDto model, String userId, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\AccountService.cs:line 165
+   at Pharmacy.Api.Controllers.AccountController.Update(UserInDto user, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\AccountController.cs:line 45
+05/11/2020 22:50:42 [Error]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 500 in 179.3119 ms
+05/11/2020 22:51:39 [Error] Pharmacy.Api.Controllers.AccountController.Update (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'id')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'id')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 12
+   at Pharmacy.Application.Helpers.UserHelper.FindUserByIdAsync(String id) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Helpers\UserHelper.cs:line 22
+   at Pharmacy.Application.Services.AccountService.UpdateProfile(UserInDto model, String userId, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\AccountService.cs:line 165
+   at Pharmacy.Api.Controllers.AccountController.Update(UserInDto user, String returnUrl) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\AccountController.cs:line 45
+05/11/2020 22:52:30 [Information]  App is starting up.
+05/11/2020 22:52:43 [Warning] Pharmacy.Api.Controllers.AccountController.Update (Pharmacy.Api) No type was specified for the decimal column '"Total"' on entity type '"PaymentRequest"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+05/11/2020 22:57:49 [Information]  App is starting up.
+05/11/2020 22:58:35 [Warning] Pharmacy.Api.Controllers.AccountController.Update (Pharmacy.Api) No type was specified for the decimal column '"Total"' on entity type '"PaymentRequest"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+05/11/2020 22:58:39 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 200 in 5619.6358 ms
+05/11/2020 22:59:19 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 200 in 300.0491 ms
+05/11/2020 22:59:52 [Information]  HTTP "PUT" "/api/Account/update?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 200 in 350.6356 ms
+05/11/2020 23:00:07 [Information]  HTTP "GET" "/api/Account/confirm?userId=8d8cda3d-4595-46ee-9d94-11e93d2251ac&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25oYTdJQlJZaHdOYktiZTU5VW45VS9rWG1OcU9hMFN0QUVtL0JUb1p6eTFoVFlUcGd0UUtSbTNYdE9UYWRyMlM0dWZ2TmYrck1QV0t4ekJ2QnJYUno0YkNqSDkwRnFUL2lxT25mMXFHRUV0OEZnNDU4YTAxQkZDdVVwODI0R0h2b1Q4M0hpM2oxVE45a1RMbU0zdmFObWI3YUdZaU5zWFBxUnFrQkErczZuVVRsaXJCM0ZmMEo2d3Z2eHB6b3RzbHRPMTJFRHRVdW00c2kxWlFJSGtUOVNLNGRHK0E0NklDUHhNRVBRNHdmWXlvQT09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 167.3956 ms
+05/11/2020 23:00:14 [Information]  HTTP "DELETE" "/api/Account/delete" responded 200 in 69.2534 ms

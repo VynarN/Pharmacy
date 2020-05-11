@@ -18,7 +18,7 @@
         public const string UserNotFoundException = "User with specified data is not found. ";
         public const string UserUpdateException = "Invalid user data. Failed to update user. ";
         public const string LoginException = "Cannot find user with specified email and password. ";
-        public const string CreateUserException = "Failed to create user account. ";
+        public const string CreateUserException = "Cannot create an account. Specified email address and/or phone number already belongs to someone. ";
         public const string AccessTokenException = "Invalid access token. ";
         public const string RefreshTokenException = "Invalid refresh token. ";
         public const string DeleteUserException = "Failed to delete a user. ";
