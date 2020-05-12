@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Pharmacy.Api.ServicesConfiguration
 {
-    public static class AuthenticationRegistration
+    public static class AuthenticationConfiguration
     {
         public static void RegisterAuthenticationService(IServiceCollection services, IConfiguration configuration)
         {

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Pharmacy.Api.Services;
 using Pharmacy.Application.Common.Interfaces;
@@ -26,6 +25,7 @@ namespace Pharmacy.Api.ServicesConfiguration
             IMapper mapper = mappingConfig.CreateMapper();
 
             services.AddSingleton(mapper);
+            services.AddSingleton<IBlobStorage, BlobService>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IEmailHelper, EmailHelper>();
             services.AddTransient<ICookieHelper, CookieHelper>();

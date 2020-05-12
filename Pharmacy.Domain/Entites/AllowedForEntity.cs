@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Pharmacy.Domain.Entites
 {
@@ -20,8 +21,7 @@ namespace Pharmacy.Domain.Entites
 
         public bool ForAllergist { get; set; }
 
-        public int MedicamentId { get; set; }
-        public Medicament Medicament { get; set; }
+        public List<Medicament> Medicaments { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -32,13 +32,12 @@ namespace Pharmacy.Domain.Entites
                    ForNurses == entity.ForNurses &&
                    ForDrivers == entity.ForDrivers &&
                    ForDiabetics == entity.ForDiabetics &&
-                   ForAllergist == entity.ForAllergist &&
-                   MedicamentId == entity.MedicamentId;
+                   ForAllergist == entity.ForAllergist;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ForAdults, ForChildren, ForPregnants, ForNurses, ForDrivers, ForDiabetics, ForAllergist, MedicamentId);
+            return HashCode.Combine(ForAdults, ForChildren, ForPregnants, ForNurses, ForDrivers, ForDiabetics, ForAllergist);
         }
     }
 }

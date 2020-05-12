@@ -1,10 +1,14 @@
-﻿namespace Pharmacy.Domain.Entites
+﻿using System;
+
+namespace Pharmacy.Domain.Entites
 {
     public class Image
     {
         public int Id { get; set; }
 
-        public byte[] ImageData { get; set; }
+        public string Name { get; set; }
+
+        public string Uri { get; set; }
 
         public int MedicamentId { get; set; }
 
@@ -12,33 +16,15 @@
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Image);
-        }
-
-        public bool Equals(Image image)
-        {
-            var AreArraysEqual = true;
-            if (ImageData.Length == image.ImageData.Length)
-            {
-                for (int i = 0; i < ImageData.Length; i++)
-                {
-                    if (ImageData[i] != image.ImageData[i])
-                    {
-                        AreArraysEqual = false;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                AreArraysEqual = false;
-            }
-            return image != null && AreArraysEqual;
+            return obj is Image image &&
+                   Name == image.Name &&
+                   Uri == image.Uri &&
+                   MedicamentId == image.MedicamentId;
         }
 
         public override int GetHashCode()
         {
-            return ImageData.GetHashCode() * 13;
+            return HashCode.Combine(Name, Uri, MedicamentId);
         }
     }
 }

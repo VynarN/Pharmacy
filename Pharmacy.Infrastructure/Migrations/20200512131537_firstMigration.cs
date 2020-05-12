@@ -3,10 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pharmacy.Infrastructure.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class firstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AllowedForEntities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ForAdults = table.Column<bool>(nullable: false),
+                    ForChildren = table.Column<bool>(nullable: false),
+                    ForPregnants = table.Column<bool>(nullable: false),
+                    ForNurses = table.Column<bool>(nullable: false),
+                    ForDrivers = table.Column<bool>(nullable: false),
+                    ForDiabetics = table.Column<bool>(nullable: false),
+                    ForAllergist = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AllowedForEntities", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "ApplicationMethods",
                 columns: table => new
@@ -264,6 +283,7 @@ namespace Pharmacy.Infrastructure.Migrations
                     Price = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     QuantityInStock = table.Column<int>(nullable: false),
                     Offtake = table.Column<int>(nullable: false),
+                    AllowedForEntityId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     MedicamentFormId = table.Column<int>(nullable: false),
                     ApplicationMethodId = table.Column<int>(nullable: false),
@@ -272,6 +292,12 @@ namespace Pharmacy.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicaments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Medicaments_AllowedForEntities_AllowedForEntityId",
+                        column: x => x.AllowedForEntityId,
+                        principalTable: "AllowedForEntities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Medicaments_ApplicationMethods_ApplicationMethodId",
                         column: x => x.ApplicationMethodId,
@@ -294,32 +320,6 @@ namespace Pharmacy.Infrastructure.Migrations
                         name: "FK_Medicaments_MedicamentForms_MedicamentFormId",
                         column: x => x.MedicamentFormId,
                         principalTable: "MedicamentForms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AllowedForEntities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ForAdults = table.Column<bool>(nullable: false),
-                    ForChildren = table.Column<bool>(nullable: false),
-                    ForPregnants = table.Column<bool>(nullable: false),
-                    ForNurses = table.Column<bool>(nullable: false),
-                    ForDrivers = table.Column<bool>(nullable: false),
-                    ForDiabetics = table.Column<bool>(nullable: false),
-                    ForAllergist = table.Column<bool>(nullable: false),
-                    MedicamentId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AllowedForEntities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AllowedForEntities_Medicaments_MedicamentId",
-                        column: x => x.MedicamentId,
-                        principalTable: "Medicaments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -355,7 +355,8 @@ namespace Pharmacy.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageData = table.Column<byte[]>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Uri = table.Column<string>(nullable: true),
                     MedicamentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -456,7 +457,7 @@ namespace Pharmacy.Infrastructure.Migrations
                     MedicamentId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     DeliveryAddressId = table.Column<int>(nullable: false),
-                    Total = table.Column<decimal>(nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     RequestedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -487,10 +488,10 @@ namespace Pharmacy.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "7ca0ecf5-f616-4ce2-95b5-7dab0eb95228", "mainadmin", "MAINADMIN" },
-                    { "2", "9c18c285-f57c-4c84-aacc-68291cbc9bdd", "admin", "ADMIN" },
-                    { "3", "44ee2b02-d2ec-4a38-a382-b8a9f2195f97", "manager", "MANAGER" },
-                    { "4", "45158161-e979-4e09-b9d7-b6396ca11351", "user", "USER" }
+                    { "1", "b1e0129c-e67c-4436-8517-a51658f1ccf7", "mainadmin", "MAINADMIN" },
+                    { "2", "bd3104dc-6d49-4b68-8153-891e71452100", "admin", "ADMIN" },
+                    { "3", "cd6f0b95-20a7-4e01-8791-302e8bbfe0f3", "manager", "MANAGER" },
+                    { "4", "a6e05d96-087f-4755-9408-5ba4d3b8ffd8", "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -499,12 +500,6 @@ namespace Pharmacy.Infrastructure.Migrations
                 column: "ManufacturerId",
                 unique: true,
                 filter: "[ManufacturerId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AllowedForEntities_MedicamentId",
-                table: "AllowedForEntities",
-                column: "MedicamentId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -562,6 +557,11 @@ namespace Pharmacy.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Medicaments_AllowedForEntityId",
+                table: "Medicaments",
+                column: "AllowedForEntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Medicaments_ApplicationMethodId",
                 table: "Medicaments",
                 column: "ApplicationMethodId");
@@ -615,9 +615,6 @@ namespace Pharmacy.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AllowedForEntities");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -661,6 +658,9 @@ namespace Pharmacy.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "AllowedForEntities");
 
             migrationBuilder.DropTable(
                 name: "ApplicationMethods");

@@ -15,8 +15,8 @@ using Pharmacy.Application.Middlewares;
 using Pharmacy.Api.ServicesConfiguration;
 using Serilog;
 using FluentValidation.AspNetCore;
-using System.Reflection;
 using Pharmacy.Application.Common.DTO.In.Auth.Register;
+using Azure.Storage.Blobs;
 
 namespace Pharmacy
 {
@@ -75,7 +75,9 @@ namespace Pharmacy
                     .AddEntityFrameworkStores<PharmacyContext>()
                     .AddDefaultTokenProviders();
 
-            AuthenticationRegistration.RegisterAuthenticationService(services, Configuration);
+            services.AddSingleton(s => new BlobServiceClient(Configuration.GetConnectionString("AzureBlobStorage")));
+
+            AuthenticationConfiguration.RegisterAuthenticationService(services, Configuration);
             ServicesRegistration.RegistereApplicationServices(services);
         }
 

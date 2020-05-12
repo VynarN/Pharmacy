@@ -47,7 +47,9 @@ namespace Pharmacy.Infrastructure
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new MedicamentConfiguration());
             modelBuilder.ApplyConfiguration(new BasketItemConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentRequestConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new ManufacturerConfiguration());
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
-using System.Security.Claims;
 
 namespace Pharmacy.Api.Services
 {

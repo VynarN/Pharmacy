@@ -9,6 +9,10 @@ namespace Pharmacy.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Medicament> builder)
         {
             builder.Property(prop => prop.Price).HasColumnType("decimal(7,2)");
+
+            builder.HasOne(med => med.Instruction)
+                   .WithOne(instr => instr.Medicament)
+                   .HasForeignKey<Instruction>(instr => instr.MedicamentId);
         }
     }
 }

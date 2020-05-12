@@ -49,28 +49,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "7ca0ecf5-f616-4ce2-95b5-7dab0eb95228",
+                            ConcurrencyStamp = "b1e0129c-e67c-4436-8517-a51658f1ccf7",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "9c18c285-f57c-4c84-aacc-68291cbc9bdd",
+                            ConcurrencyStamp = "bd3104dc-6d49-4b68-8153-891e71452100",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "44ee2b02-d2ec-4a38-a382-b8a9f2195f97",
+                            ConcurrencyStamp = "cd6f0b95-20a7-4e01-8791-302e8bbfe0f3",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "45158161-e979-4e09-b9d7-b6396ca11351",
+                            ConcurrencyStamp = "a6e05d96-087f-4755-9408-5ba4d3b8ffd8",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -242,13 +242,7 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.Property<bool>("ForPregnants")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MedicamentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicamentId")
-                        .IsUnique();
 
                     b.ToTable("AllowedForEntities");
                 });
@@ -335,11 +329,14 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte[]>("ImageData")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int>("MedicamentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Uri")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -448,6 +445,9 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AllowedForEntityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ApplicationMethodId")
                         .HasColumnType("int");
 
@@ -485,6 +485,8 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AllowedForEntityId");
 
                     b.HasIndex("ApplicationMethodId");
 
@@ -583,7 +585,7 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(7,2)");
 
                     b.HasKey("Id");
 
@@ -728,19 +730,10 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasForeignKey("Pharmacy.Domain.Entites.Address", "ManufacturerId");
                 });
 
-            modelBuilder.Entity("Pharmacy.Domain.Entites.AllowedForEntity", b =>
-                {
-                    b.HasOne("Pharmacy.Domain.Entites.Medicament", "Medicament")
-                        .WithOne("AllowedForEntity")
-                        .HasForeignKey("Pharmacy.Domain.Entites.AllowedForEntity", "MedicamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Pharmacy.Domain.Entites.BasketItem", b =>
                 {
                     b.HasOne("Pharmacy.Domain.Entites.Medicament", "Medicament")
-                        .WithMany()
+                        .WithMany("BasketItems")
                         .HasForeignKey("MedicamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -772,6 +765,12 @@ namespace Pharmacy.Infrastructure.Migrations
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.Medicament", b =>
                 {
+                    b.HasOne("Pharmacy.Domain.Entites.AllowedForEntity", "AllowedForEntity")
+                        .WithMany("Medicaments")
+                        .HasForeignKey("AllowedForEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Pharmacy.Domain.Entites.ApplicationMethod", "ApplicationMethod")
                         .WithMany("Medicaments")
                         .HasForeignKey("ApplicationMethodId")
@@ -825,7 +824,7 @@ namespace Pharmacy.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Pharmacy.Domain.Entites.Medicament", "Medicament")
-                        .WithMany()
+                        .WithMany("PaymentRequests")
                         .HasForeignKey("MedicamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

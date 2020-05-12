@@ -29,7 +29,7 @@ namespace Pharmacy.Domain.Entites
                    SenderId == request.SenderId &&
                    ReceiverEmail == request.ReceiverEmail &&
                    MedicamentId == request.MedicamentId &&
-                   DeliveryAddress == request.DeliveryAddress &&
+                   DeliveryAddressId == request.DeliveryAddressId &&
                    Quantity == request.Quantity &&
                    Total == request.Total &&
                    RequestedAt == request.RequestedAt;

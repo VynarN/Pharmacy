@@ -18,6 +18,7 @@ namespace Pharmacy.Domain.Entites
 
         public Instruction Instruction { get; set; }
 
+        public int AllowedForEntityId { get; set; }
         public AllowedForEntity AllowedForEntity { get; set; }
 
         public int CategoryId { get; set; }
@@ -36,10 +37,16 @@ namespace Pharmacy.Domain.Entites
 
         public List<Order> Orders { get; set; }
 
+        public List<PaymentRequest> PaymentRequests { get; set; }
+
+        public List<BasketItem> BasketItems { get; set; }
+
         public Medicament()
         {
             Images = new List<Image>();
             Orders = new List<Order>();
+            PaymentRequests = new List<PaymentRequest>();
+            BasketItems = new List<BasketItem>();
         }
 
         public override bool Equals(object obj)
@@ -50,7 +57,7 @@ namespace Pharmacy.Domain.Entites
                    QuantityInStock == medicament.QuantityInStock &&
                    Offtake == medicament.Offtake &&
                    Instruction.Equals(medicament.Instruction) &&
-                   AllowedForEntity.Equals(medicament.AllowedForEntity) &&
+                   AllowedForEntityId == medicament.AllowedForEntityId &&
                    CategoryId == medicament.CategoryId &&
                    MedicamentFormId == medicament.MedicamentFormId &&
                    ApplicationMethodId == medicament.ApplicationMethodId &&
@@ -65,7 +72,7 @@ namespace Pharmacy.Domain.Entites
             hash.Add(QuantityInStock);
             hash.Add(Offtake);
             hash.Add(Instruction);
-            hash.Add(AllowedForEntity);
+            hash.Add(AllowedForEntityId);
             hash.Add(CategoryId);
             hash.Add(MedicamentFormId);
             hash.Add(ApplicationMethodId);

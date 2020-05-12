@@ -22,7 +22,8 @@
         public const string AccessTokenException = "Invalid access token. ";
         public const string RefreshTokenException = "Invalid refresh token. ";
         public const string DeleteUserException = "Failed to delete a user. ";
-        public static string SendEmailException = "Failed to send an email. ";
-        public static string Exception = "Oops... Something went wrong. Please contact support.";
+        public const string SendEmailException = "Failed to send an email. ";
+        public const string FileUploading = "An error occured while uploading a file. ";
+        public const string Exception = "Oops... Something went wrong. Please contact support.";
     }
 }
