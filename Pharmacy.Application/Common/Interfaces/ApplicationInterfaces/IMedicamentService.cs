@@ -1,4 +1,4 @@
-﻿using Pharmacy.Application.Common.DTO.In.MedicamentIn;
+﻿using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,12 +9,12 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         Task<Medicament> GetMedicament(int medicamentId);
 
-        Task<IEnumerable<Medicament>> GetMedicaments();
+        Task<IEnumerable<Medicament>> GetMedicaments(PaginationQuery paginationQuery = null, MedicamentFilterQuery filterQuery = null);
 
-        Task CreateMedicament(MedicamentInDto medicamentDto);
+        Task<int> CreateMedicament(Medicament medicament);
 
         Task DeleteMedicament(int medicamentId);
 
-        Task UpdateMedicament(MedicamentInDto medicamentDto);
+        Task UpdateMedicament(Medicament medicament);
     }
 }

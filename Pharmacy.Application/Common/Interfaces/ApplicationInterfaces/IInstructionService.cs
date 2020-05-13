@@ -1,12 +1,12 @@
-﻿using Pharmacy.Application.Common.DTO;
+﻿using Pharmacy.Domain.Entites;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IInstructionService
     {
-        Task CreateInstruction(InstructionDto instructionDto, int medicamentId);
+        Task CreateInstruction(Instruction instruction);
 
-        Task UpdateInstruction(InstructionDto instructionDto, int medicamentId);
+        Task UpdateInstruction(Instruction instruction);
     }
 }

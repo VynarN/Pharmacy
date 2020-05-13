@@ -1,5 +1,4 @@
-﻿using Pharmacy.Application.Common.DTO;
-using Pharmacy.Domain.Entites;
+﻿using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +8,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses();
 
-        Task CreateDeliveryAddress(DeliveryAddressDto deliveryAddressDto);
+        Task CreateDeliveryAddress(DeliveryAddress deliveryAddress);
     }
 }

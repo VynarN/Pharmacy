@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Pharmacy.Api.Services;
 using Pharmacy.Application.Common.Interfaces;
+using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrustructureInterfaces;
@@ -35,8 +36,10 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserManager, IdentityUserManager>();
             services.AddTransient<ISignInManager, IdentitySignInManager>();
-            services.AddTransient<IEmailSender, SendGridService>();
+            services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IManufacturerService, ManufacturerService>();
             services.AddScoped<ICurrentUser, CurrentUserService>();
+
         }   
     }
 }

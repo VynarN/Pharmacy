@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using Pharmacy.Application.Common.DTO;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Services
@@ -12,24 +11,18 @@ namespace Pharmacy.Application.Services
     {
         private readonly IRepository<Instruction> _repository;
 
-        private readonly IMapper _mapper;
-
-        public InstructionService(IRepository<Instruction> repository, IMapper mapper)
+        public InstructionService(IRepository<Instruction> repository)
         {
             _repository = repository;
-            _mapper = mapper;
         }
 
-        public async Task CreateInstruction(InstructionDto instructionDto, int medicamentId)
+        public async Task CreateInstruction(Instruction instruction)
         {
-            var instruction = _mapper.Map<Instruction>(instructionDto);
-
-            instruction.MedicamentId = medicamentId;
-
             await _repository.Create(instruction);
+
         }
 
-        public async Task UpdateInstruction(InstructionDto instructionDto, int medicamentId)
+        public Task UpdateInstruction(Instruction instruction)
         {
             throw new NotImplementedException();
         }

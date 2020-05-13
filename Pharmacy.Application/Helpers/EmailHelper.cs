@@ -14,9 +14,9 @@ namespace Pharmacy.Application.Helpers
 
         private readonly IEmailSender _emailSender;
 
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
-        public EmailHelper(IConfiguration configuration, IEmailSender emailSender, IHostingEnvironment environment)
+        public EmailHelper(IConfiguration configuration, IEmailSender emailSender, IWebHostEnvironment environment)
         {
             _configuration = configuration;
             _emailSender = emailSender;
