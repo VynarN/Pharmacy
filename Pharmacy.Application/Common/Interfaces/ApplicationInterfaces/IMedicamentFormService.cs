@@ -6,12 +6,10 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IMedicamentFormService
     {
-        Task<MedicamentForm> GetApplicationMethod(int medicamentFormId);
+        IEnumerable<MedicamentForm> GetMedicamentForms();
 
-        Task<IEnumerable<MedicamentForm>> GetApplicationMethods();
+        Task CreateMedicamentForm(string medicamentForm);
 
-        Task CreateApplicationMethod(string medicamentForm);
-
-        Task DeleteApplicationMethod(int medicamentFormId);
+        Task DeleteMedicamentForm(int medicamentFormId);
     }
 }

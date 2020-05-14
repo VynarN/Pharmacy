@@ -7,7 +7,7 @@ namespace Pharmacy.Application.Common.Exceptions
     [Serializable]
     public class SendEmailException: Exception
     {
-        public string EmailReceiver = "Receiver: ";
+        public readonly string EmailReceiver = "Receiver: ";
 
         public SendEmailException()
         {

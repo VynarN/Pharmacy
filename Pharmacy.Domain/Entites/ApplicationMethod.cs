@@ -17,11 +17,8 @@ namespace Pharmacy.Domain.Entites
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as ApplicationMethod);
-        }
+            var method = obj as ApplicationMethod;
 
-        public bool Equals(ApplicationMethod method)
-        { 
             return method != null && method.Method.Equals(Method);
         }
 

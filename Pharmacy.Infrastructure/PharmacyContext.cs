@@ -38,18 +38,18 @@ namespace Pharmacy.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
-            modelBuilder.ApplyConfiguration(new MedicamentConfiguration());
-            modelBuilder.ApplyConfiguration(new BasketItemConfiguration());
-            modelBuilder.ApplyConfiguration(new PaymentRequestConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderConfiguration());
-            modelBuilder.ApplyConfiguration(new ManufacturerConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new MedicamentConfiguration());
+            builder.ApplyConfiguration(new BasketItemConfiguration());
+            builder.ApplyConfiguration(new PaymentRequestConfiguration());
+            builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new ManufacturerConfiguration());
         }
     }
 }

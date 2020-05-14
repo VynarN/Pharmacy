@@ -5,6 +5,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IAllowedForEntityService
     {
-        Task CreateAllowedForEntity(AllowedForEntity allowedForEntity);
+        Task<int> CreateAllowedForEntity(AllowedForEntity allowedForEntity);
     }
 }

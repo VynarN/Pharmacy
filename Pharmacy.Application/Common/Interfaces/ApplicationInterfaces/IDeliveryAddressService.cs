@@ -6,7 +6,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IDeliveryAddressService
     {
-        Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses();
+        IEnumerable<DeliveryAddress> GetDeliveryAddresses(string userId);
 
         Task CreateDeliveryAddress(DeliveryAddress deliveryAddress);
     }

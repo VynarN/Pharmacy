@@ -39,7 +39,7 @@ namespace Pharmacy.Application.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<Medicament>> GetMedicaments(PaginationQuery paginationQuery = null, MedicamentFilterQuery filterQuery = null)
+        public IEnumerable<Medicament> GetMedicaments(PaginationQuery paginationQuery = null, MedicamentFilterQuery filterQuery = null)
         {
             throw new System.NotImplementedException();
         }

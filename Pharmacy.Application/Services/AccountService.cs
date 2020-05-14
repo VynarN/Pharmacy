@@ -153,9 +153,9 @@ namespace Pharmacy.Application.Services
                 throw new ConfirmationException(ExceptionStrings.ResetPasswordException, userId);
         }
 
-        public async Task<IList<string>> GetUserRoles(string userEmail)
+        public async Task<IList<string>> GetUserRoles(string userId)
         {
-            var user = await _userHelper.FindUserByEmailAsync(userEmail);
+            var user = await _userHelper.FindUserByIdAsync(userId);
 
             return await _userManager.GetUserRolesAsync(user);
         }

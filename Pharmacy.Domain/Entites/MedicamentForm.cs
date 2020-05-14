@@ -17,11 +17,8 @@ namespace Pharmacy.Domain.Entites
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as MedicamentForm);
-        }
+            var medicamentForm = obj as MedicamentForm;
 
-        public bool Equals(MedicamentForm medicamentForm)
-        {
             return medicamentForm != null && medicamentForm.Form.Equals(Form);
         }
 

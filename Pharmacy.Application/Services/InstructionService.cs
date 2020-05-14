@@ -2,7 +2,6 @@
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Services

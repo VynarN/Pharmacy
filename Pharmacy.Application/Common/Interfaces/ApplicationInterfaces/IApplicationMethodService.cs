@@ -6,7 +6,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IApplicationMethodService
     {
-        Task<IEnumerable<ApplicationMethod>> GetApplicationMethods();
+        IEnumerable<ApplicationMethod> GetApplicationMethods();
 
         Task CreateApplicationMethod(string applicationMethod);
 

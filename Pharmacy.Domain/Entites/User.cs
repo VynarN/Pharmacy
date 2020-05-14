@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 
 namespace Pharmacy.Domain.Entites
@@ -26,12 +25,9 @@ namespace Pharmacy.Domain.Entites
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as User);
-        }
-        
-        public bool Equals(User user)
-        {
-            return user != null && user.Email.Equals(Email) 
+            var user = obj as User;
+
+            return user != null && user.Email.Equals(Email)
                    && user.PhoneNumber.Equals(PhoneNumber);
         }
 

@@ -17,11 +17,8 @@ namespace Pharmacy.Domain.Entites
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Category);
-        }
+            var category = obj as Category;
 
-        public bool Equals(Category category)
-        {
             return category != null && category.Name.Equals(Name);
         }
 

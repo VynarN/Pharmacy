@@ -25,16 +25,13 @@ namespace Pharmacy.Domain.Entites
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Address);
-        }
+            var deliveryAddress = obj as DeliveryAddress;
 
-        public bool Equals(Address address)
-        {
-            return address != null && address.ZipCode == ZipCode
-                   && address.Country.Equals(Country)
-                   && address.City.Equals(City)
-                   && address.Street.Equals(Street)
-                   && address.Region.Equals(Region);
+            return deliveryAddress != null && deliveryAddress.ZipCode == ZipCode
+                   && deliveryAddress.Country.Equals(Country)
+                   && deliveryAddress.City.Equals(City)
+                   && deliveryAddress.Street.Equals(Street)
+                   && deliveryAddress.Region.Equals(Region);
         }
 
         public override int GetHashCode()

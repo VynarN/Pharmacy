@@ -7,24 +7,24 @@ namespace Pharmacy.Application.Services
 {
     public class UriService: IUriService
     {
-        private string _baseUri;
+        private readonly string _baseUri;
 
         public UriService(string baseUri)
         {
             _baseUri = baseUri;
         }
 
-        public Uri GetPaginationUri(PaginationQuery pagination, MedicamentFilterQuery query)
+        public Uri GetPaginationUri(PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery)
         {
             var uri = new Uri(_baseUri);
 
-            if (pagination == null)
+            if (paginationQuery == null)
             {
                 return uri;
             }
 
-            var modifiedUrl = QueryHelpers.AddQueryString(_baseUri, "pageNumber", pagination.PageNumber.ToString());
-            modifiedUrl = QueryHelpers.AddQueryString(modifiedUrl, "pageSize", pagination.PageSize.ToString());
+            var modifiedUrl = QueryHelpers.AddQueryString(_baseUri, "pageNumber", paginationQuery.PageNumber.ToString());
+            modifiedUrl = QueryHelpers.AddQueryString(modifiedUrl, "pageSize", paginationQuery.PageSize.ToString());
 
             return new Uri(modifiedUrl);
         }

@@ -19,11 +19,8 @@
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as Address);
-        }
+            var address = obj as Address;
 
-        public bool Equals(Address address)
-        {
             return address != null && address.ZipCode == ZipCode
                    && address.Country.Equals(Country)
                    && address.City.Equals(City)

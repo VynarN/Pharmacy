@@ -2,27 +2,33 @@
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Services
 {
     public class DeliveryAddressService : IDeliveryAddressService
     {
-        private readonly IRepository<DeliveryAddress> _repository;
+        private readonly IRepository<DeliveryAddress> _deliveryAddressRepository;
 
-        public DeliveryAddressService(IRepository<DeliveryAddress> repository)
+        private readonly IRepository<Order> _orderRepository;
+
+        public DeliveryAddressService(IRepository<DeliveryAddress> deliveryAddressRepository, IRepository<Order> orderRepository)
         {
-            _repository = repository;
+            _deliveryAddressRepository = deliveryAddressRepository;
+            _orderRepository = orderRepository;
         }
 
         public async Task CreateDeliveryAddress(DeliveryAddress deliveryAddress)
         {
-            await _repository.Create(deliveryAddress);
+            await _deliveryAddressRepository.Create(deliveryAddress);
         }
 
-        public Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses()
+        public IEnumerable<DeliveryAddress> GetDeliveryAddresses(string userId)
         {
-            throw new System.NotImplementedException();
+            return _orderRepository.GetWithInclude(order => order.DeliveryAddress)
+                .Where(order => order.UserId.Equals(userId))
+                .Select(order => order.DeliveryAddress);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
+using Pharmacy.Application.Common.Validators;
 using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,24 +17,23 @@ namespace Pharmacy.Application.Services
             _repository = repository;
         }
 
-        public async Task CreateApplicationMethod(string medicamentForm)
+        public async Task CreateMedicamentForm(string medicamentForm)
         {
-            await _repository.Create(new MedicamentForm() { Form = medicamentForm });
+            StringArgumentValidator.ValidateStringArgument(medicamentForm, nameof(medicamentForm));
+
+            var correctedForm = char.ToUpper(medicamentForm[0]) + medicamentForm.Substring(1).ToLower();
+
+            await _repository.Create(new MedicamentForm() { Form = correctedForm });
         }
 
-        public Task DeleteApplicationMethod(int medicamentFormId)
+        public Task DeleteMedicamentForm(int medicamentFormId)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<MedicamentForm> GetApplicationMethod(int medicamentFormId)
+        public IEnumerable<MedicamentForm> GetMedicamentForms()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<MedicamentForm>> GetApplicationMethods()
-        {
-            throw new System.NotImplementedException();
+            return _repository.GetAllQueryable().AsNoTracking();
         }
     }
 }

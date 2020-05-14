@@ -25,15 +25,15 @@ namespace Pharmacy.Application.Helpers
 
         public async Task Send(
             string emailReceiver,
-            string emailContentPathTemplate,
+            string PathToEmailBodyTemplate,
             string emailSubjectTemplate,
             params string[] links)
         {
             StringArgumentValidator.ValidateStringArgument(emailReceiver, nameof(emailReceiver));
-            StringArgumentValidator.ValidateStringArgument(emailContentPathTemplate, nameof(emailContentPathTemplate));
+            StringArgumentValidator.ValidateStringArgument(PathToEmailBodyTemplate, nameof(PathToEmailBodyTemplate));
             StringArgumentValidator.ValidateStringArgument(emailSubjectTemplate, nameof(emailSubjectTemplate));
 
-            var pathToTemplate = _environment.WebRootPath + _configuration[emailContentPathTemplate];
+            var pathToTemplate = _environment.WebRootPath + _configuration[PathToEmailBodyTemplate];
 
             string content = string.Empty;
 

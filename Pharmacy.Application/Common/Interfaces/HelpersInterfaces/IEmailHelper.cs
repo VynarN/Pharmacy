@@ -4,6 +4,6 @@ namespace Pharmacy.Application.Common.Interfaces.HelpersInterfaces
 {
     public interface IEmailHelper
     {
-        Task Send(string emailReceiver, string PathToEmailBodyTempalte, string emailSubjectTemlate, params string[] links);
+        Task Send(string emailReceiver, string PathToEmailBodyTemplate, string emailSubjectTemplate, params string[] links);
     }
 }
