@@ -195,13 +195,10 @@ namespace Pharmacy.Application.Services
                     }
                 }
             }
-
-            if (!userToBeUpdated.FirstName.Equals(model.FirstName))
-                userToBeUpdated.FirstName = model.FirstName;
-
-            if (!userToBeUpdated.SecondName.Equals(model.SecondName))
-                userToBeUpdated.SecondName = model.SecondName;
-
+            
+            userToBeUpdated.FirstName = model.FirstName;
+            userToBeUpdated.SecondName = model.SecondName;
+            
             await _userManager.UpdateAsync(userToBeUpdated);
 
         }

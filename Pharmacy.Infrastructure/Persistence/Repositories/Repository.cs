@@ -50,7 +50,7 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
             return context.Set<TEntity>().AsQueryable();
         }
 
-        public async ValueTask<TEntity> GetByIdAsync(long id)
+        public async ValueTask<TEntity> GetByIdAsync(int id)
         {
             return await context.Set<TEntity>().FindAsync(id);
         }

@@ -1,0 +1,95 @@
+05/14/2020 17:09:29 [Information]  App is starting up.
+05/14/2020 17:41:54 [Information]  App is starting up.
+05/14/2020 17:43:29 [Information]  App is starting up.
+05/14/2020 17:46:09 [Error]  HTTP "POST" "/api/Medicament/create" responded 500 in 717.0719 ms
+System.InvalidOperationException: Unable to resolve service for type 'Pharmacy.Application.Common.Interfaces.ApplicationInterfaces.IMedicamentService' while attempting to activate 'Pharmacy.Api.Controllers.MedicamentController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.XsrfProtectionMiddleware.InvokeAsync(HttpContext context) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\XsrfProtectionMiddleware.cs:line 33
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+05/14/2020 17:46:09 [Error]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Pharmacy.Application.Common.Interfaces.ApplicationInterfaces.IMedicamentService' while attempting to activate 'Pharmacy.Api.Controllers.MedicamentController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.XsrfProtectionMiddleware.InvokeAsync(HttpContext context) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\XsrfProtectionMiddleware.cs:line 33
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/14/2020 17:50:07 [Information]  App is starting up.
+05/14/2020 17:50:25 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 4199.1127 ms
+05/14/2020 17:52:41 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 294.4080 ms
+05/14/2020 17:57:27 [Information]  App is starting up.
+05/14/2020 17:57:35 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 751.1907 ms
+05/14/2020 18:01:07 [Information]  App is starting up.
+05/14/2020 18:02:09 [Information]  App is starting up.
+05/14/2020 18:03:17 [Information]  App is starting up.
+05/14/2020 18:07:53 [Information]  App is starting up.
+05/14/2020 18:14:36 [Information]  App is starting up.
+05/14/2020 18:15:00 [Information]  HTTP "POST" "/api/Image/create/1" responded 415 in 866.2842 ms
+05/14/2020 18:23:05 [Information]  App is starting up.
+05/14/2020 18:24:30 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 81936.8918 ms
+05/14/2020 18:26:32 [Information]  App is starting up.
+05/14/2020 18:26:43 [Information]  HTTP "POST" "/api/image/create/1" responded 200 in 721.7037 ms
+05/14/2020 18:27:35 [Information]  App is starting up.
+05/14/2020 18:30:07 [Information]  App is starting up.
+05/14/2020 18:34:09 [Information]  App is starting up.
+05/14/2020 18:36:34 [Information]  App is starting up.
+05/14/2020 18:38:25 [Information]  App is starting up.
+05/14/2020 18:52:41 [Information]  App is starting up.
+05/14/2020 18:54:20 [Information]  App is starting up.
+05/14/2020 19:01:34 [Information]  App is starting up.
+05/14/2020 19:02:07 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 814.3166 ms
+05/14/2020 19:03:27 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 53531.8167 ms
+05/14/2020 19:16:10 [Information]  App is starting up.
+05/14/2020 19:17:08 [Information]  App is starting up.
+05/14/2020 19:19:29 [Information]  App is starting up.
+05/14/2020 19:21:49 [Information]  App is starting up.
+05/14/2020 19:22:34 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 635.8138 ms
+05/14/2020 19:26:51 [Information]  App is starting up.
+05/14/2020 19:27:19 [Information]  HTTP "POST" "/api/Image/create/1" responded 200 in 555.9949 ms
+05/14/2020 19:30:46 [Information]  App is starting up.
+05/14/2020 19:33:32 [Information]  App is starting up.
+05/14/2020 19:34:49 [Information]  HTTP "POST" "/api/image/create/1" responded 200 in 54903.2149 ms
+05/14/2020 21:00:21 [Information]  App is starting up.
+05/14/2020 21:01:23 [Error] Pharmacy.Api.Controllers.ImageController.DeleteImage (Pharmacy.Api) The key value at position 0 of the call to 'DbSet<Image>.Find' was of type 'long', which does not match the property type of 'int'.
+System.ArgumentException: The key value at position 0 of the call to 'DbSet<Image>.Find' was of type 'long', which does not match the property type of 'int'.
+   at Microsoft.EntityFrameworkCore.Internal.EntityFinder`1.FindTracked(Object[] keyValues, IReadOnlyList`1& keyProperties)
+   at Microsoft.EntityFrameworkCore.Internal.EntityFinder`1.FindAsync(Object[] keyValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.FindAsync(Object[] keyValues)
+   at Pharmacy.Infrastructure.Persistence.Repositories.Repository`1.GetByIdAsync(Int64 id) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Infrastructure\Persistence\Repositories\Repository.cs:line 55
+   at Pharmacy.Application.Services.ImageService.DeleteImage(Int32 imageId) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\ImageService.cs:line 42
+   at Pharmacy.Api.Controllers.ImageController.DeleteImage(Int32 imageId) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\ImageController.cs:line 52
+05/14/2020 21:01:24 [Error]  HTTP "DELETE" "/api/Image/delete/1" responded 500 in 3354.5148 ms
+05/14/2020 21:02:50 [Information]  App is starting up.
+05/14/2020 21:03:01 [Information]  HTTP "DELETE" "/api/Image/delete/1" responded 200 in 5429.1628 ms

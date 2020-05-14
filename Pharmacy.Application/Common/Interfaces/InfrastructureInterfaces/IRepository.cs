@@ -21,7 +21,7 @@ namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 
         IQueryable<TEntity> GetAllQueryable();
 
-        ValueTask<TEntity> GetByIdAsync(long id);
+        ValueTask<TEntity> GetByIdAsync(int id);
 
         IEnumerable<TEntity> GetByPredicate(Expression<Func<TEntity, bool>> predicate);
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Pharmacy.Domain.Entites;
-using System.Collections.Generic;
+﻿using Pharmacy.Domain.Entites;
 using static Pharmacy.Application.Common.Mappings.IMapFrom;
 
 namespace Pharmacy.Application.Common.DTO.In.MedicamentIn
@@ -15,8 +13,6 @@ namespace Pharmacy.Application.Common.DTO.In.MedicamentIn
 
         public int Offtake { get; set; }
 
-        public int AllowedForEntityId { get; set; }
-
         public int CategoryId { get; set; }
 
         public int MedicamentFormId { get; set; }
@@ -25,8 +21,8 @@ namespace Pharmacy.Application.Common.DTO.In.MedicamentIn
 
         public int ManufacturerId { get; set; }
 
-        public InstructionDto instruction { get; set; }
+        public InstructionDto Instruction { get; set; }
 
-        public List<IFormFile> Images { get; set; }
+        public AllowedForEntityDto AllowedForEntity { get; set; }
     }
 }

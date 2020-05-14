@@ -37,7 +37,15 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IUserManager, IdentityUserManager>();
             services.AddTransient<ISignInManager, IdentitySignInManager>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IDeliveryAddressService, DeliveryAddressService>();
             services.AddTransient<IManufacturerService, ManufacturerService>();
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IMedicamentService, MedicamentService>();
+            services.AddTransient<IInstructionService, InstructionService>();
+            services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
+            services.AddTransient<IApplicationMethodService, ApplicationMethodService>();
+            services.AddTransient<IMedicamentFormService, MedicamentFormService>();
+            services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
             services.AddScoped<ICurrentUser, CurrentUserService>();
 
         }   

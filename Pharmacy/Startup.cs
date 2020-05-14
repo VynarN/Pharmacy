@@ -42,7 +42,7 @@ namespace Pharmacy
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddAntiforgery(options => { options.HeaderName = "x-xsrf-token"; });
+            //services.AddAntiforgery(options => { options.HeaderName = "x-xsrf-token"; });
 
             services.AddMvc()
                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterDtoValidator>());
@@ -102,7 +102,7 @@ namespace Pharmacy
             app.UseSerilogRequestLogging();
             app.UseMiddleware<TokenMiddleware>();
             app.UseAuthentication();
-            app.UseXsrfProtection(antiforgery);
+            //app.UseXsrfProtection(antiforgery);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
