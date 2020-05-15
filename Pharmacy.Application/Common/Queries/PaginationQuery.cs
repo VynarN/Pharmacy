@@ -14,7 +14,7 @@
 
         public PaginationQuery(int pageNumber, int pageSize)
         {
-            PageNumber = pageNumber;
+            PageNumber = pageNumber < 1 ? 1 : pageNumber;
             PageSize = pageSize > 100 ? 100 : pageSize;
         }
     }

@@ -4,7 +4,6 @@ using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,9 +38,11 @@ namespace Pharmacy.Application.Services
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Medicament> GetMedicaments(PaginationQuery paginationQuery = null, MedicamentFilterQuery filterQuery = null)
+        public IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery = null)
         {
-            throw new System.NotImplementedException();
+            totalMedicamentsCount = _repository.GetAllQueryable().Count();
+
+            return _repository.GetAllQueryable().Skip((paginationQuery.PageNumber - 1) * paginationQuery.PageSize).Take(paginationQuery.PageSize);
         }
 
         public Task UpdateMedicament(Medicament medicament)

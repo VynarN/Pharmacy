@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Queries;
-using System;
 
 namespace Pharmacy.Application.Services
 {
@@ -9,24 +9,20 @@ namespace Pharmacy.Application.Services
     {
         private readonly string _baseUri;
 
-        public UriService(string baseUri)
+        public UriService(IHttpContextAccessor httpContextAccessor)
         {
-            _baseUri = baseUri;
+            _baseUri = string.Concat(httpContextAccessor.HttpContext.Request.Scheme, "://",
+                                     httpContextAccessor.HttpContext.Request.Host.ToUriComponent(),
+                                     httpContextAccessor.HttpContext.Request.Path);
         }
 
-        public Uri GetPaginationUri(PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery)
+        public string GetMedicamentsPaginationUri(PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery)
         {
-            var uri = new Uri(_baseUri);
+            var modifiedUri = QueryHelpers.AddQueryString(_baseUri, "pageNumber", paginationQuery.PageNumber.ToString());
 
-            if (paginationQuery == null)
-            {
-                return uri;
-            }
+            modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "pageSize", paginationQuery.PageSize.ToString());
 
-            var modifiedUrl = QueryHelpers.AddQueryString(_baseUri, "pageNumber", paginationQuery.PageNumber.ToString());
-            modifiedUrl = QueryHelpers.AddQueryString(modifiedUrl, "pageSize", paginationQuery.PageSize.ToString());
-
-            return new Uri(modifiedUrl);
+            return modifiedUri;
         }
     }
 }

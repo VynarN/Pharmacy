@@ -1,6 +1,6 @@
 ﻿using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
@@ -9,7 +9,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         Task<Medicament> GetMedicament(int medicamentId);
 
-        IEnumerable<Medicament> GetMedicaments(PaginationQuery paginationQuery = null, MedicamentFilterQuery filterQuery = null);
+        IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery = null);
 
         Task<int> CreateMedicament(Medicament medicament);
 

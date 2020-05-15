@@ -46,8 +46,9 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IApplicationMethodService, ApplicationMethodService>();
             services.AddTransient<IMedicamentFormService, MedicamentFormService>();
             services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
+            services.AddTransient<IPaginationHelper, PaginationHelper>();
+            services.AddTransient<IUriService, UriService>();
             services.AddScoped<ICurrentUser, CurrentUserService>();
-
         }   
     }
 }
