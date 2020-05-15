@@ -9,7 +9,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         Task<Medicament> GetMedicament(int medicamentId);
 
-        IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery = null);
+        IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery);
 
         Task<int> CreateMedicament(Medicament medicament);
 

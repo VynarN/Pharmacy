@@ -7,8 +7,10 @@ using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrustructureInterfaces;
 using Pharmacy.Application.Common.Mappings;
+using Pharmacy.Application.Common.Queries;
 using Pharmacy.Application.Helpers;
 using Pharmacy.Application.Services;
+using Pharmacy.Domain.Entites;
 using Pharmacy.Infrastructure.Persistence.Repositories;
 using Pharmacy.Infrastructure.Services;
 
@@ -47,7 +49,8 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IMedicamentFormService, MedicamentFormService>();
             services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
             services.AddTransient<IPaginationHelper, PaginationHelper>();
-            services.AddTransient<IUriService, UriService>();
+            services.AddTransient<IFilterHelper<Medicament, MedicamentFilterQuery>, MedicamentFilterHelper>();
+            services.AddScoped<IUriService, UriService>();
             services.AddScoped<ICurrentUser, CurrentUserService>();
         }   
     }

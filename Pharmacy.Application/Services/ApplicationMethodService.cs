@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace Pharmacy.Application.Services
 
         public IEnumerable<ApplicationMethod> GetApplicationMethods()
         {
-            return _repository.GetAllQueryable().AsNoTracking();
+            return _repository.GetAllQueryable();
         }
     }
 }

@@ -325,3 +325,27 @@ System.InvalidOperationException: Unable to resolve service for type 'Pharmacy.A
 05/15/2020 14:02:12 [Information]  App is starting up.
 05/15/2020 14:02:28 [Information]  HTTP "GET" "/api/Medicament/get?PageNumber=1&PageSize=3" responded 200 in 2750.7327 ms
 05/15/2020 14:02:39 [Information]  HTTP "GET" "/api/Medicament/get?pageNumber=2&pageSize=3" responded 200 in 117.4591 ms
+05/15/2020 17:11:46 [Information]  App is starting up.
+05/15/2020 17:13:17 [Information]  HTTP "GET" "/api/Medicament/get" responded 200 in 4488.0979 ms
+05/15/2020 17:16:17 [Information]  App is starting up.
+05/15/2020 17:16:46 [Error] Pharmacy.Api.Controllers.MedicamentController.GetAll (Pharmacy.Api) Value cannot be null. (Parameter 'value')
+System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(String uri, String name, String value)
+   at Pharmacy.Application.Services.UriService.GetMedicamentsPaginationUri(PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\UriService.cs:line 23
+   at Pharmacy.Application.Helpers.PaginationHelper.FormMedicamentsPaginatedResponse(Int32 medicamentsCount, IEnumerable`1 medicamentsDto, PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Helpers\PaginationHelper.cs:line 32
+   at Pharmacy.Api.Controllers.MedicamentController.GetAll(PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\MedicamentController.cs:line 80
+05/15/2020 17:16:47 [Error]  HTTP "GET" "/api/Medicament/get?PageNumber=1&PageSize=3&AllowedFor=ForNurses" responded 500 in 3857.1989 ms
+05/15/2020 17:22:02 [Information]  App is starting up.
+05/15/2020 17:22:14 [Information]  HTTP "GET" "/api/Medicament/get?PageNumber=1&PageSize=3&AllowedFor=ForNurses" responded 200 in 4958.8030 ms
+05/15/2020 17:29:01 [Information]  App is starting up.
+05/15/2020 17:32:09 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 96126.5947 ms
+05/15/2020 17:34:40 [Information]  App is starting up.
+05/15/2020 17:35:02 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 4150.7111 ms
+05/15/2020 17:37:14 [Information]  App is starting up.
+05/15/2020 17:37:45 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 4401.4648 ms
+05/15/2020 17:50:11 [Information]  App is starting up.
+05/15/2020 18:07:08 [Information]  App is starting up.
+05/15/2020 18:07:39 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 4427.1837 ms
+05/15/2020 18:08:18 [Information]  App is starting up.
+05/15/2020 18:08:29 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 4256.4610 ms
+05/15/2020 18:09:16 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 86.4557 ms

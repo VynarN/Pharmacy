@@ -1,6 +1,4 @@
-﻿using Pharmacy.Application.Common.Constants;
-using Pharmacy.Application.Common.Exceptions;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System.Collections.Generic;
@@ -30,10 +28,7 @@ namespace Pharmacy.Application.Services
             {
                 await _repository.Create(allowedForEntity);
 
-                var createdEntityId = ExistingEntities(allowedForEntity).FirstOrDefault()?.Id;
-
-                return createdEntityId.HasValue ? createdEntityId.Value :
-                    throw new ObjectCreateException(ExceptionStrings.ObjectCreateException, nameof(allowedForEntity));
+                return ExistingEntities(allowedForEntity).FirstOrDefault().Id;
             }
 
             IEnumerable<AllowedForEntity> ExistingEntities(AllowedForEntity allowedFor)

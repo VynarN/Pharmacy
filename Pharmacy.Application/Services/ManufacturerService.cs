@@ -1,6 +1,4 @@
-﻿using Pharmacy.Application.Common.Constants;
-using Pharmacy.Application.Common.Exceptions;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System.Linq;
@@ -21,10 +19,7 @@ namespace Pharmacy.Application.Services
         {
             await _repository.Create(manufacturer);
 
-            var createdManufacturerId = _repository.GetByPredicate(obj => obj.Name.Equals(manufacturer.Name)).FirstOrDefault()?.Id;
-
-            return createdManufacturerId.HasValue ? createdManufacturerId.Value :
-                throw new ObjectCreateException(ExceptionStrings.ObjectCreateException, manufacturer.Name);
+            return _repository.GetByPredicate(obj => obj.Name.Equals(manufacturer.Name)).FirstOrDefault().Id;
         }
     }
 }

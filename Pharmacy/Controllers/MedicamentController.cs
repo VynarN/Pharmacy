@@ -21,18 +21,16 @@ namespace Pharmacy.Api.Controllers
     {
         private readonly IMedicamentService _medicamentService;
         private readonly IAllowedForEntityService _allowedForEntityService;
-        private readonly IInstructionService _instructionService;
         private readonly IPaginationHelper _paginationHelper;
         private readonly ILogger<MedicamentController> _logger;
         private readonly IMapper _mapper;
 
         public MedicamentController(IMedicamentService medicamentService, ILogger<MedicamentController> logger,
                                     IAllowedForEntityService allowedForEntityService, IMapper mapper,
-                                    IInstructionService instructionService, IPaginationHelper paginationHelper)
+                                    IPaginationHelper paginationHelper)
         {
             _medicamentService = medicamentService;
             _allowedForEntityService = allowedForEntityService;
-            _instructionService = instructionService;
             _paginationHelper = paginationHelper;
             _logger = logger;
             _mapper = mapper;
@@ -43,19 +41,14 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                var allowedForEntity = _mapper.Map<AllowedForEntity>(medicamentDto.AllowedForEntity);
-
-                var instruction = _mapper.Map<Instruction>(medicamentDto.Instruction);
-
                 var medicament = _mapper.Map<Medicament>(medicamentDto);
 
-                medicament.AllowedForEntityId = await _allowedForEntityService.CreateAllowedForEntity(allowedForEntity);
+                var createdAllowedForEntityId = await _allowedForEntityService.CreateAllowedForEntity(medicament.AllowedForEntity);
+
+                medicament.AllowedForEntityId = createdAllowedForEntityId;
+                medicament.AllowedForEntity = null;
 
                 var createdMedicamentId = await _medicamentService.CreateMedicament(medicament);
-
-                instruction.MedicamentId = createdMedicamentId;
-
-                await _instructionService.CreateInstruction(instruction);
 
                 return Ok(createdMedicamentId);
             }
@@ -73,7 +66,7 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                var medicaments = _medicamentService.GetMedicaments(out int totalMedicamentsCount, paginationQuery);
+                var medicaments = _medicamentService.GetMedicaments(out int totalMedicamentsCount, paginationQuery, medicamentFilterQuery);
 
                 var medicamentsDto = medicaments.ProjectTo<MedicamentOutDto>(_mapper.ConfigurationProvider);
 

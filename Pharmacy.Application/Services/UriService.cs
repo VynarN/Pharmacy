@@ -18,9 +18,21 @@ namespace Pharmacy.Application.Services
 
         public string GetMedicamentsPaginationUri(PaginationQuery paginationQuery, MedicamentFilterQuery medicamentFilterQuery)
         {
-            var modifiedUri = QueryHelpers.AddQueryString(_baseUri, "pageNumber", paginationQuery.PageNumber.ToString());
+            var modifiedUri = QueryHelpers.AddQueryString(_baseUri, "PageNumber", paginationQuery.PageNumber.ToString());
+            
+            modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "PageSize", paginationQuery.PageSize.ToString());
 
-            modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "pageSize", paginationQuery.PageSize.ToString());
+            if (!string.IsNullOrEmpty(medicamentFilterQuery.Categories))
+                modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "Categories", medicamentFilterQuery.Categories);
+
+            if (!string.IsNullOrEmpty(medicamentFilterQuery.ApplicationMethods))
+                modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "ApplicationMethods", medicamentFilterQuery.ApplicationMethods);
+
+            if (!string.IsNullOrEmpty(medicamentFilterQuery.MedicamentForms))
+                 modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "MedicamentForms", medicamentFilterQuery.MedicamentForms);
+
+            if (!string.IsNullOrEmpty(medicamentFilterQuery.AllowedFor))
+                modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "AllowedFor", medicamentFilterQuery.AllowedFor);
 
             return modifiedUri;
         }

@@ -9,7 +9,6 @@ using Pharmacy.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Pharmacy.Application.Middlewares.MiddlewareExtensions;
 using Microsoft.AspNetCore.Antiforgery;
 using Pharmacy.Application.Middlewares;
 using Pharmacy.Api.ServicesConfiguration;

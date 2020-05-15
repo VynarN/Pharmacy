@@ -83,16 +83,17 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
             await context.SaveChangesAsync();
         }
 
-        public IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties)
+        public IQueryable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return Include(includeProperties).ToList();
+            return Include(includeProperties);
         }
 
-        public IEnumerable<TEntity> GetWithInclude(Func<TEntity, bool> predicate,
+        public IQueryable<TEntity> GetWithInclude(Func<TEntity, bool> predicate,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
-            return query.Where(predicate).ToList();
+
+            return query.Where(predicate).AsQueryable();
         }
 
         private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)

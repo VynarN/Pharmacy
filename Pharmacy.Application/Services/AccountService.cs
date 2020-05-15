@@ -171,7 +171,6 @@ namespace Pharmacy.Application.Services
                 using (var transaction = await _repository.BeginTransactionAsync())
                 {
                     await _userManager.SetEmailAsync(userToBeUpdated, model.Email);
-
                     await _userManager.SetUserNameAsync(userToBeUpdated, model.Email);
 
                     var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(userToBeUpdated);

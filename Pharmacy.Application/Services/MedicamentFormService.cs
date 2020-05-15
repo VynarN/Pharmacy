@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Validators;
 using Pharmacy.Domain.Entites;
@@ -33,7 +32,7 @@ namespace Pharmacy.Application.Services
 
         public IEnumerable<MedicamentForm> GetMedicamentForms()
         {
-            return _repository.GetAllQueryable().AsNoTracking();
+            return _repository.GetAllQueryable();
         }
     }
 }
