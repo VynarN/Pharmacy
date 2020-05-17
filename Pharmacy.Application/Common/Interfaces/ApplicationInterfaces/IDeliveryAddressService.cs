@@ -8,6 +8,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         IEnumerable<DeliveryAddress> GetDeliveryAddresses(string userId);
 
-        Task CreateDeliveryAddress(DeliveryAddress deliveryAddress);
+        Task<int> CreateDeliveryAddress(DeliveryAddress deliveryAddress);
     }
 }

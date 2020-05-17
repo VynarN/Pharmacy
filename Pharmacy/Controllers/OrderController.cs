@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
-using Pharmacy.Application.Common.DTO.In.OrderIn;
+using Pharmacy.Application.Common.DTO;
+using Pharmacy.Application.Common.DTO.Out.OrderOut;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
+using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
 
 namespace Pharmacy.Api.Controllers
@@ -30,14 +33,37 @@ namespace Pharmacy.Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateOrder()
+        public async Task<IActionResult> CreateOrder(DeliveryAddressDto deliveryAddressDto)
         {
             try
             {
                 var currentUserId = _currentUser.UserId;
-                await _orderService.CreateOrder(currentUserId);
+
+                var deliveryAddress = _mapper.Map<DeliveryAddress>(deliveryAddressDto);
+
+                await _orderService.CreateOrder(currentUserId, deliveryAddress);
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
+            }
+        }
+
+        [HttpGet("get")]
+        public IActionResult GetOrders([FromQuery]PaginationQuery paginationQuery)
+        {
+            try
+            {
+                var groupedOrders = _orderService.GetOrders(paginationQuery);
+
+                var formatedOrders = _mapper.Map<IEnumerable<GroupedOrdersDto>>(groupedOrders);
+
+                return Ok(formatedOrders);
             }
             catch (Exception ex)
             {

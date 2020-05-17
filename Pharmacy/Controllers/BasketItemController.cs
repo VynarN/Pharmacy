@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.DTO.In.BasketItemIn;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
 using System.Net;
@@ -16,14 +17,17 @@ namespace Pharmacy.Api.Controllers
     public class BasketItemController : ControllerBase
     {
         private readonly IBasketItemService _basketItemService;
+        private readonly ICurrentUser _currentUser;
         private readonly ILogger<ManufacturerController> _logger;
         private readonly IMapper _mapper;
 
-        public BasketItemController(IBasketItemService basketItemService, ILogger<ManufacturerController> logger, IMapper mapper)
+        public BasketItemController(IBasketItemService basketItemService, ILogger<ManufacturerController> logger, 
+                                    IMapper mapper, ICurrentUser currentUser)
         {
             _basketItemService = basketItemService;
             _logger = logger;
             _mapper = mapper;
+            _currentUser = currentUser;
         }
 
         [HttpPost("create")]
@@ -31,7 +35,10 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
+                var currentUserId = _currentUser.UserId;
+
                 var basketItem = _mapper.Map<BasketItem>(basketItemDto);
+                basketItem.UserId = currentUserId;
 
                 await _basketItemService.CreateBasketItem(basketItem);
 

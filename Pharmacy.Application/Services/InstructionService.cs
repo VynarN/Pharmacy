@@ -21,7 +21,7 @@ namespace Pharmacy.Application.Services
 
         }
 
-        public Task UpdateInstruction(Instruction instruction)
+        public Task UpdateInstruction(Instruction instruction, int instructionId)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,6 @@ namespace Pharmacy.Application.Services
     public class MedicamentService : IMedicamentService
     {
         private readonly IRepository<Medicament> _repository;
-
         private readonly IFilterHelper<Medicament, MedicamentFilterQuery> _filterHelper;
 
         public MedicamentService(IRepository<Medicament> repository, IFilterHelper<Medicament, MedicamentFilterQuery> filterHelper)

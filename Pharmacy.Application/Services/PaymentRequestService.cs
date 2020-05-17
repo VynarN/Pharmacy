@@ -1,4 +1,5 @@
 ﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
 using System.Linq;
@@ -8,16 +9,16 @@ namespace Pharmacy.Application.Services
 {
     public class PaymentRequestService : IPaymentRequestService
     {
-        private readonly IPaymentRequestService _paymentRequestService;
+        private readonly IRepository<PaymentRequest> _repository;
 
-        public PaymentRequestService(IPaymentRequestService paymentRequestService)
+        public PaymentRequestService(IRepository<PaymentRequest> repository)
         {
-            _paymentRequestService = paymentRequestService;
+            _repository = repository;
         }
 
         public async Task CreatePaymentRequest(PaymentRequest paymentRequest)
         {
-            await _paymentRequestService.CreatePaymentRequest(paymentRequest);
+            await _repository.Create(paymentRequest);
         }
 
         public Task DeletePaymentRequest(int paymentRequestId)

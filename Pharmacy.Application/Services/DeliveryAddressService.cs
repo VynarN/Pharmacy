@@ -10,7 +10,6 @@ namespace Pharmacy.Application.Services
     public class DeliveryAddressService : IDeliveryAddressService
     {
         private readonly IRepository<DeliveryAddress> _deliveryAddressRepository;
-
         private readonly IRepository<Order> _orderRepository;
 
         public DeliveryAddressService(IRepository<DeliveryAddress> deliveryAddressRepository, IRepository<Order> orderRepository)
@@ -19,9 +18,15 @@ namespace Pharmacy.Application.Services
             _orderRepository = orderRepository;
         }
 
-        public async Task CreateDeliveryAddress(DeliveryAddress deliveryAddress)
+        public async Task<int> CreateDeliveryAddress(DeliveryAddress deliveryAddress)
         {
             await _deliveryAddressRepository.Create(deliveryAddress);
+
+            return _deliveryAddressRepository.GetByPredicate(da => da.Country.Equals(deliveryAddress.Country) 
+                                                            && da.Region.Equals(deliveryAddress.Region) 
+                                                            && da.City.Equals(deliveryAddress.City)
+                                                            && da.Street.Equals(deliveryAddress.Street)
+                                                            && da.ZipCode == deliveryAddress.ZipCode).First().Id;
         }
 
         public IEnumerable<DeliveryAddress> GetDeliveryAddresses(string userId)

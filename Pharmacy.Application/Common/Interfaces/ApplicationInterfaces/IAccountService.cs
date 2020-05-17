@@ -22,7 +22,7 @@ namespace Pharmacy.Application.Common.Interfaces
 
         Task ResetPasswordAsync(ResetPasswordDto model, string userId, string token);
 
-        Task<IList<string>> GetUserRoles(string userId);
+        Task<IList<string>> GetUserRoles(string userEmail);
 
         Task DeleteProfile(string userId);
     }

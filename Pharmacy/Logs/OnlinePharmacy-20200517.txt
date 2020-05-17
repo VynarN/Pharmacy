@@ -1,0 +1,311 @@
+05/17/2020 20:33:59 [Information]  App is starting up.
+05/17/2020 20:36:15 [Information]  App is starting up.
+05/17/2020 20:36:46 [Information]  HTTP "POST" "/api/Account/login" responded 400 in 5698.9929 ms
+05/17/2020 20:37:29 [Information]  HTTP "POST" "/api/Account/login" responded 400 in 194.4359 ms
+05/17/2020 20:38:05 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 157.6956 ms
+05/17/2020 20:38:20 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 202 in 2981.0928 ms
+05/17/2020 20:38:32 [Information]  HTTP "GET" "/api/Account/confirm?userId=30c2a622-f1e7-4596-852a-3261cd66ad5f&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25pQi9oRHE1RDJtSFI2YUZTaEVxNnkyTEE1SGZwa0p2QitGVWZ2amxsN2QwNit4UnpkZ2d0bDhrcmh5U0hlTmd0TitMM3JKZlhwNnBiNTBpbFVpckJCYmU0UlRtYlVCeEZEa3BBZEY4aC9OV3FNeDZNVkhJazVoL0ttYWFlS1lNRGQ5VzhRSUNTcytPQ2RzVzE0VHRiSG5UM3IxS0tKSytHaUtjTWZRQjBoZFBmdmp0dDNLeHlZQ2pIaDMwU2x0bVFkODdqVm9EcTN4YWZjU2laVWdFWGJZa2xVRFVjaHFBWU1jREJFMXlqYWZDZz09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 1540.7477 ms
+05/17/2020 20:38:55 [Error] Pharmacy.Api.Controllers.AccountController.Login (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: vynar.n.i@gmail.com
+05/17/2020 20:38:55 [Error]  HTTP "POST" "/api/Account/login" responded 500 in 425.2012 ms
+05/17/2020 20:44:13 [Information]  App is starting up.
+05/17/2020 20:44:23 [Error] Pharmacy.Api.Controllers.AccountController.Login (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: vynar.n.i@gmail.com
+05/17/2020 20:44:23 [Error]  HTTP "POST" "/api/Account/login" responded 500 in 3817.4472 ms
+05/17/2020 20:48:07 [Information]  App is starting up.
+05/17/2020 20:48:38 [Error] Pharmacy.Api.Controllers.AccountController.Login (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: vynar.n.i@gmail.com
+05/17/2020 20:48:39 [Error]  HTTP "POST" "/api/Account/login" responded 500 in 17973.0172 ms
+05/17/2020 20:49:31 [Information]  App is starting up.
+05/17/2020 20:49:40 [Error] Pharmacy.Api.Controllers.AccountController.Login (Pharmacy.Api) User with specified data is not found. 
+ObjectNotFoundException: User with specified data is not found. Identifier: vynar.n.i@gmail.com
+05/17/2020 20:49:40 [Error]  HTTP "POST" "/api/Account/login" responded 500 in 4178.5036 ms
+05/17/2020 20:52:01 [Information]  App is starting up.
+05/17/2020 20:53:24 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 2549.6593 ms
+05/17/2020 20:53:42 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 255.4697 ms
+05/17/2020 20:53:56 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 30.5524 ms
+05/17/2020 20:54:05 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 15.8337 ms
+05/17/2020 20:54:34 [Error] Pharmacy.Api.Controllers.OrderController.CreateOrder (Pharmacy.Api) An exception occurred in the database while saving changes for context type '"Pharmacy.Infrastructure.PharmacyContext"'."
+""System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)"
+System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+05/17/2020 20:54:35 [Error] Pharmacy.Api.Controllers.OrderController.CreateOrder (Pharmacy.Api) There is already an open DataReader associated with this Command which must be closed first.
+System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Pharmacy.Infrastructure.Persistence.Repositories.Repository`1.Create(TEntity entity) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Infrastructure\Persistence\Repositories\Repository.cs:line 39
+   at Pharmacy.Application.Services.OrderService.CreateOrder(String userId, DeliveryAddress deliveryAddress) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\OrderService.cs:line 34
+   at Pharmacy.Api.Controllers.OrderController.CreateOrder(DeliveryAddressDto deliveryAddressDto) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 43
+05/17/2020 20:54:35 [Error]  HTTP "POST" "/api/Order/create" responded 500 in 1401.1204 ms
+05/17/2020 20:59:57 [Information]  App is starting up.
+05/17/2020 21:00:08 [Error] Pharmacy.Api.Controllers.OrderController.CreateOrder (Pharmacy.Api) An exception occurred in the database while saving changes for context type '"Pharmacy.Infrastructure.PharmacyContext"'."
+""System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)"
+System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+05/17/2020 21:00:09 [Error] Pharmacy.Api.Controllers.OrderController.CreateOrder (Pharmacy.Api) There is already an open DataReader associated with this Command which must be closed first.
+System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Pharmacy.Infrastructure.Persistence.Repositories.Repository`1.Create(TEntity entity) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Infrastructure\Persistence\Repositories\Repository.cs:line 39
+   at Pharmacy.Application.Services.OrderService.CreateOrder(String userId, DeliveryAddress deliveryAddress) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\OrderService.cs:line 34
+   at Pharmacy.Api.Controllers.OrderController.CreateOrder(DeliveryAddressDto deliveryAddressDto) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 43
+05/17/2020 21:00:09 [Error]  HTTP "POST" "/api/Order/create" responded 500 in 5754.4422 ms
+05/17/2020 21:02:13 [Information]  App is starting up.
+05/17/2020 21:02:24 [Error] Pharmacy.Api.Controllers.OrderController.CreateOrder (Pharmacy.Api) An exception occurred in the database while saving changes for context type '"Pharmacy.Infrastructure.PharmacyContext"'."
+""System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)"
+System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+05/17/2020 21:02:24 [Error] Pharmacy.Api.Controllers.OrderController.CreateOrder (Pharmacy.Api) There is already an open DataReader associated with this Command which must be closed first.
+System.InvalidOperationException: There is already an open DataReader associated with this Command which must be closed first.
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.ValidateConnectionForExecute(SqlCommand command)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   at System.Data.Common.DbConnection.BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Pharmacy.Infrastructure.Persistence.Repositories.Repository`1.Create(TEntity entity) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Infrastructure\Persistence\Repositories\Repository.cs:line 39
+   at Pharmacy.Application.Services.OrderService.CreateOrder(String userId, DeliveryAddress deliveryAddress) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\OrderService.cs:line 34
+   at Pharmacy.Api.Controllers.OrderController.CreateOrder(DeliveryAddressDto deliveryAddressDto) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 43
+05/17/2020 21:02:24 [Error]  HTTP "POST" "/api/Order/create" responded 500 in 4828.6558 ms
+05/17/2020 21:05:06 [Information]  App is starting up.
+05/17/2020 21:05:28 [Information]  HTTP "POST" "/api/Order/create" responded 200 in 3758.5391 ms
+05/17/2020 21:07:36 [Information]  App is starting up.
+05/17/2020 21:07:55 [Error] Pharmacy.Api.Controllers.OrderController.GetOrders (Pharmacy.Api) Missing type map configuration or unsupported mapping.
+
+Mapping types:
+EntityQueryable`1 -> GroupedOrdersDto
+Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[[Pharmacy.Domain.Common.ValueObjects.GroupedOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+EntityQueryable`1 -> GroupedOrdersDto
+Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[[Pharmacy.Domain.Common.ValueObjects.GroupedOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto
+   at lambda_method(Closure , EntityQueryable`1 , GroupedOrdersDto , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at Pharmacy.Api.Controllers.OrderController.GetOrders(PaginationQuery paginationQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 63
+05/17/2020 21:07:55 [Error]  HTTP "GET" "/api/Order/get" responded 500 in 2655.7023 ms
+05/17/2020 21:09:00 [Information]  App is starting up.
+05/17/2020 21:09:10 [Error] Pharmacy.Api.Controllers.OrderController.GetOrders (Pharmacy.Api) Error mapping types.
+
+Mapping types:
+EntityQueryable`1 -> IEnumerable`1
+Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[[Pharmacy.Domain.Common.ValueObjects.GroupedOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto, Pharmacy.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+EntityQueryable`1 -> IEnumerable`1
+Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[[Pharmacy.Domain.Common.ValueObjects.GroupedOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto, Pharmacy.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> System.InvalidOperationException: The LINQ expression '(GroupByShaperExpression:
+KeySelector: (t.OrderedAt), 
+ElementSelector:(EntityShaperExpression: 
+    EntityType: Order
+    ValueBufferExpression: 
+        (ProjectionBindingExpression: EmptyProjectionMember)
+    IsNullable: False
+)
+)
+    .Select(order => order)' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+   at Microsoft.EntityFrameworkCore.Query.RelationalSqlTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at System.Linq.Expressions.MethodCallExpression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at Microsoft.EntityFrameworkCore.Query.RelationalSqlTranslatingExpressionVisitor.Translate(Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.RelationalProjectionBindingExpressionVisitor.Visit(Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.RelationalProjectionBindingExpressionVisitor.VisitMemberAssignment(MemberAssignment memberAssignment)
+   at System.Linq.Expressions.ExpressionVisitor.VisitMemberBinding(MemberBinding node)
+   at Microsoft.EntityFrameworkCore.Query.Internal.RelationalProjectionBindingExpressionVisitor.VisitMemberInit(MemberInitExpression memberInitExpression)
+   at System.Linq.Expressions.MemberInitExpression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at Microsoft.EntityFrameworkCore.Query.Internal.RelationalProjectionBindingExpressionVisitor.Visit(Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.RelationalProjectionBindingExpressionVisitor.Translate(SelectExpression selectExpression, Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.RelationalQueryableMethodTranslatingExpressionVisitor.TranslateSelect(ShapedQueryExpression source, LambdaExpression selector)
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Query.RelationalQueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at System.Linq.Expressions.MethodCallExpression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass9_0`1.<Execute>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQueryCore[TFunc](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.Execute[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.Execute[TResult](Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetEnumerator()
+   at lambda_method(Closure , EntityQueryable`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , EntityQueryable`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at Pharmacy.Api.Controllers.OrderController.GetOrders(PaginationQuery paginationQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 64
+05/17/2020 21:09:10 [Error]  HTTP "GET" "/api/Order/get" responded 500 in 2541.4762 ms
+05/17/2020 21:12:40 [Information]  App is starting up.
+05/17/2020 21:13:13 [Error] Pharmacy.Api.Controllers.OrderController.GetOrders (Pharmacy.Api) Error mapping types.
+
+Mapping types:
+EnumerableQuery`1 -> IEnumerable`1
+System.Linq.EnumerableQuery`1[[Pharmacy.Domain.Common.ValueObjects.GroupedOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto, Pharmacy.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+EnumerableQuery`1 -> IEnumerable`1
+System.Linq.EnumerableQuery`1[[Pharmacy.Domain.Common.ValueObjects.GroupedOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto, Pharmacy.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> System.InvalidOperationException: Client side GroupBy is not supported.
+   at Microsoft.EntityFrameworkCore.Query.RelationalShapedQueryCompilingExpressionVisitor.CustomShaperCompilingExpressionVisitor.VisitExtension(Expression extensionExpression)
+   at System.Linq.Expressions.Expression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at System.Dynamic.Utils.ExpressionVisitorUtils.VisitBlockExpressions(ExpressionVisitor visitor, BlockExpression block)
+   at System.Linq.Expressions.ExpressionVisitor.VisitBlock(BlockExpression node)
+   at System.Linq.Expressions.BlockExpression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at System.Linq.Expressions.ExpressionVisitor.VisitLambda[T](Expression`1 node)
+   at System.Linq.Expressions.Expression`1.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at Microsoft.EntityFrameworkCore.Query.RelationalShapedQueryCompilingExpressionVisitor.VisitShapedQueryExpression(ShapedQueryExpression shapedQueryExpression)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.VisitExtension(Expression extensionExpression)
+   at System.Linq.Expressions.Expression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass9_0`1.<Execute>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQueryCore[TFunc](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.Execute[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.Execute[TResult](Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetEnumerator()
+   at System.Linq.Enumerable.SelectEnumerableIterator`2.MoveNext()
+   at lambda_method(Closure , EnumerableQuery`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , EnumerableQuery`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at Pharmacy.Api.Controllers.OrderController.GetOrders(PaginationQuery paginationQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 64
+05/17/2020 21:13:13 [Error]  HTTP "GET" "/api/Order/get" responded 500 in 2484.3072 ms
+05/17/2020 21:16:06 [Information]  App is starting up.
+05/17/2020 21:16:17 [Information]  HTTP "GET" "/api/Order/get" responded 200 in 3267.7722 ms
+05/17/2020 21:21:49 [Information]  App is starting up.
+05/17/2020 21:22:05 [Information]  HTTP "GET" "/api/Order/get" responded 200 in 3091.6483 ms
+05/17/2020 21:23:36 [Information]  App is starting up.
+05/17/2020 21:23:44 [Information]  HTTP "GET" "/api/Order/get" responded 200 in 3192.6519 ms
+05/17/2020 21:24:25 [Information]  App is starting up.
+05/17/2020 21:24:38 [Information]  HTTP "GET" "/api/Order/get" responded 200 in 3371.8080 ms

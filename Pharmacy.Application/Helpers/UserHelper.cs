@@ -21,7 +21,7 @@ namespace Pharmacy.Application.Helpers
         {
             StringArgumentValidator.ValidateStringArgument(id, nameof(id));
 
-            var user = await _userManager.FindByIdAsync(id.ToUpper());
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
                 throw new ObjectNotFoundException(ExceptionStrings.UserNotFoundException, id);
