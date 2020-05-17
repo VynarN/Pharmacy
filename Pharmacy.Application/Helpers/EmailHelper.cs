@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
-using Pharmacy.Application.Common.Interfaces.InfrustructureInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Validators;
 using System.IO;
 using System.Threading.Tasks;

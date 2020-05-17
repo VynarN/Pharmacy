@@ -1,17 +1,16 @@
 ﻿using Pharmacy.Application.Common.AppObjects;
 using Pharmacy.Application.Common.DTO.Out;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
-using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using System.Collections.Generic;
 
-namespace Pharmacy.Application.Helpers
+namespace Pharmacy.Api.Services
 {
-    public class PaginationHelper: IPaginationHelper
+    public class PaginationService: IPaginationService
     {
         private readonly IUriService _uriService;
 
-        public PaginationHelper(IUriService uriService)
+        public PaginationService(IUriService uriService)
         {
             _uriService = uriService;
         }

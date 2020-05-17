@@ -6,7 +6,7 @@ using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.DTO.In.MedicamentIn;
 using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
-using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
 using System;
@@ -21,13 +21,13 @@ namespace Pharmacy.Api.Controllers
     {
         private readonly IMedicamentService _medicamentService;
         private readonly IAllowedForEntityService _allowedForEntityService;
-        private readonly IPaginationHelper _paginationHelper;
+        private readonly IPaginationService _paginationHelper;
         private readonly ILogger<MedicamentController> _logger;
         private readonly IMapper _mapper;
 
         public MedicamentController(IMedicamentService medicamentService, ILogger<MedicamentController> logger,
                                     IAllowedForEntityService allowedForEntityService, IMapper mapper,
-                                    IPaginationHelper paginationHelper)
+                                    IPaginationService paginationHelper)
         {
             _medicamentService = medicamentService;
             _allowedForEntityService = allowedForEntityService;

@@ -48,7 +48,7 @@ namespace Pharmacy.Application.Services
                                 .Take(paginationQuery.PageSize);
         }
 
-        public Task UpdateMedicament(Medicament medicament)
+        public Task UpdateMedicament(Medicament medicament, int medicamentId)
         {
             throw new System.NotImplementedException();
         }

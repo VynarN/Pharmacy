@@ -1,6 +1,6 @@
-﻿namespace Pharmacy.Application.Common.Interfaces.HelpersInterfaces
+﻿namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 {
-    public interface ICookieHelper
+    public interface ICookieService
     {
         public void CreateCookie(bool isPersistent, string accessToken, string refreshToken);
 

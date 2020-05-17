@@ -3,9 +3,9 @@ using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Application.Common.Queries;
 using System.Collections.Generic;
 
-namespace Pharmacy.Application.Common.Interfaces.HelpersInterfaces
+namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 {
-    public interface IPaginationHelper
+    public interface IPaginationService
     {
         PaginatedResponse<MedicamentOutDto> FormMedicamentsPaginatedResponse(int medicamentsCount, 
                                                    IEnumerable<MedicamentOutDto> medicamentsDto,

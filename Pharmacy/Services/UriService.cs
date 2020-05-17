@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
-using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 
-namespace Pharmacy.Application.Services
+namespace Pharmacy.Api.Services
 {
     public class UriService: IUriService
     {

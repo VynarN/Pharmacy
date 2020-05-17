@@ -5,7 +5,6 @@ using Pharmacy.Application.Common.Interfaces;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
-using Pharmacy.Application.Common.Interfaces.InfrustructureInterfaces;
 using Pharmacy.Application.Common.Mappings;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Application.Helpers;
@@ -31,7 +30,7 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddSingleton<IBlobStorage, BlobService>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IEmailHelper, EmailHelper>();
-            services.AddTransient<ICookieHelper, CookieHelper>();
+            services.AddTransient<ICookieService, CookieService>();
             services.AddTransient<IUserHelper, UserHelper>();
             services.AddTransient<ITokenHelper, TokenHelper>();
             services.AddTransient<IEmailSender, SendGridService>();
@@ -48,7 +47,7 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IApplicationMethodService, ApplicationMethodService>();
             services.AddTransient<IMedicamentFormService, MedicamentFormService>();
             services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
-            services.AddTransient<IPaginationHelper, PaginationHelper>();
+            services.AddTransient<IPaginationService, PaginationService>();
             services.AddTransient<IFilterHelper<Medicament, MedicamentFilterQuery>, MedicamentFilterHelper>();
             services.AddScoped<IUriService, UriService>();
             services.AddScoped<ICurrentUser, CurrentUserService>();

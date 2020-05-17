@@ -5,13 +5,13 @@ using System;
 
 namespace Pharmacy.Application.Helpers
 {
-    public class CookieHelper: ICookieHelper
+    public class CookieService: ICookieService
     {
         private readonly IConfiguration _configuration;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CookieHelper(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public CookieService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
@@ -23,7 +23,7 @@ namespace Pharmacy.Application.Helpers
 
             if (isPersistent)
             {
-                CookieOptions.MaxAge = TimeSpan.FromDays(Convert.ToDouble(_configuration["CookieSettings:ExpireMinutes"]));
+                CookieOptions.MaxAge = TimeSpan.FromDays(Convert.ToDouble(_configuration["CookieSettings:ExpireDays"]));
 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append(_configuration["CookieSettings:AccessTokenCookieName"], accessToken, CookieOptions);
                 _httpContextAccessor.HttpContext.Response.Cookies.Append(_configuration["CookieSettings:RefreshTokenCookieName"], refreshToken, CookieOptions);

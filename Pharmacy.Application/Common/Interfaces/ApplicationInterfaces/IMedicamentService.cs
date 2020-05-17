@@ -15,6 +15,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 
         Task DeleteMedicament(int medicamentId);
 
-        Task UpdateMedicament(Medicament medicament);
+        Task UpdateMedicament(Medicament medicament, int medicamentId);
     }
 }

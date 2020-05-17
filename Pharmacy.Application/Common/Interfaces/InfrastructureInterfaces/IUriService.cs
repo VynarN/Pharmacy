@@ -1,6 +1,6 @@
 ﻿using Pharmacy.Application.Common.Queries;
 
-namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
+namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 {
     public interface IUriService
     {

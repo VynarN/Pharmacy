@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Exceptions;
-using Pharmacy.Application.Common.Interfaces.InfrustructureInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net;

@@ -12,7 +12,6 @@ using Pharmacy.Application.Common.DTO.In.Auth.ResetPassword;
 using Pharmacy.Application.Common.DTO.In.UserIn;
 using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces;
-using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 
 namespace Pharmacy.Api.Controllers
@@ -22,11 +21,11 @@ namespace Pharmacy.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _service;
-        private readonly ICookieHelper _cookieHelper;
+        private readonly ICookieService _cookieHelper;
         private readonly ICurrentUser _currentUser;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService service,ICookieHelper cookieHelper, ICurrentUser currentUser, ILogger<AccountController> logger)
+        public AccountController(IAccountService service,ICookieService cookieHelper, ICurrentUser currentUser, ILogger<AccountController> logger)
         {
             _service = service;
             _cookieHelper = cookieHelper;

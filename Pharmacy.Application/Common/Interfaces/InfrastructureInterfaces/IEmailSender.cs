@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Pharmacy.Application.Common.Interfaces.InfrustructureInterfaces
+namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 {
     public interface IEmailSender
     {
