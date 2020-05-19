@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy.Domain.Common.Enums;
+using System;
 
 namespace Pharmacy.Domain.Entites
 {
@@ -22,6 +23,8 @@ namespace Pharmacy.Domain.Entites
         public decimal Total { get; set; }
 
         public DateTime RequestedAt { get; set; }
+
+        public RequestStatus RequestStatus { get; set; }
 
         public override bool Equals(object obj)
         {

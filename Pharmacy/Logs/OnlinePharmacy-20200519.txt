@@ -1,0 +1,5 @@
+05/19/2020 10:25:54 [Information]  App is starting up.
+05/19/2020 10:27:40 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 3416.2921 ms
+05/19/2020 10:27:58 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 149.6488 ms
+05/19/2020 10:28:04 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 26.6413 ms
+05/19/2020 10:28:22 [Information]  HTTP "POST" "/api/Order/create" responded 200 in 278.4444 ms

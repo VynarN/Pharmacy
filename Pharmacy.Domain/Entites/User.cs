@@ -17,10 +17,13 @@ namespace Pharmacy.Domain.Entites
 
         public List<PaymentRequest> PaymentRequests { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         public User()
         {
             BasketItems = new List<BasketItem>();
             Orders = new List<Order>();
+            Comments = new List<Comment>();
         }
 
         public override bool Equals(object obj)

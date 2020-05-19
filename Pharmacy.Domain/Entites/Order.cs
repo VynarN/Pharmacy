@@ -1,9 +1,10 @@
 ﻿using Pharmacy.Domain.Common.Enums;
+using Pharmacy.Domain.Common.ValueObjects;
 using System;
 
 namespace Pharmacy.Domain.Entites
 {
-    public class Order
+    public class Order: AuditableEntity
     {
         public int Id { get; set; }
 
@@ -22,11 +23,9 @@ namespace Pharmacy.Domain.Entites
 
         public OrderStatus Status { get; set; }
 
-        public DateTime OrderedAt { get; set; }
+        public DateTime? DispatchedAt { get; set; }
 
-        public DateTime DispatchedAt { get; set; }
-
-        public DateTime DeliveredAt { get; set; }
+        public DateTime? DeliveredAt { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -37,14 +36,14 @@ namespace Pharmacy.Domain.Entites
                    Quantity == order.Quantity &&
                    Total == order.Total &&
                    Status == order.Status &&
-                   OrderedAt == order.OrderedAt &&
+                   CreatedAt == order.CreatedAt &&
                    DispatchedAt == order.DispatchedAt &&
                    DeliveredAt == order.DeliveredAt;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(UserId, MedicamentId, DeliveryAddressId, Total, Status, OrderedAt, DispatchedAt, DeliveredAt) + Quantity.GetHashCode();
+            return HashCode.Combine(UserId, MedicamentId, DeliveryAddressId, Total, Status, CreatedAt, DispatchedAt, DeliveredAt) + Quantity.GetHashCode();
         }
     }
 }

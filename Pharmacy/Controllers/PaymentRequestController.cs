@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
-using Pharmacy.Application.Common.DTO.In.PaymentRequestIn;
+using Pharmacy.Application.Common.DTO;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
 using System.Net;
@@ -16,24 +17,28 @@ namespace Pharmacy.Api.Controllers
     public class PaymentRequestController : ControllerBase
     {
         private readonly IPaymentRequestService _paymentRequestService;
+        private readonly ICurrentUser _currentUser;
         private readonly ILogger<PaymentRequestController> _logger;
         private readonly IMapper _mapper;
 
-        public PaymentRequestController(IPaymentRequestService paymentRequestService, ILogger<PaymentRequestController> logger, IMapper mapper)
+        public PaymentRequestController(IPaymentRequestService paymentRequestService, ILogger<PaymentRequestController> logger, IMapper mapper, ICurrentUser currentUser)
         {
             _paymentRequestService = paymentRequestService;
+            _currentUser = currentUser;
             _logger = logger;
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> AddBasketItem(PaymentRequestInDto paymentRequestDto)
+        [HttpPost("create/{receiver}")]
+        public async Task<IActionResult> CreatePaymentRequest(string receiver, DeliveryAddressDto deliveryAddressDto)
         {
             try
             {
-                var basketItem = _mapper.Map<PaymentRequest>(paymentRequestDto);
+                var currentUserId = _currentUser.UserId;
 
-                await _paymentRequestService.CreatePaymentRequest(basketItem);
+                var deliveryAddress = _mapper.Map<DeliveryAddress>(deliveryAddressDto);
+
+                await _paymentRequestService.CreatePaymentRequest(currentUserId, receiver, deliveryAddress);
 
                 return Ok();
             }

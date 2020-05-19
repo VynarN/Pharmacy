@@ -10,8 +10,8 @@ using Pharmacy.Infrastructure;
 namespace Pharmacy.Infrastructure.Migrations
 {
     [DbContext(typeof(PharmacyContext))]
-    [Migration("20200512131537_firstMigration")]
-    partial class firstMigration
+    [Migration("20200519113728_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,28 +51,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "b1e0129c-e67c-4436-8517-a51658f1ccf7",
+                            ConcurrencyStamp = "6601960e-2fcb-4b4f-b7c2-47fac9f8d25a",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "bd3104dc-6d49-4b68-8153-891e71452100",
+                            ConcurrencyStamp = "555d4813-7474-4254-8e9a-8a1458244125",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "cd6f0b95-20a7-4e01-8791-302e8bbfe0f3",
+                            ConcurrencyStamp = "63a8a3f8-0f67-49a1-818b-0d6fdb80b4de",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "a6e05d96-087f-4755-9408-5ba4d3b8ffd8",
+                            ConcurrencyStamp = "e758f602-fc54-47b3-9e21-088f790c9819",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -297,6 +297,63 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Pharmacy.Domain.Entites.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Depth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicamentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicamentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Pharmacy.Domain.Entites.CommentResponse", b =>
+                {
+                    b.Property<int>("CommentResponseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentResponseId");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("CommentResponses");
+                });
+
             modelBuilder.Entity("Pharmacy.Domain.Entites.DeliveryAddress", b =>
                 {
                     b.Property<int>("Id")
@@ -456,7 +513,7 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -523,20 +580,29 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DeliveredAt")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeliveredAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DeliveryAddressId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DispatchedAt")
+                    b.Property<DateTime?>("DispatchedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MedicamentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OrderedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -579,6 +645,9 @@ namespace Pharmacy.Infrastructure.Migrations
 
                     b.Property<string>("ReceiverEmail")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestStatus")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
@@ -743,6 +812,28 @@ namespace Pharmacy.Infrastructure.Migrations
                     b.HasOne("Pharmacy.Domain.Entites.User", "User")
                         .WithMany("BasketItems")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Pharmacy.Domain.Entites.Comment", b =>
+                {
+                    b.HasOne("Pharmacy.Domain.Entites.Medicament", "Medicament")
+                        .WithMany("Comments")
+                        .HasForeignKey("MedicamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pharmacy.Domain.Entites.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Pharmacy.Domain.Entites.CommentResponse", b =>
+                {
+                    b.HasOne("Pharmacy.Domain.Entites.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -2,7 +2,7 @@
 {
     public enum RequestStatus
     {
-        None,
+        Pending,
         Accepted,
         Declined
     }

@@ -41,7 +41,7 @@ namespace Pharmacy.Api.Controllers
 
                 var deliveryAddress = _mapper.Map<DeliveryAddress>(deliveryAddressDto);
 
-                await _orderService.CreateOrder(currentUserId, deliveryAddress);
+                await _orderService.CreateOrders(currentUserId, deliveryAddress);
 
                 return Ok();
             }

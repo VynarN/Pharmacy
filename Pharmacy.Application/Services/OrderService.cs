@@ -1,4 +1,5 @@
-﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Constants;
+using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Common.Enums;
@@ -23,7 +24,7 @@ namespace Pharmacy.Application.Services
             _deliveryAddressService = deliveryAddressService;
         }
 
-        public async Task CreateOrder(string userId, DeliveryAddress deliveryAddress)
+        public async Task CreateOrders(string userId, DeliveryAddress deliveryAddress)
         {
             var userBasketItems = _basketItemsRepo.GetWithInclude(bi => bi.UserId.Equals(userId), bi => bi.Medicament);
 
@@ -36,7 +37,6 @@ namespace Pharmacy.Application.Services
                 MedicamentId = basketItem.MedicamentId,
                 Quantity = basketItem.ProductQuantity,
                 Total = basketItem.Medicament.Price * basketItem.ProductQuantity,
-                OrderedAt = DateTime.UtcNow,
                 Status = OrderStatus.Pending
             });
 
@@ -45,7 +45,7 @@ namespace Pharmacy.Application.Services
             await _basketItemsRepo.Delete(userBasketItems);
         }
 
-        public Task UpdateOrder(OrderStatus orderStatus, int orderId)
+        public Task UpdateOrders(string userId, DateTime orderDateTime, OrderStatus orderStatus)
         {
             throw new System.NotImplementedException();
         }
@@ -56,7 +56,7 @@ namespace Pharmacy.Application.Services
                                    .Skip((paginationQuery.PageNumber - 1) * paginationQuery.PageSize)
                                    .Take(paginationQuery.PageSize)
                                    .AsEnumerable()
-                                   .GroupBy(order => order.OrderedAt.ToString("dd/mm/yyyy H:mm"))
+                                   .GroupBy(order => order.CreatedAt.ToString(StringConstants.DateTimeFormat))
                                    .Select(g => new GroupedOrders() { 
                                        Date = g.Key, 
                                        Orders = g.Select(order => order), 

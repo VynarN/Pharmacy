@@ -41,12 +41,15 @@ namespace Pharmacy.Domain.Entites
 
         public List<BasketItem> BasketItems { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         public Medicament()
         {
             Images = new List<Image>();
             Orders = new List<Order>();
             PaymentRequests = new List<PaymentRequest>();
             BasketItems = new List<BasketItem>();
+            Comments = new List<Comment>();
         }
 
         public override bool Equals(object obj)
