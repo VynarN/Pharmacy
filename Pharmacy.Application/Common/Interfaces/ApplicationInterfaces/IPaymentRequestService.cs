@@ -7,7 +7,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IPaymentRequestService
     {
-        Task CreatePaymentRequest(string userId, string receiverEmail, DeliveryAddress deliveryAddress);
+        Task CreatePaymentRequest(string senderId, string receiverEmail, DeliveryAddress deliveryAddress);
 
         Task DeletePaymentRequest(int paymentRequestId);
 

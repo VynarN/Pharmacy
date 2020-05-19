@@ -3,3 +3,107 @@
 05/19/2020 10:27:58 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 149.6488 ms
 05/19/2020 10:28:04 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 26.6413 ms
 05/19/2020 10:28:22 [Information]  HTTP "POST" "/api/Order/create" responded 200 in 278.4444 ms
+05/19/2020 19:11:16 [Information]  App is starting up.
+05/19/2020 19:12:19 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 400 in 3948.6112 ms
+05/19/2020 19:12:32 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 202 in 2124.8265 ms
+05/19/2020 19:12:48 [Information]  HTTP "GET" "/api/Account/confirm?userId=d5bfe12f-e8eb-4417-837c-937d72d7fac7&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25oTGNEU0pnclFsTGhjZWNSOW40STc1RkM0NmZHaldsM1dremNRRWRYRXJwZnN2Z3ZHY295OER6Wi9OY3JmZGRCc3ZMU2JJSVh1MHRDMVl4MEZHUW1KTloxbElSYkJaellBeFRyQ3lYY1lGRXFPVzlTSWR1emVEVHRCT0IySS9SK1VHa2RlMm1vUnVyNkhEWFJqcmhIZkZXdGpZWVBJZUJMYko3emN4dHEreU5tUXh6eDZ1aVh5NUVXWUlFTitmakhUdHlqM0hLbzB5UzQwMnE4U1VtVlFpMi9jbWtqaHd3Y2pQOWJWTFl0L1lpdz09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 1169.0416 ms
+05/19/2020 19:12:48 [Information]  HTTP "GET" "/api/Account/confirm?userId=d5bfe12f-e8eb-4417-837c-937d72d7fac7&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25oTGNEU0pnclFsTGhjZWNSOW40STc1RkM0NmZHaldsM1dremNRRWRYRXJwZnN2Z3ZHY295OER6Wi9OY3JmZGRCc3ZMU2JJSVh1MHRDMVl4MEZHUW1KTloxbElSYkJaellBeFRyQ3lYY1lGRXFPVzlTSWR1emVEVHRCT0IySS9SK1VHa2RlMm1vUnVyNkhEWFJqcmhIZkZXdGpZWVBJZUJMYko3emN4dHEreU5tUXh6eDZ1aVh5NUVXWUlFTitmakhUdHlqM0hLbzB5UzQwMnE4U1VtVlFpMi9jbWtqaHd3Y2pQOWJWTFl0L1lpdz09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 105.3901 ms
+05/19/2020 19:13:54 [Information]  App is starting up.
+05/19/2020 19:14:20 [Information]  HTTP "GET" "/api/Account/confirm?userId=d5bfe12f-e8eb-4417-837c-937d72d7fac7&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25oTGNEU0pnclFsTGhjZWNSOW40STc1RkM0NmZHaldsM1dremNRRWRYRXJwZnN2Z3ZHY295OER6Wi9OY3JmZGRCc3ZMU2JJSVh1MHRDMVl4MEZHUW1KTloxbElSYkJaellBeFRyQ3lYY1lGRXFPVzlTSWR1emVEVHRCT0IySS9SK1VHa2RlMm1vUnVyNkhEWFJqcmhIZkZXdGpZWVBJZUJMYko3emN4dHEreU5tUXh6eDZ1aVh5NUVXWUlFTitmakhUdHlqM0hLbzB5UzQwMnE4U1VtVlFpMi9jbWtqaHd3Y2pQOWJWTFl0L1lpdz09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 3467.5561 ms
+05/19/2020 19:14:55 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 335.0453 ms
+05/19/2020 19:15:45 [Information]  HTTP "POST" "/api/Manufacturer/create" responded 200 in 257.7248 ms
+05/19/2020 19:16:04 [Information]  HTTP "POST" "/api/Manufacturer/create" responded 200 in 25.9330 ms
+05/19/2020 19:23:07 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 281.1635 ms
+05/19/2020 19:24:54 [Information]  HTTP "POST" "/api/Medicament/create" responded 200 in 63.6911 ms
+05/19/2020 19:25:27 [Information]  HTTP "POST" "/api/Account/register?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 202 in 1384.3685 ms
+05/19/2020 19:25:34 [Information]  HTTP "GET" "/api/Account/confirm?userId=d113d35b-37bb-4f88-9cc6-876758c3f52d&token=Q2ZESjhHVXdRRmFqZXdSTWpPRlNDZ1poU25pbXNGV0x0cUdtc0FRcHhSOURhS2dIUXVXRG4vMEtWRU53U00rb0ZpamtsVitLM3FVOWZ4c1g1cHBHcHIxRUR6S0dCdXkveWVLdnd5S1FSOXkrUHBSaXJvQ2lseWR4VHdwd09xejE1ZXBHQWJlcTd4VFJwVFUwRGlCaG0vOWwzSjBHTHEyQ0c1Uzk1RXdtZWJ0eFdPNFdQSllCY3JpQ0pKeStQR05kejZZSzdjalUwZUtRVHhFVW42TDgxVi9Lc0xVcnptenQvVW8yMTI0NksrMExXeEVDL3FjSjhxZGJVSU9WRVhwY0RYYWhqdz09&returnUrl=https://localhost:44337/swagger/index.html" responded 302 in 211.9577 ms
+05/19/2020 19:26:39 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 47.2422 ms
+05/19/2020 19:26:48 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 8.7877 ms
+05/19/2020 19:27:42 [Information]  HTTP "POST" "/api/Order/create" responded 200 in 179.0418 ms
+05/19/2020 19:27:51 [Error] Pharmacy.Api.Controllers.OrderController.GetOrders (Pharmacy.Api) Error mapping types.
+
+Mapping types:
+EnumerableQuery`1 -> IEnumerable`1
+System.Linq.EnumerableQuery`1[[Pharmacy.Domain.Common.ValueObjects.GroupedUserOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto, Pharmacy.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+EnumerableQuery`1 -> IEnumerable`1
+System.Linq.EnumerableQuery`1[[Pharmacy.Domain.Common.ValueObjects.GroupedUserOrders, Pharmacy.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto, Pharmacy.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+GroupedUserOrders -> GroupedOrdersDto
+Pharmacy.Domain.Common.ValueObjects.GroupedUserOrders -> Pharmacy.Application.Common.DTO.Out.OrderOut.GroupedOrdersDto
+   at lambda_method(Closure , GroupedUserOrders , GroupedOrdersDto , ResolutionContext )
+   at lambda_method(Closure , EnumerableQuery`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , EnumerableQuery`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at Pharmacy.Api.Controllers.OrderController.GetOrders(PaginationQuery paginationQuery) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\OrderController.cs:line 64
+05/19/2020 19:27:51 [Error]  HTTP "GET" "/api/Order/get" responded 500 in 239.5013 ms
+05/19/2020 19:29:38 [Information]  App is starting up.
+05/19/2020 19:34:51 [Error]  HTTP "GET" "/api/Order/get" responded 500 in 2963.3992 ms
+System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteAsyncCore(Stream utf8Json, Object value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+05/19/2020 19:34:51 [Error]  An unhandled exception has occurred while executing the request.
+System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteAsyncCore(Stream utf8Json, Object value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/19/2020 19:39:32 [Information]  App is starting up.
+05/19/2020 19:39:54 [Information]  HTTP "GET" "/api/Order/get" responded 200 in 3199.6353 ms
+05/19/2020 19:41:09 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 503.8751 ms
+05/19/2020 19:41:15 [Information]  HTTP "POST" "/api/BasketItem/create" responded 200 in 23.2969 ms
+05/19/2020 19:41:48 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 129.5544 ms
+05/19/2020 19:43:39 [Information]  App is starting up.
+05/19/2020 19:48:03 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 2438.4172 ms
+05/19/2020 19:51:41 [Information]  App is starting up.
+05/19/2020 19:52:22 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 2863.9391 ms
+05/19/2020 19:52:57 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 15046.8415 ms
+05/19/2020 19:59:03 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 257869.8350 ms
+05/19/2020 20:24:33 [Information]  App is starting up.
+05/19/2020 20:24:56 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 3552.2528 ms
+05/19/2020 20:25:19 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 644.1582 ms
+05/19/2020 20:25:32 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 278.6980 ms

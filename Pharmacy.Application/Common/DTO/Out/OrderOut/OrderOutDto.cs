@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Pharmacy.Domain.Common.Enums;
 using Pharmacy.Domain.Entites;
-using System;
 using static Pharmacy.Application.Common.Mappings.IMapFrom;
 
 namespace Pharmacy.Application.Common.DTO.Out
@@ -10,8 +8,6 @@ namespace Pharmacy.Application.Common.DTO.Out
     {
         public int Id { get; set; }
 
-        public string UserId { get; set; }
-
         public MedicamentOutDto Medicament { get; set; }
 
         public int Quantity { get; set; }
@@ -19,14 +15,6 @@ namespace Pharmacy.Application.Common.DTO.Out
         public decimal Total { get; set; }
 
         public DeliveryAddressDto DeliveryAddress { get; set; }
-
-        public OrderStatus Status { get; set; }
-
-        public DateTime OrderedAt { get; set; }
-
-        public DateTime DispatchedAt { get; set; }
-
-        public DateTime DeliveredAt { get; set; }
 
         public void Mapping(Profile profile)
         {

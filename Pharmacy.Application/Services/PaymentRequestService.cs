@@ -1,6 +1,8 @@
 ﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
+using Pharmacy.Domain.Common.Enums;
 using Pharmacy.Domain.Entites;
 using System;
 using System.Linq;
@@ -13,35 +15,40 @@ namespace Pharmacy.Application.Services
         private readonly IRepository<PaymentRequest> _paymentRequestRepo;
         private readonly IRepository<BasketItem> _basketItemRepo;
         private readonly IDeliveryAddressService _deliveryAddressService;
+        private readonly IUserHelper _userHelper;
 
-        public PaymentRequestService(IRepository<PaymentRequest> paymentRequestRepo, IRepository<BasketItem> basketItemRepo, IDeliveryAddressService deliveryAddressService)
+        public PaymentRequestService(IRepository<PaymentRequest> paymentRequestRepo, IRepository<BasketItem> basketItemRepo, 
+                                     IDeliveryAddressService deliveryAddressService, IUserHelper userHelper)
         {
             _basketItemRepo = basketItemRepo;
             _paymentRequestRepo = paymentRequestRepo;
             _deliveryAddressService = deliveryAddressService;
+            _userHelper = userHelper;
         }
 
-        public async Task CreatePaymentRequest(string userId, string receiverEmail, DeliveryAddress deliveryAddress)
-        { 
-            var userBasketItems = _basketItemRepo.GetWithInclude(bi => bi.UserId.Equals(userId), bi => bi.Medicament);
+        public async Task CreatePaymentRequest(string senderId, string receiverEmail, DeliveryAddress deliveryAddress)
+        {
+            var receiver = await _userHelper.FindUserByEmailAsync(receiverEmail);
+
+            var senderBasketItems = _basketItemRepo.GetWithInclude(bi => bi.UserId.Equals(senderId), bi => bi.Medicament);
 
             var addressId = deliveryAddress.Id != 0 ? deliveryAddress.Id : await _deliveryAddressService.CreateDeliveryAddress(deliveryAddress);
 
-            var paymentRequests = userBasketItems.Select(basketItem => new PaymentRequest()
+            var paymentRequests = senderBasketItems.Select(basketItem => new PaymentRequest()
             {
-                SenderId = userId,
-                ReceiverEmail = receiverEmail,
+                SenderId = senderId,
+                ReceiverEmail = receiver.Email,
                 DeliveryAddressId = addressId,
                 MedicamentId = basketItem.MedicamentId,
                 Quantity = basketItem.ProductQuantity,
                 Total = basketItem.Medicament.Price * basketItem.ProductQuantity,
                 RequestedAt = DateTime.Now,
-                
+                RequestStatus = RequestStatus.Pending
             });
 
             await _paymentRequestRepo.Create(paymentRequests);
 
-            await _basketItemRepo.Delete(userBasketItems);
+            await _basketItemRepo.Delete(senderBasketItems);
         }
 
         public Task DeletePaymentRequest(int paymentRequestId)

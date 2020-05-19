@@ -59,9 +59,9 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                var groupedOrders = _orderService.GetOrders(paginationQuery);
+                var groupedUserOrders = _orderService.GetOrders(paginationQuery);
 
-                var formatedOrders = _mapper.Map<IEnumerable<GroupedOrdersDto>>(groupedOrders);
+                var formatedOrders = _mapper.Map<IEnumerable<GroupedUserOrdersDto>>(groupedUserOrders);
 
                 return Ok(formatedOrders);
             }

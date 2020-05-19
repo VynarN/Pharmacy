@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
+using Pharmacy.Domain.Common.ValueObjects;
 using Pharmacy.Domain.Entites;
+using System;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pharmacy.Infrastructure
 {
@@ -23,13 +28,38 @@ namespace Pharmacy.Infrastructure
         public DbSet<Comment> Comments { get; set; }
         public DbSet<CommentResponse> CommentResponses { get; set; }
 
-        public PharmacyContext(DbContextOptions<PharmacyContext> options) : base(options) { }
+        private readonly ICurrentUser _currentUser;
+
+        public PharmacyContext(DbContextOptions<PharmacyContext> options, ICurrentUser currentUser) : base(options) 
+        {
+            _currentUser = currentUser;
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUser.UserId;
+                        entry.Entity.CreatedAt = DateTime.Now;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.ModifiedBy = _currentUser.UserId;
+                        entry.Entity.ModifiedAt = DateTime.Now;
+                        break;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

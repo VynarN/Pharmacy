@@ -10,6 +10,12 @@ namespace Pharmacy.Application.Common.DTO.Out.OrderOut
 
         public decimal OrdersTotal { get; set; }
 
-        public string Date { get; set; }
+        public string CreatedAt { get; set; }
+
+        public string DispatchedAt { get; set; }
+
+        public string DeliveredAt { get; set; }
+
+        public string Status { get; set; }
     }
 }
