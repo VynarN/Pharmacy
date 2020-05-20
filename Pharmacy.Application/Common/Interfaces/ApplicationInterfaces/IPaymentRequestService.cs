@@ -11,6 +11,8 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 
         Task DeletePaymentRequest(int paymentRequestId);
 
-        IQueryable<PaymentRequest> GetPaymentRequests(PaginationQuery paginationQuery);
+        IQueryable<PaymentRequest> GetIncoming(out int totalCount, PaginationQuery paginationQuery);
+
+        IQueryable<PaymentRequest> GetOutcoming(out int totalCount, PaginationQuery paginationQuery);
     }
 }

@@ -2,7 +2,7 @@
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Validators;
 using Pharmacy.Domain.Entites;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Services
@@ -16,7 +16,7 @@ namespace Pharmacy.Application.Services
             _repository = repository;
         }
 
-        public async Task CreateService(string category)
+        public async Task CreateCategory(string category)
         {
             StringArgumentValidator.ValidateStringArgument(category, nameof(category));
 
@@ -25,7 +25,12 @@ namespace Pharmacy.Application.Services
             await _repository.Create(new Category() { Name = correctedCategory });
         }
 
-        public IEnumerable<Category> GetCategories()
+        public async Task DeleteCategory(Category category)
+        {
+            await _repository.Delete(category);
+        }
+
+        public IQueryable<Category> GetCategories()
         {
             return _repository.GetAllQueryable();
         }

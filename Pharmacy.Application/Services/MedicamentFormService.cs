@@ -25,9 +25,9 @@ namespace Pharmacy.Application.Services
             await _repository.Create(new MedicamentForm() { Form = correctedForm });
         }
 
-        public Task DeleteMedicamentForm(int medicamentFormId)
+        public async Task DeleteMedicamentForm(MedicamentForm medicamentForm)
         {
-            throw new System.NotImplementedException();
+            await _repository.Delete(medicamentForm);
         }
 
         public IEnumerable<MedicamentForm> GetMedicamentForms()

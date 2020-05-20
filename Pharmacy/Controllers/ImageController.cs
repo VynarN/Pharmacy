@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
@@ -10,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Api.Controllers
 {
+    [Authorize(Roles = "manager,admin,mainadmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
     {
         private readonly IImageService _imageService;
-
         private readonly ILogger<ImageController> _logger;
 
         public ImageController(IImageService imageService, ILogger<ImageController> logger)
@@ -24,9 +25,8 @@ namespace Pharmacy.Api.Controllers
             _logger = logger;
         }
 
-
         [HttpPost]
-        [Route("create/{medicamentId}")]
+        [Route("add/{medicamentId}")]
         public async Task<IActionResult> AddImages(IList<IFormFile> images, int medicamentId)
         {
             try

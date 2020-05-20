@@ -36,5 +36,14 @@ namespace Pharmacy.Api.Services
 
             return modifiedUri;
         }
+
+        public string GetPaginationUri(PaginationQuery paginationQuery)
+        {
+            var modifiedUri = QueryHelpers.AddQueryString(_baseUri, "PageNumber", paginationQuery.PageNumber.ToString());
+
+            modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "PageSize", paginationQuery.PageSize.ToString());
+
+            return modifiedUri;
+        }
     }
 }

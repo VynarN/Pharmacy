@@ -26,14 +26,14 @@ namespace Pharmacy.Application.Services
             return  _repository.GetByPredicate( med => med.Name.Equals(medicament.Name) && med.Price == medicament.Price).FirstOrDefault().Id;
         }
 
-        public Task DeleteMedicament(int medicamentId)
+        public async Task DeleteMedicament(Medicament medicament)
         {
-            throw new System.NotImplementedException();
+            await _repository.Delete(medicament);
         }
 
-        public Task<Medicament> GetMedicament(int medicamentId)
+        public async Task<Medicament> GetMedicament(int medicamentId)
         {
-            throw new System.NotImplementedException();
+            return await _repository.GetByIdAsync(medicamentId);
         }
 
         public IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery)
@@ -47,9 +47,9 @@ namespace Pharmacy.Application.Services
                                 .Take(paginationQuery.PageSize);
         }
 
-        public Task UpdateMedicament(Medicament medicament, int medicamentId)
+        public async Task UpdateMedicament(Medicament medicament)
         {
-            throw new System.NotImplementedException();
+            await _repository.Update(medicament);
         }
     }
 }

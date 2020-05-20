@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
@@ -12,16 +13,17 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BasketItemController : ControllerBase
     {
         private readonly IBasketItemService _basketItemService;
         private readonly ICurrentUser _currentUser;
-        private readonly ILogger<ManufacturerController> _logger;
+        private readonly ILogger<BasketItemController> _logger;
         private readonly IMapper _mapper;
 
-        public BasketItemController(IBasketItemService basketItemService, ILogger<ManufacturerController> logger, 
+        public BasketItemController(IBasketItemService basketItemService, ILogger<BasketItemController> logger, 
                                     IMapper mapper, ICurrentUser currentUser)
         {
             _basketItemService = basketItemService;
@@ -30,7 +32,7 @@ namespace Pharmacy.Api.Controllers
             _currentUser = currentUser;
         }
 
-        [HttpPost("create")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddBasketItem(BasketItemInDto basketItemDto)
         {
             try

@@ -1,5 +1,5 @@
 ﻿using Pharmacy.Application.Common.AppObjects;
-using Pharmacy.Application.Common.DTO.Out;
+using Pharmacy.Application.Common.DTO.Out.MedicamentOut;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using System.Collections.Generic;
@@ -15,12 +15,12 @@ namespace Pharmacy.Api.Services
             _uriService = uriService;
         }
 
-        public PaginatedResponse<MedicamentOutDto> FormMedicamentsPaginatedResponse(int medicamentsCount,
-                                                                         IEnumerable<MedicamentOutDto> medicamentsDto,
+        public PaginatedResponse<MedicamentBaseInfoDto> FormMedicamentsPaginatedResponse(int medicamentsCount,
+                                                                         IEnumerable<MedicamentBaseInfoDto> medicamentsDto,
                                                                          PaginationQuery paginationQuery, 
                                                                          MedicamentFilterQuery medicamentFilterQuery)
         {
-            var paginatedResponse = new PaginatedResponse<MedicamentOutDto>(medicamentsDto);
+            var paginatedResponse = new PaginatedResponse<MedicamentBaseInfoDto>(medicamentsDto);
 
             paginatedResponse.PageNumber = paginationQuery.PageNumber;
             paginatedResponse.PageSize = paginationQuery.PageSize;
@@ -45,6 +45,34 @@ namespace Pharmacy.Api.Services
                                                         PageSize = paginationQuery.PageSize
                                                     },
                                                     medicamentFilterQuery) : null;
+            return paginatedResponse;
+        }
+
+        public PaginatedResponse<T> FormPaginatedResponse<T>(int totalCount, IEnumerable<T> dtos, PaginationQuery paginationQuery)
+        {
+            var paginatedResponse = new PaginatedResponse<T>(dtos);
+
+            paginatedResponse.PageNumber = paginationQuery.PageNumber;
+            paginatedResponse.PageSize = paginationQuery.PageSize;
+
+            paginatedResponse.TotalPages = GetTotalPages(totalCount, paginationQuery.PageSize);
+
+
+            paginatedResponse.NextPage = paginatedResponse.TotalPages > paginationQuery.PageNumber ?
+                                        _uriService.GetPaginationUri(
+                                                new PaginationQuery()
+                                                {
+                                                    PageNumber = paginationQuery.PageNumber + 1,
+                                                    PageSize = paginationQuery.PageSize
+                                                }) : null;
+
+            paginatedResponse.PreviousPage = paginatedResponse.PageNumber > 1 ?
+                                             _uriService.GetPaginationUri(
+                                                     new PaginationQuery()
+                                                     {
+                                                         PageNumber = paginationQuery.PageNumber - 1,
+                                                         PageSize = paginationQuery.PageSize
+                                                     }) : null;
             return paginatedResponse;
         }
 

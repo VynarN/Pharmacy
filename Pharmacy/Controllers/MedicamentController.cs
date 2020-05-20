@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.DTO.In.MedicamentIn;
 using Pharmacy.Application.Common.DTO.Out;
+using Pharmacy.Application.Common.DTO.Out.MedicamentOut;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
@@ -21,21 +23,22 @@ namespace Pharmacy.Api.Controllers
     {
         private readonly IMedicamentService _medicamentService;
         private readonly IAllowedForEntityService _allowedForEntityService;
-        private readonly IPaginationService _paginationHelper;
+        private readonly IPaginationService _paginationService;
         private readonly ILogger<MedicamentController> _logger;
         private readonly IMapper _mapper;
 
         public MedicamentController(IMedicamentService medicamentService, ILogger<MedicamentController> logger,
                                     IAllowedForEntityService allowedForEntityService, IMapper mapper,
-                                    IPaginationService paginationHelper)
+                                    IPaginationService paginationService)
         {
             _medicamentService = medicamentService;
             _allowedForEntityService = allowedForEntityService;
-            _paginationHelper = paginationHelper;
+            _paginationService = paginationService;
             _logger = logger;
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "manager,admin,mainadmin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateMedicament(MedicamentInDto medicamentDto)
         {
@@ -50,7 +53,7 @@ namespace Pharmacy.Api.Controllers
 
                 var createdMedicamentId = await _medicamentService.CreateMedicament(medicament);
 
-                return Ok(createdMedicamentId);
+                return CreatedAtAction(nameof(Get), createdMedicamentId);
             }
             catch(Exception ex)
             {
@@ -68,12 +71,52 @@ namespace Pharmacy.Api.Controllers
             {
                 var medicaments = _medicamentService.GetMedicaments(out int totalMedicamentsCount, paginationQuery, medicamentFilterQuery);
 
-                var medicamentsDto = medicaments.ProjectTo<MedicamentOutDto>(_mapper.ConfigurationProvider);
+                var medicamentsDto = medicaments.ProjectTo<MedicamentBaseInfoDto>(_mapper.ConfigurationProvider);
 
-                var paginatedResponse = _paginationHelper.FormMedicamentsPaginatedResponse(totalMedicamentsCount, 
+                var paginatedResponse = _paginationService.FormMedicamentsPaginatedResponse(totalMedicamentsCount, 
                                                           medicamentsDto, paginationQuery, medicamentFilterQuery);
 
                 return Ok(paginatedResponse);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
+            }
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                var medicament = await _medicamentService.GetMedicament(id);
+
+                var mappedMedicament =_mapper.Map<MedicamentOutDto>(medicament);
+
+                return Ok(mappedMedicament);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ObjectResult(ExceptionStrings.Exception);
+            }
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update(MedicamentInDto medicamentDto)
+        {
+            try
+            {
+                var mappedMedicament = _mapper.Map<Medicament>(medicamentDto);
+
+                await _medicamentService.UpdateMedicament(mappedMedicament);
+
+                return NoContent();
             }
             catch (Exception ex)
             {

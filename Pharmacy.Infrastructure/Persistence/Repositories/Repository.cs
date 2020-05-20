@@ -83,6 +83,12 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task Update(IEnumerable<TEntity> entities)
+        {
+            context.Set<TEntity>().UpdateRange(entities);
+            await context.SaveChangesAsync();
+        }
+
         public IQueryable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return Include(includeProperties);

@@ -21,5 +21,10 @@ namespace Pharmacy.Application.Services
 
             return _repository.GetByPredicate(obj => obj.Name.Equals(manufacturer.Name)).FirstOrDefault().Id;
         }
+
+        public async Task UpdateManufacturer(Manufacturer manufacturer)
+        {
+            await _repository.Update(manufacturer);
+        }
     }
 }

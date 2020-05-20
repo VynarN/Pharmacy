@@ -1,7 +1,6 @@
 ﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
-using System;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Services
@@ -21,9 +20,9 @@ namespace Pharmacy.Application.Services
 
         }
 
-        public Task UpdateInstruction(Instruction instruction, int instructionId)
+        public async Task UpdateInstruction(Instruction instruction)
         {
-            throw new NotImplementedException();
+            await _repository.Update(instruction);
         }
     }
 }

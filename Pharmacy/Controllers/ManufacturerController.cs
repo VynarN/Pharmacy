@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
@@ -11,6 +12,7 @@ using Pharmacy.Domain.Entites;
 
 namespace Pharmacy.Api.Controllers
 {
+    [Authorize(Roles = "manager,admin,mainadmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ManufacturerController : ControllerBase

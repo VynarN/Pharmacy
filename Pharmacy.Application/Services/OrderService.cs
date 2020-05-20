@@ -25,7 +25,7 @@ namespace Pharmacy.Application.Services
             _deliveryAddressService = deliveryAddressService;
         }
 
-        public async Task CreateOrders(string userId, DeliveryAddress deliveryAddress)
+        public async Task CreateOrder(string userId, DeliveryAddress deliveryAddress)
         {
             var userBasketItems = _basketItemsRepo.GetWithInclude(bi => bi.UserId.Equals(userId), bi => bi.Medicament);
 
@@ -46,47 +46,51 @@ namespace Pharmacy.Application.Services
             await _basketItemsRepo.Delete(userBasketItems);
         }
 
-
-        public Task CreateOrders(string userId, IEnumerable<PaymentRequest> paymentRequests)
+        public async Task UpdateOrder(string userId, string createdAt, string orderStatus)
         {
-            throw new NotImplementedException();
+            var userOrders = _orderRepository.GetByPredicate(order => order.UserId.Equals(userId))
+                                             .AsEnumerable()
+                                             .Where(order => order.CreatedAt.ToString(StringConstants.DateTimeFormat).Equals(createdAt));
+
+            foreach (var order in userOrders)
+            {
+                order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatus);
+
+                if (order.Status == OrderStatus.Dispatched)
+                    order.DispatchedAt = DateTime.Now;
+                else if (order.Status == OrderStatus.Delivered)
+                    order.DeliveredAt = DateTime.Now;
+            }
+
+            await _orderRepository.Update(userOrders);
         }
 
-        public Task UpdateOrders(string userId, DateTime orderDateTime, OrderStatus orderStatus)
+        public IEnumerable<GroupedOrders> GetUserOrders(out int totalOrderCount, PaginationQuery paginationQuery, string userId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public IQueryable<GroupedUserOrders> GetOrders(PaginationQuery paginationQuery)
-        {
-            return _orderRepository.GetWithInclude(obj => obj.DeliveryAddress, obj => obj.Medicament)
-                                   .Skip((paginationQuery.PageNumber - 1) * paginationQuery.PageSize)
-                                   .Take(paginationQuery.PageSize)
+            var groupedOrders = _orderRepository.GetWithInclude(obj => obj.DeliveryAddress, obj => obj.Medicament)
+                                   .Where(order => order.UserId.Equals(userId))
                                    .AsEnumerable()
-                                   .GroupBy(order => order.UserId)
-                                   .Select(g => new GroupedUserOrders() {
-                                       UserId = g.Key,
-                                       GroupedOrders = g.Select(order => order)
-                                                        .GroupBy(order => new
-                                                        {
-                                                            Created = order.CreatedAt.ToString(StringConstants.DateTimeFormat),
-                                                            Dispatched = order.DispatchedAt?.ToString(StringConstants.DateTimeFormat),
-                                                            Delivered = order.DeliveredAt?.ToString(StringConstants.DateTimeFormat),
-                                                            Status = order.Status.ToString()
-                                                        })
-                                                        .Select(g => new GroupedOrders() {
-                                                            CreatedAt = g.Key.Created,
-                                                            DispatchedAt = g.Key.Dispatched,
-                                                            DeliveredAt = g.Key.Delivered,
-                                                            Status = g.Key.Status,
-                                                            Orders = g.Select(order => order),
-                                                            OrdersTotal = g.Sum(order => order.Total) })
-                                   }).AsQueryable();
-        }
+                                   .GroupBy(order => new
+                                   {
+                                       Created = order.CreatedAt.ToString(StringConstants.DateTimeFormat),
+                                       Dispatched = order.DispatchedAt?.ToString(StringConstants.DateTimeFormat),
+                                       Delivered = order.DeliveredAt?.ToString(StringConstants.DateTimeFormat),
+                                       Status = order.Status.ToString()
+                                   });
 
-        public GroupedUserOrders GetUserOrders(PaginationQuery paginationQuery, string userId)
-        {
-            throw new System.NotImplementedException();
+            totalOrderCount = groupedOrders.Count();
+
+            return  groupedOrders.Select(g => new GroupedOrders()
+                                  {
+                                      CreatedAt = g.Key.Created,
+                                      DispatchedAt = g.Key.Dispatched,
+                                      DeliveredAt = g.Key.Delivered,
+                                      Status = g.Key.Status,
+                                      Orders = g.Select(order => order),
+                                      OrdersTotal = g.Sum(order => order.Total)
+                                  })
+                                  .Skip((paginationQuery.PageNumber - 1) * paginationQuery.PageSize)
+                                  .Take(paginationQuery.PageSize);
         }
     }
 }

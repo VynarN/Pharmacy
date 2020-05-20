@@ -10,6 +10,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 
         Task CreateApplicationMethod(string applicationMethod);
 
-        Task DeleteApplicationMethod(int applicationMethodId);
+        Task DeleteApplicationMethod(ApplicationMethod applicationMethod);
     }
 }

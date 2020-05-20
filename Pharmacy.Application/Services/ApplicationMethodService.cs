@@ -21,9 +21,9 @@ namespace Pharmacy.Application.Services
             await _repository.Create(new ApplicationMethod() { Method = applicationMethod });
         }
 
-        public Task DeleteApplicationMethod(int applicationMethodId)
+        public async Task DeleteApplicationMethod(ApplicationMethod applicationMethod)
         {
-            throw new System.NotImplementedException();
+            await _repository.Delete(applicationMethod);
         }
 
         public IEnumerable<ApplicationMethod> GetApplicationMethods()

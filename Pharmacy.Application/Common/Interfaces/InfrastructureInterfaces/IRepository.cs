@@ -33,6 +33,8 @@ namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 
         Task Update(TEntity entity);
 
+        Task Update(IEnumerable<TEntity> entities);
+
         IQueryable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties);
 
         IQueryable<TEntity> GetWithInclude(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);

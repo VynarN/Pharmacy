@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Pharmacy.Domain.Entites;
+using System.Collections.Generic;
 using static Pharmacy.Application.Common.Mappings.IMapFrom;
 
 namespace Pharmacy.Application.Common.DTO.Out
 {
     public class MedicamentOutDto: IMapFrom<Medicament>
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public decimal Price { get; set; }
@@ -26,6 +29,13 @@ namespace Pharmacy.Application.Common.DTO.Out
 
         public AllowedForEntityDto AllowedForEntity { get; set; }
 
+        public List<ImageOutDto> Images { get; set; }
+
+        public MedicamentOutDto()
+        {
+            Images = new List<ImageOutDto>();
+        }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Medicament, MedicamentOutDto>()
@@ -34,7 +44,8 @@ namespace Pharmacy.Application.Common.DTO.Out
                 .ForMember(m => m.ApplicationMethod, mf => mf.MapFrom(p => p.ApplicationMethod))
                 .ForMember(m => m.Manufacturer, mf => mf.MapFrom(p => p.Manufacturer))
                 .ForMember(m => m.Instruction, mf => mf.MapFrom(p => p.Instruction))
-                .ForMember(m => m.MedicamentForm, mf => mf.MapFrom(p => p.MedicamentForm));
+                .ForMember(m => m.MedicamentForm, mf => mf.MapFrom(p => p.MedicamentForm))
+                .ForMember(m => m.Images, mf => mf.MapFrom(p => p.Images));
         }
     }
 }

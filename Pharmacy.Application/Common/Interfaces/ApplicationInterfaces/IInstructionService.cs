@@ -7,6 +7,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         Task CreateInstruction(Instruction instruction);
 
-        Task UpdateInstruction(Instruction instruction, int instructionId);
+        Task UpdateInstruction(Instruction instruction);
     }
 }

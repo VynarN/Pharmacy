@@ -1,13 +1,15 @@
 ﻿using Pharmacy.Domain.Entites;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetCategories();
+        IQueryable<Category> GetCategories();
 
-        Task CreateService(string category);
+        Task CreateCategory(string category);
+
+        Task DeleteCategory(Category category);
     }
 }

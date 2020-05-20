@@ -56,9 +56,14 @@ namespace Pharmacy.Application.Services
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<PaymentRequest> GetPaymentRequests(PaginationQuery paginationQuery)
+        public IQueryable<PaymentRequest> GetIncoming(out int totalCount, PaginationQuery paginationQuery)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<PaymentRequest> GetOutcoming(out int totalCount, PaginationQuery paginationQuery)
+        {
+            throw new NotImplementedException();
         }
     }
 }

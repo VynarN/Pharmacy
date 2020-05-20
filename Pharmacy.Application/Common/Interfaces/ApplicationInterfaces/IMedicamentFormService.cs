@@ -10,6 +10,6 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 
         Task CreateMedicamentForm(string medicamentForm);
 
-        Task DeleteMedicamentForm(int medicamentFormId);
+        Task DeleteMedicamentForm(MedicamentForm medicamentForm);
     }
 }
