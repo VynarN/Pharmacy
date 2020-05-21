@@ -46,6 +46,21 @@ namespace Pharmacy.Application.Services
             await _basketItemsRepo.Delete(userBasketItems);
         }
 
+        public async Task CreateOrderFromPaymentRequest(IEnumerable<PaymentRequest> paymentRequests)
+        {
+            var orders = paymentRequests.Select(pr => new Order()
+            {
+                DeliveryAddressId = pr.DeliveryAddressId,
+                MedicamentId = pr.MedicamentId,
+                UserId = pr.SenderId,
+                Quantity = pr.Quantity,
+                Total = pr.Total,
+                Status = OrderStatus.Pending
+            });
+
+            await _orderRepository.Create(orders);
+        }
+
         public async Task UpdateOrder(string userId, string createdAt, string orderStatus)
         {
             var userOrders = _orderRepository.GetByPredicate(order => order.UserId.Equals(userId))

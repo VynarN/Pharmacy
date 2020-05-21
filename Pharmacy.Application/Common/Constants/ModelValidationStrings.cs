@@ -14,6 +14,7 @@
         public const string ValueOutOfRange = "Value is out of range. ";
         public const string PhoneNumber = "Invalid phone number. ";
         public const string PhoneNumberUniqueness = "Specified phone number is already taken. ";
-        public const string EmptyField = "Field cannot be empty.";
+        public const string EmptyField = "Field cannot be empty. ";
+        public const string DateTime = "Invalid date and time. ";
     }
 }

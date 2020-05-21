@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 namespace Pharmacy.Domain.Common.ValueObjects
 {
-    public class GroupedPaymentRequests
+    public class GroupedIncomingPaymentRequest
     {
         public IEnumerable<PaymentRequest> PaymentRequests { get; set; }
+
+        public string SenderEmail { get; set; }
 
         public string Status { get; set; }
 

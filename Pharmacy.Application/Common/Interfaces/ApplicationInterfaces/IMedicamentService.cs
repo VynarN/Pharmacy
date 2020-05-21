@@ -7,7 +7,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 {
     public interface IMedicamentService
     {
-        Task<Medicament> GetMedicament(int medicamentId);
+        Medicament GetMedicament(int medicamentId);
 
         IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery);
 

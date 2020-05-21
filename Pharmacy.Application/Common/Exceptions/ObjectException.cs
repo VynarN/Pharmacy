@@ -57,7 +57,7 @@ namespace Pharmacy.Application.Common.Exceptions
         {
             var identifier = ObjectIdentifier.Length > IntegerConstants.OBJECT_IDENTIFIER_LENGTH ? ObjectIdentifier : " ";
 
-            return GetType().Name + ": " + Message + identifier;
+            return Message + identifier;
         }
     }
 }

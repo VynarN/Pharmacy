@@ -1,5 +1,5 @@
 ﻿using Pharmacy.Application.Common.AppObjects;
-using Pharmacy.Application.Common.DTO.Out.MedicamentOut;
+using Pharmacy.Application.Common.DTO;
 using Pharmacy.Application.Common.Queries;
 using System.Collections.Generic;
 

@@ -10,6 +10,8 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
     {
         Task CreateOrder(string userId, DeliveryAddress deliveryAddress);
 
+        Task CreateOrderFromPaymentRequest(IEnumerable<PaymentRequest> paymentRequests);
+
         Task UpdateOrder(string userId, string createdAt, string orderStatus);
         
         IEnumerable<GroupedOrders> GetUserOrders(out int totalOrderCount, PaginationQuery paginationQuery, string userId);

@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Application.Common.Constants;
+using Pharmacy.Application.Common.DTO;
 using Pharmacy.Application.Common.DTO.In.MedicamentIn;
 using Pharmacy.Application.Common.DTO.Out;
-using Pharmacy.Application.Common.DTO.Out.MedicamentOut;
+using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
@@ -88,15 +89,19 @@ namespace Pharmacy.Api.Controllers
         }
 
         [HttpGet("get/{id}")]
-        public async Task<IActionResult> Get(int id)
+        public IActionResult Get(int id)
         {
             try
             {
-                var medicament = await _medicamentService.GetMedicament(id);
+                var medicament = _medicamentService.GetMedicament(id);
 
-                var mappedMedicament =_mapper.Map<MedicamentOutDto>(medicament);
+                var mappedMedicament = _mapper.Map<MedicamentOutDto>(medicament);
 
                 return Ok(mappedMedicament);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

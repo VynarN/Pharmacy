@@ -1,4 +1,6 @@
-﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
+﻿using Pharmacy.Application.Common.Constants;
+using Pharmacy.Application.Common.Exceptions;
+using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
@@ -30,10 +32,17 @@ namespace Pharmacy.Application.Services
         {
             await _repository.Delete(medicament);
         }
-
-        public async Task<Medicament> GetMedicament(int medicamentId)
+        
+        public Medicament GetMedicament(int medicamentId)
         {
-            return await _repository.GetByIdAsync(medicamentId);
+            return _repository.GetWithInclude(obj => obj.Id == medicamentId, obj => obj.Images,
+                                                                             obj => obj.Instruction,
+                                                                             obj => obj.Manufacturer,
+                                                                             obj => obj.MedicamentForm,
+                                                                             obj => obj.ApplicationMethod,
+                                                                             obj => obj.Category,
+                                                                             obj => obj.AllowedForEntity)
+                              .FirstOrDefault() ?? throw new ObjectNotFoundException(ExceptionStrings.ObjectNotFoundException, medicamentId.ToString());
         }
 
         public IQueryable<Medicament> GetMedicaments(out int totalMedicamentsCount, PaginationQuery paginationQuery, MedicamentFilterQuery filterQuery)

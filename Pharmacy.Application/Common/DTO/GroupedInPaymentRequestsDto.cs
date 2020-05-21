@@ -4,9 +4,11 @@ using static Pharmacy.Application.Common.Mappings.IMapFrom;
 
 namespace Pharmacy.Application.Common.DTO.Out.PaymentRequestOut
 {
-    public class GroupedPaymentRequestsDto: IMapFrom<GroupedPaymentRequests>
+    public class GroupedInPaymentRequestsDto: IMapFrom<GroupedIncomingPaymentRequest>
     {
-        public IEnumerable<PaymentRequestOutDto> PaymentRequests { get; set; }
+        public IEnumerable<PaymentRequestDto> PaymentRequests { get; set; }
+
+        public string SenderEmail { get; set; }
 
         public string Status { get; set; }
 

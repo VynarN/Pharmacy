@@ -14,13 +14,13 @@ namespace Pharmacy.Application.Common.DTO.Out
 
         public string PhoneNumber { get; set; }
 
-        public List<OrderOutDto> Orders { get; set; }
+        public List<OrderDto> Orders { get; set; }
 
         public List<BasketItemOutDto> BasketItems { get; set; }
 
         public UserOutDto()
         {
-            Orders = new List<OrderOutDto>();
+            Orders = new List<OrderDto>();
             BasketItems = new List<BasketItemOutDto>();
         }
     }
