@@ -91,7 +91,7 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
 
         public IQueryable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return Include(includeProperties);
+            return Include(includeProperties).AsNoTracking();
         }
 
         public IQueryable<TEntity> GetWithInclude(Func<TEntity, bool> predicate,
@@ -99,7 +99,7 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
         {
             var query = Include(includeProperties);
 
-            return query.Where(predicate).AsQueryable();
+            return query.Where(predicate).AsQueryable().AsNoTracking();
         }
 
         private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)

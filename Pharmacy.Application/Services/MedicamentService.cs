@@ -13,24 +13,35 @@ namespace Pharmacy.Application.Services
     public class MedicamentService : IMedicamentService
     {
         private readonly IRepository<Medicament> _repository;
+        private readonly IAllowedForEntityService _allowedForEntityService;
         private readonly IFilterHelper<Medicament, MedicamentFilterQuery> _filterHelper;
 
-        public MedicamentService(IRepository<Medicament> repository, IFilterHelper<Medicament, MedicamentFilterQuery> filterHelper)
+        public MedicamentService(IRepository<Medicament> repository, IFilterHelper<Medicament, MedicamentFilterQuery> filterHelper,
+                                 IAllowedForEntityService allowedForEntityService)
         {
             _repository = repository;
             _filterHelper = filterHelper;
+            _allowedForEntityService = allowedForEntityService;
         }
 
         public async Task<int> CreateMedicament(Medicament medicament)
         {
+            var createdAllowedForEntityId = await _allowedForEntityService.CreateAllowedForEntity(medicament.AllowedForEntity);
+
+            medicament.AllowedForEntityId = createdAllowedForEntityId;
+            medicament.AllowedForEntity = null;
+
             await _repository.Create(medicament);
 
             return  _repository.GetByPredicate( med => med.Name.Equals(medicament.Name) && med.Price == medicament.Price).FirstOrDefault().Id;
         }
 
-        public async Task DeleteMedicament(Medicament medicament)
+        public async Task DeleteMedicament(int medicamentId)
         {
-            await _repository.Delete(medicament);
+            var medicamentToBeDeleted = (await _repository.GetByIdAsync(medicamentId)) 
+                                      ?? throw new ObjectNotFoundException(ExceptionStrings.ObjectNotFoundException, medicamentId.ToString());
+
+            await _repository.Delete(medicamentToBeDeleted);
         }
         
         public Medicament GetMedicament(int medicamentId)
@@ -56,9 +67,38 @@ namespace Pharmacy.Application.Services
                                 .Take(paginationQuery.PageSize);
         }
 
-        public async Task UpdateMedicament(Medicament medicament)
+        public async Task UpdateMedicament(int medicamentId, Medicament medicament)
         {
-            await _repository.Update(medicament);
+            var medicamentToBeUpdated = _repository.GetWithInclude(med => med.Id == medicamentId, obj => obj.Instruction,
+                                                                                                  obj => obj.AllowedForEntity).FirstOrDefault()
+                                     ?? throw new ObjectNotFoundException(ExceptionStrings.ObjectNotFoundException, medicamentId.ToString());
+
+            medicament.Name = medicament.Name.Equals(medicamentToBeUpdated.Name)
+                                             ? medicamentToBeUpdated.Name
+                                             : medicament.Name;
+
+            medicamentToBeUpdated.Price = medicament.Price != medicamentToBeUpdated.Price 
+                                                           ? medicament.Price 
+                                                           : medicamentToBeUpdated.Price;
+
+            medicamentToBeUpdated.QuantityInStock = medicament.QuantityInStock != medicamentToBeUpdated.QuantityInStock 
+                                                                               ? medicament.QuantityInStock 
+                                                                               : medicamentToBeUpdated.QuantityInStock;
+
+            medicament.Instruction.MedicamentId = medicamentId;
+            medicament.Instruction.Id = medicamentToBeUpdated.Id;
+            medicamentToBeUpdated.Instruction = medicament.Instruction.Equals(medicamentToBeUpdated.Instruction) 
+                                                                      ? medicamentToBeUpdated.Instruction 
+                                                                      : medicament.Instruction;
+
+            if (!medicament.AllowedForEntity.Equals(medicamentToBeUpdated.AllowedForEntity))
+            {
+                var newAllowedForEntityId = await _allowedForEntityService.CreateAllowedForEntity(medicament.AllowedForEntity);
+                medicamentToBeUpdated.AllowedForEntity = null;
+                medicamentToBeUpdated.AllowedForEntityId = newAllowedForEntityId;
+            }
+
+            await _repository.Update(medicamentToBeUpdated);
         }
     }
 }

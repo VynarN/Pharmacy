@@ -13,8 +13,8 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 
         Task<int> CreateMedicament(Medicament medicament);
 
-        Task DeleteMedicament(Medicament medicament);
+        Task DeleteMedicament(int medicamentId);
 
-        Task UpdateMedicament(Medicament medicament);
+        Task UpdateMedicament(int medicamentId, Medicament medicament);
     }
 }

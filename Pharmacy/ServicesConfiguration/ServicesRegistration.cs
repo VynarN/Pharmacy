@@ -10,6 +10,7 @@ using Pharmacy.Application.Common.Queries;
 using Pharmacy.Application.Helpers;
 using Pharmacy.Application.Services;
 using Pharmacy.Domain.Entites;
+using Pharmacy.Infrastructure;
 using Pharmacy.Infrastructure.Persistence.Repositories;
 using Pharmacy.Infrastructure.Services;
 

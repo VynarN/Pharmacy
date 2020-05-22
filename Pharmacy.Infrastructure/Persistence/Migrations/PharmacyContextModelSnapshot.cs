@@ -49,28 +49,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "6601960e-2fcb-4b4f-b7c2-47fac9f8d25a",
+                            ConcurrencyStamp = "ad293b40-6e93-46f3-bf6d-6028374a8ac7",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "555d4813-7474-4254-8e9a-8a1458244125",
+                            ConcurrencyStamp = "373c29a0-f9b8-4af4-b283-95744e5e07ff",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "63a8a3f8-0f67-49a1-818b-0d6fdb80b4de",
+                            ConcurrencyStamp = "5b0faf5c-c892-4269-bfaf-7152f1463d8d",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "e758f602-fc54-47b3-9e21-088f790c9819",
+                            ConcurrencyStamp = "b53c5871-415d-4307-9e7f-6de5495455a2",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -485,12 +485,20 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebSite")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
+
+                    b.HasIndex("WebSite")
+                        .IsUnique()
+                        .HasFilter("[WebSite] IS NOT NULL");
 
                     b.ToTable("Manufacturers");
                 });

@@ -146,8 +146,8 @@ namespace Pharmacy.Application.Services
                 throw new ArgumentException(ModelValidationStrings.DateTime, nameof(createdAt));
             }
 
-            return _paymentRequestRepo.GetByPredicate(pr => pr.SenderId.Equals(senderId) &&
-                                                            pr.ReceiverEmail.Equals(receiverEmail))
+            return _paymentRequestRepo.GetWithInclude(pr => pr.SenderId.Equals(senderId) &&
+                                                            pr.ReceiverEmail.Equals(receiverEmail), obj => obj.Medicament)
                                       .AsEnumerable()
                                       .Where(pr => pr.RequestedAt.ToString(StringConstants.DateTimeFormat).Equals(createdAt));
         }

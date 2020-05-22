@@ -21,19 +21,19 @@ namespace Pharmacy.Application.Services
             await _repository.Create(basketItem);
         }
 
-        public Task DeleteBasketItem(int basketItemId)
+        public async Task DeleteBasketItem(BasketItem basketItem)
         {
-            throw new NotImplementedException();
+            await _repository.Delete(basketItem);
         }
 
-        public IQueryable<BasketItem> GetBasketItems()
+        public IQueryable<BasketItem> GetBasketItems(string userId)
         {
-            throw new NotImplementedException();
+            return _repository.GetWithInclude(bi => bi.UserId.Equals(userId), obj => obj.Medicament, obj =>obj.Medicament.Images );
         }
 
-        public Task UpdateBasketItem(int medicamentCount, int basketItemId)
+        public async Task UpdateBasketItem(BasketItem basketItem)
         {
-            throw new NotImplementedException();
+            await _repository.Update(basketItem);
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.DTO.In.Auth;
 using Pharmacy.Application.Common.DTO.In.Auth.Register;
@@ -21,14 +22,14 @@ namespace Pharmacy.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _service;
-        private readonly ICookieService _cookieHelper;
+        private readonly ICookieService _cookieService;
         private readonly ICurrentUser _currentUser;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService service,ICookieService cookieHelper, ICurrentUser currentUser, ILogger<AccountController> logger)
+        public AccountController(IAccountService service,ICookieService cookieService, ICurrentUser currentUser, ILogger<AccountController> logger)
         {
             _service = service;
-            _cookieHelper = cookieHelper;
+            _cookieService = cookieService;
             _currentUser = currentUser;
             _logger = logger;
         }
@@ -47,10 +48,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -63,7 +61,7 @@ namespace Pharmacy.Api.Controllers
 
                 var userRoles = await _service.GetUserRoles(user.Email);
 
-                _cookieHelper.CreateCookie(user.RememberMe, tokens.AccessToken, tokens.RefreshToken);
+                _cookieService.CreateCookie(user.RememberMe, tokens.AccessToken, tokens.RefreshToken);
 
                 return Ok(userRoles);
             }
@@ -73,10 +71,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -85,16 +80,13 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                _cookieHelper.CleanCookies();
+                _cookieService.CleanCookies();
 
                 return NoContent();
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -109,10 +101,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -137,11 +126,11 @@ namespace Pharmacy.Api.Controllers
 
                 await Response.WriteAsync(ex.ToString());
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
-                _logger.LogError(ex, ex.Message); 
+                _logger.LogError(ex.Message);
 
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                 await Response.WriteAsync(ExceptionStrings.Exception);
             }
@@ -166,10 +155,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -192,9 +178,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                return BadRequest(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -216,10 +200,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
     }

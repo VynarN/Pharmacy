@@ -10,6 +10,9 @@ namespace Pharmacy.Infrastructure.Persistence.Configurations
             builder.HasOne(mfcr => mfcr.Address)
                    .WithOne(adrs => adrs.Manufacturer)
                    .HasForeignKey<Address>(adrs => adrs.ManufacturerId);
+
+            builder.HasIndex(mfcr => mfcr.PhoneNumber).IsUnique();
+            builder.HasIndex(mfcr => mfcr.WebSite).IsUnique();
         }
     }
 }

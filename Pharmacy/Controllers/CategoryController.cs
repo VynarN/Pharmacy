@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pharmacy.Application.Common.Constants;
+using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Api.Controllers
@@ -39,10 +38,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -59,10 +55,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
     }

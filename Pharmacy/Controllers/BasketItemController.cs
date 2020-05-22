@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.DTO.In.BasketItemIn;
+using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
@@ -37,10 +40,7 @@ namespace Pharmacy.Api.Controllers
         {
             try
             {
-                var currentUserId = _currentUser.UserId;
-
-                var basketItem = _mapper.Map<BasketItem>(basketItemDto);
-                basketItem.UserId = currentUserId;
+                var basketItem = MapDtoToBasketItem(basketItemDto);
 
                 await _basketItemService.CreateBasketItem(basketItem);
 
@@ -48,11 +48,72 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
+        }
+
+        [HttpGet("get")]
+        public IActionResult GetUserBasketItems()
+        {
+            try
+            {
+                var currentUserId = _currentUser.UserId;
+
+                var userBasketItems = _basketItemService.GetBasketItems(currentUserId);
+
+                var mappedBasketItems = userBasketItems.ProjectTo<BasketItemOutDto>(_mapper.ConfigurationProvider);
+
+                return Ok(mappedBasketItems);
+            }
+            catch(Exception ex)
+            {
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
+            }
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateBasketItem(BasketItemInDto basketItemDto)
+        {
+            try
+            {
+                var basketItem = MapDtoToBasketItem(basketItemDto);
+
+                await _basketItemService.UpdateBasketItem(basketItem);
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
+            }
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteBasketItem(BasketItemInDto basketItemDto)
+        {
+            try
+            {
+                var basketItem = MapDtoToBasketItem(basketItemDto);
+
+                await _basketItemService.DeleteBasketItem(basketItem);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
+            }
+        }
+
+        private BasketItem MapDtoToBasketItem(BasketItemInDto basketItemDto)
+        {
+            var currentUserId = _currentUser.UserId;
+
+            var basketItem = _mapper.Map<BasketItem>(basketItemDto);
+
+            basketItem.UserId = currentUserId;
+
+            return basketItem;
         }
     }
 }

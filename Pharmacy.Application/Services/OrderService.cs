@@ -1,8 +1,10 @@
-﻿using Pharmacy.Application.Common.Constants;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Common.Enums;
+using Pharmacy.Domain.Common.Exceptions;
 using Pharmacy.Domain.Common.ValueObjects;
 using Pharmacy.Domain.Entites;
 using System;
@@ -16,34 +18,58 @@ namespace Pharmacy.Application.Services
     {
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<BasketItem> _basketItemsRepo;
+        private readonly IRepository<Medicament> _medicamentRepo;
         private readonly IDeliveryAddressService _deliveryAddressService;
 
-        public OrderService(IRepository<Order> orderRepository, IRepository<BasketItem> basketItemRepo, IDeliveryAddressService deliveryAddressService)
+        public OrderService(IRepository<Order> orderRepository, IRepository<BasketItem> basketItemRepo, IRepository<Medicament> medicamentRepo, 
+                            IDeliveryAddressService deliveryAddressService)
         {
             _orderRepository = orderRepository;
             _basketItemsRepo = basketItemRepo;
+            _medicamentRepo = medicamentRepo;
             _deliveryAddressService = deliveryAddressService;
         }
 
         public async Task CreateOrder(string userId, DeliveryAddress deliveryAddress)
         {
-            var userBasketItems = _basketItemsRepo.GetWithInclude(bi => bi.UserId.Equals(userId), bi => bi.Medicament);
+            var userBasketItems = _basketItemsRepo.GetWithInclude(bi => bi.UserId.Equals(userId), bi => bi.Medicament).AsEnumerable();
 
             var addressId = deliveryAddress.Id != 0 ? deliveryAddress.Id : await _deliveryAddressService.CreateDeliveryAddress(deliveryAddress);
 
-            var orders = userBasketItems.Select(basketItem => new Order()
+            var ordersAndMedicaments = userBasketItems.Select(basketItem => new
             {
-                UserId = userId,
-                DeliveryAddressId = addressId,
-                MedicamentId = basketItem.MedicamentId,
-                Quantity = basketItem.ProductQuantity,
-                Total = basketItem.Medicament.Price * basketItem.ProductQuantity,
-                Status = OrderStatus.Pending
+                Order = new Order()
+                {
+                    UserId = userId,
+                    DeliveryAddressId = addressId,
+                    MedicamentId = basketItem.MedicamentId,
+                    Quantity = basketItem.Medicament.QuantityInStock >= basketItem.ProductQuantity
+                             ? basketItem.ProductQuantity
+                             : throw new ProductException(string.Format(ModelValidationStrings.ProductQuantity,
+                                                                 basketItem.Medicament.Name, basketItem.Medicament.QuantityInStock)),
+                    Total = basketItem.Medicament.Price * basketItem.ProductQuantity,
+                    Status = OrderStatus.Pending
+                },
+                basketItem.Medicament
             });
+
+            var medicaments = new List<Medicament>();
+
+            foreach(var orderAndMedicament in ordersAndMedicaments)
+            {
+                orderAndMedicament.Medicament.Offtake += orderAndMedicament.Order.Quantity;
+                orderAndMedicament.Medicament.QuantityInStock -= orderAndMedicament.Order.Quantity;
+                medicaments.Add(orderAndMedicament.Medicament);
+            }
+
+            var orders = ordersAndMedicaments.Select(om => om.Order);
 
             await _orderRepository.Create(orders);
 
+            await _medicamentRepo.Update(medicaments);
+
             await _basketItemsRepo.Delete(userBasketItems);
+
         }
 
         public async Task CreateOrderFromPaymentRequest(IEnumerable<PaymentRequest> paymentRequests)

@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pharmacy.Application.Common.Constants;
+using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.DTO;
 using Pharmacy.Application.Common.DTO.In.MedicamentIn;
 using Pharmacy.Application.Common.DTO.Out;
@@ -13,7 +13,6 @@ using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Api.Controllers
@@ -23,17 +22,14 @@ namespace Pharmacy.Api.Controllers
     public class MedicamentController : ControllerBase
     {
         private readonly IMedicamentService _medicamentService;
-        private readonly IAllowedForEntityService _allowedForEntityService;
         private readonly IPaginationService _paginationService;
         private readonly ILogger<MedicamentController> _logger;
         private readonly IMapper _mapper;
 
         public MedicamentController(IMedicamentService medicamentService, ILogger<MedicamentController> logger,
-                                    IAllowedForEntityService allowedForEntityService, IMapper mapper,
-                                    IPaginationService paginationService)
+                                    IMapper mapper, IPaginationService paginationService)
         {
             _medicamentService = medicamentService;
-            _allowedForEntityService = allowedForEntityService;
             _paginationService = paginationService;
             _logger = logger;
             _mapper = mapper;
@@ -47,21 +43,13 @@ namespace Pharmacy.Api.Controllers
             {
                 var medicament = _mapper.Map<Medicament>(medicamentDto);
 
-                var createdAllowedForEntityId = await _allowedForEntityService.CreateAllowedForEntity(medicament.AllowedForEntity);
-
-                medicament.AllowedForEntityId = createdAllowedForEntityId;
-                medicament.AllowedForEntity = null;
-
                 var createdMedicamentId = await _medicamentService.CreateMedicament(medicament);
 
-                return CreatedAtAction(nameof(Get), createdMedicamentId);
+                return CreatedAtAction(nameof(Get), new { id = createdMedicamentId }, medicamentDto);
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -81,10 +69,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -105,30 +90,49 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(MedicamentInDto medicamentDto)
+        [Authorize(Roles = "manager,admin,mainadmin")]
+        [HttpPut("update/{medicamentId}")]
+        public async Task<IActionResult> Update(MedicamentUpdateInfoDto medicamentDto, int medicamentId)
         {
             try
             {
                 var mappedMedicament = _mapper.Map<Medicament>(medicamentDto);
 
-                await _medicamentService.UpdateMedicament(mappedMedicament);
+                await _medicamentService.UpdateMedicament(medicamentId, mappedMedicament);
 
-                return NoContent();
+                return Ok();
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
+            }
+        }
 
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+        [Authorize(Roles = "manager,admin,mainadmin")]
+        [HttpDelete("delete/{medicamentId}")]
+        public async Task<IActionResult> DeleteMedicament(int medicamentId)
+        {
+            try
+            {
+                await _medicamentService.DeleteMedicament(medicamentId);
+
+                return Ok();
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
     }

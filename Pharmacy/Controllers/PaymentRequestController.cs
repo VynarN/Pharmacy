@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pharmacy.Application.Common.Constants;
+using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.DTO;
 using Pharmacy.Application.Common.DTO.Out.PaymentRequestOut;
 using Pharmacy.Application.Common.Exceptions;
@@ -13,7 +13,6 @@ using Pharmacy.Application.Common.Queries;
 using Pharmacy.Domain.Entites;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Api.Controllers
@@ -42,7 +41,7 @@ namespace Pharmacy.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create/{receiver}")]
+        [HttpPost("create/{receiverEmail}")]
         public async Task<IActionResult> CreatePaymentRequest(string receiverEmail, DeliveryAddressDto deliveryAddressDto)
         {
             try
@@ -63,15 +62,12 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
         [HttpGet("get/incoming")]
-        public async Task<IActionResult> GetIncomingPaymentRequests(PaginationQuery paginationQuery)
+        public async Task<IActionResult> GetIncomingPaymentRequests([FromQuery]PaginationQuery paginationQuery)
         {
             try
             {
@@ -87,15 +83,12 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
         [HttpGet("get/outcoming")]
-        public IActionResult GetOutcomingPaymentRequests(PaginationQuery paginationQuery)
+        public IActionResult GetOutcomingPaymentRequests([FromQuery]PaginationQuery paginationQuery)
         {
             try
             {
@@ -111,10 +104,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -129,7 +119,7 @@ namespace Pharmacy.Api.Controllers
 
                 await _paymentRequestService.AcceptPaymentRequest(sender.Id, receiver.Email, createdAt);
 
-                return NoContent();
+                return Ok();
             }
             catch (ObjectNotFoundException ex)
             {
@@ -141,10 +131,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -159,7 +146,7 @@ namespace Pharmacy.Api.Controllers
 
                 await _paymentRequestService.DeclinePaymentRequest(sender.Id, receiver.Email, createdAt);
 
-                return NoContent();
+                return Ok();
             }
             catch (ObjectNotFoundException ex)
             {
@@ -171,10 +158,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
 
@@ -201,10 +185,7 @@ namespace Pharmacy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
-                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new ObjectResult(ExceptionStrings.Exception);
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
             }
         }
     }

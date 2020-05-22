@@ -16,5 +16,6 @@
         public const string PhoneNumberUniqueness = "Specified phone number is already taken. ";
         public const string EmptyField = "Field cannot be empty. ";
         public const string DateTime = "Invalid date and time. ";
+        public const string ProductQuantity = "Requested number of {0} cannot be ordered. Number remaining in stock: {1}. ";
     }
 }
