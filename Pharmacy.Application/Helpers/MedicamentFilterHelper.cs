@@ -11,10 +11,40 @@ namespace Pharmacy.Application.Helpers
     {
         public IQueryable<Medicament> Filter(IQueryable<Medicament> medicaments, MedicamentFilterQuery filter)
         {
-            return FilterByCategory(filter.Categories,
+            return  FilterBySearchValue(filter.SearchValue,
+                                    FilterByCategory(filter.Categories,
                                     FilterByMedicamentForm(filter.MedicamentForms,
                                     FilterByApplicationMethod(filter.ApplicationMethods,
-                                    FilterByAllowedFor(filter.AllowedFor, medicaments))));
+                                    FilterByAllowedFor(filter.AllowedFor,
+                                    FilterByPrice(filter.OrderByPrice, filter.PriceFrom, filter.PriceTo, filter.InDescOrder, medicaments))))));
+        }
+
+        public IQueryable<Medicament> FilterBySearchValue(string searchValue, IQueryable<Medicament> medicaments)
+        {
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                var filteredMedicaments = new List<Medicament>();
+
+                filteredMedicaments.AddRange(medicaments.Where(med => med.Name.ToLower().Contains(searchValue.ToLower()) 
+                                                                   || med.Manufacturer.Name.ToLower().Contains(searchValue.ToLower())));
+                
+                return filteredMedicaments.AsQueryable();
+            }
+
+            return medicaments;
+        }
+
+        public IQueryable<Medicament> FilterByPrice(bool filterByPrice, int priceFrom, int priceTo, bool inDescOrder, IQueryable<Medicament> medicaments)
+        {
+            if (filterByPrice && priceFrom >= 0 && priceTo > 0 && priceFrom < priceTo)
+            {
+                var filteredMedicaments = new List<Medicament>();
+
+                filteredMedicaments.AddRange(medicaments.Where(med => med.Price >= priceFrom && med.Price <= priceTo));
+
+                return inDescOrder ? filteredMedicaments.OrderByDescending(med => med.Price).AsQueryable() : filteredMedicaments.OrderBy(med => med.Price).AsQueryable();
+            }
+            return medicaments;
         }
 
         public IQueryable<Medicament> FilterByCategory(string categories, IQueryable<Medicament> medicaments)

@@ -20,10 +20,17 @@ namespace Pharmacy.Application.Services
         {
             await _repository.Create(basketItem);
         }
-
+        
         public async Task DeleteBasketItem(BasketItem basketItem)
         {
             await _repository.Delete(basketItem);
+        }
+
+        public async Task DeleteAllBasketItems(string userId)
+        {
+            var userBasketItems = _repository.GetByPredicate(bi => bi.UserId.Equals(userId));
+
+            await _repository.Delete(userBasketItems);
         }
 
         public IQueryable<BasketItem> GetBasketItems(string userId)

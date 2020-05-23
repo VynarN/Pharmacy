@@ -60,7 +60,7 @@ namespace Pharmacy.Application.Services
         {
             totalMedicamentsCount = _repository.GetAllQueryable().Count();
 
-            var medicamentsWithIncludes = _repository.GetWithInclude(prop => prop.AllowedForEntity);
+            var medicamentsWithIncludes = _repository.GetWithInclude(prop => prop.AllowedForEntity, prop => prop.Manufacturer);
 
             return _filterHelper.Filter(medicamentsWithIncludes, filterQuery)
                                 .Skip((paginationQuery.PageNumber - 1) * paginationQuery.PageSize)

@@ -1,0 +1,42 @@
+05/23/2020 11:02:22 [Information]  App is starting up.
+05/23/2020 11:02:47 [Error]  An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Conflicting method/path combination "DELETE api/BasketItem/delete" for actions - Pharmacy.Api.Controllers.BasketItemController.DeleteBasketItem (Pharmacy.Api),Pharmacy.Api.Controllers.BasketItemController.DeleteAll (Pharmacy.Api). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/23/2020 11:02:57 [Error]  An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Conflicting method/path combination "DELETE api/BasketItem/delete" for actions - Pharmacy.Api.Controllers.BasketItemController.DeleteBasketItem (Pharmacy.Api),Pharmacy.Api.Controllers.BasketItemController.DeleteAll (Pharmacy.Api). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/23/2020 11:03:35 [Information]  App is starting up.
+05/23/2020 11:03:39 [Error]  An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Conflicting method/path combination "DELETE api/BasketItem/delete" for actions - Pharmacy.Api.Controllers.BasketItemController.DeleteBasketItem (Pharmacy.Api),Pharmacy.Api.Controllers.BasketItemController.DeleteAll (Pharmacy.Api). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/23/2020 11:06:11 [Information]  App is starting up.
+05/23/2020 11:07:16 [Information]  App is starting up.
+05/23/2020 11:09:11 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 14241.4861 ms
+05/23/2020 11:09:24 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 313.6868 ms
+05/23/2020 11:09:41 [Information]  HTTP "POST" "/api/Order/create" responded 200 in 376.1505 ms
+05/23/2020 11:09:53 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 30.2211 ms
+05/23/2020 11:09:59 [Information]  HTTP "DELETE" "/api/BasketItem/delete/all" responded 200 in 45.8964 ms
+05/23/2020 11:10:05 [Information]  HTTP "DELETE" "/api/BasketItem/delete/all" responded 200 in 8.9198 ms
+05/23/2020 11:10:09 [Information]  HTTP "DELETE" "/api/BasketItem/delete/all" responded 200 in 6.0736 ms
+05/23/2020 11:10:20 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 8.5068 ms
+05/23/2020 11:13:05 [Information]  HTTP "GET" "/api/Medicament/get" responded 200 in 181.3527 ms
+05/23/2020 11:17:16 [Information]  HTTP "GET" "/api/Medicament/get?PriceTo=10&OrderByPrice=true" responded 200 in 63.1682 ms
+05/23/2020 11:17:26 [Information]  HTTP "GET" "/api/Medicament/get?PriceTo=10&OrderByPrice=true&InDescOrder=true" responded 200 in 49.8031 ms
+05/23/2020 11:17:38 [Information]  HTTP "GET" "/api/Medicament/get?PriceTo=10&OrderByPrice=true&InDescOrder=false" responded 200 in 12.6726 ms
+05/23/2020 11:17:58 [Information]  HTTP "GET" "/api/Medicament/get?AllowedFor=fornurses&PriceTo=30&OrderByPrice=true&InDescOrder=false" responded 200 in 17.9038 ms
+05/23/2020 11:18:10 [Information]  HTTP "GET" "/api/Medicament/get?PriceTo=30&OrderByPrice=true&InDescOrder=false" responded 200 in 14.0320 ms
+05/23/2020 11:18:35 [Information]  HTTP "GET" "/api/Medicament/get?SearchValue=acid&PriceTo=30&OrderByPrice=true&InDescOrder=false" responded 200 in 19.6259 ms
+05/23/2020 11:18:44 [Information]  HTTP "GET" "/api/Medicament/get?SearchValue=some&PriceTo=30&OrderByPrice=true&InDescOrder=false" responded 200 in 10.1767 ms
+05/23/2020 11:18:52 [Information]  HTTP "GET" "/api/Medicament/get?SearchValue=Some&PriceTo=30&OrderByPrice=true&InDescOrder=false" responded 200 in 13.2317 ms

@@ -10,6 +10,8 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
 
         Task DeleteBasketItem(BasketItem basketItem);
 
+        Task DeleteAllBasketItems(string userId);
+
         IQueryable<BasketItem> GetBasketItems(string userId);
 
         Task UpdateBasketItem(BasketItem basketItem);

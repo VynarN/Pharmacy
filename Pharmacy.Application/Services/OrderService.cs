@@ -68,8 +68,6 @@ namespace Pharmacy.Application.Services
 
             await _medicamentRepo.Update(medicaments);
 
-            await _basketItemsRepo.Delete(userBasketItems);
-
         }
 
         public async Task CreateOrderFromPaymentRequest(IEnumerable<PaymentRequest> paymentRequests)

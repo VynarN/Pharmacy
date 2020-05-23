@@ -4,14 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Api.Auxiliary;
-using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.DTO.In.BasketItemIn;
 using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Api.Controllers
@@ -96,6 +94,23 @@ namespace Pharmacy.Api.Controllers
                 var basketItem = MapDtoToBasketItem(basketItemDto);
 
                 await _basketItemService.DeleteBasketItem(basketItem);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
+            }
+        }
+
+        [HttpDelete("delete/all")]
+        public async Task<IActionResult> DeleteAll()
+        {
+            try
+            {
+                var currentUserId = _currentUser.UserId;
+
+                await _basketItemService.DeleteAllBasketItems(currentUserId);
 
                 return Ok();
             }
