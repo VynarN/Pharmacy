@@ -53,6 +53,8 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IBasketItemService, BasketItemService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaymentRequestService, PaymentRequestService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUriService, UriService>();
             services.AddScoped<ICurrentUser, CurrentUserService>();
         }   

@@ -30,6 +30,8 @@ namespace Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces
 
         Task AddUserToRoleAsync(User user, string role);
 
+        Task RemoveUserFromRoleAsync(User user, string role);
+
         Task SetPhoneNumberAsync(User user, string phoneNumber);
 
         Task SetEmailAsync(User user, string email);

@@ -23,6 +23,7 @@ namespace Pharmacy.Domain.Entites
         {
             BasketItems = new List<BasketItem>();
             Orders = new List<Order>();
+            PaymentRequests = new List<PaymentRequest>();
             Comments = new List<Comment>();
         }
 

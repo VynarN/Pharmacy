@@ -211,15 +211,15 @@ namespace Pharmacy.Application.Services
 
         private async Task AddUserToDefaultRole(User user)
         {
-            var usersInRoles = (await _userManager.GetUsersInRoleAsync(RoleStrings.Roles[3])).ToList();
+            var usersInRoles = (await _userManager.GetUsersInRoleAsync(RoleConstants.MainAdmin)).ToList();
 
             if (usersInRoles == null || usersInRoles.Count < 1)
             {
-                await _userManager.AddUserToRoleAsync(user, RoleStrings.Roles[3]);
+                await _userManager.AddUserToRoleAsync(user, RoleConstants.MainAdmin);
             }
             else
             {
-                await _userManager.AddUserToRoleAsync(user, RoleStrings.Roles[0]);
+                await _userManager.AddUserToRoleAsync(user, RoleConstants.User);
             }
         }
     }

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Pharmacy.Domain.Entites;
+using static Pharmacy.Application.Common.Mappings.IMapFrom;
 
 namespace Pharmacy.Application.Common.DTO.Out
 {
-    public class UserOutDto
+    public class UserOutDto: IMapFrom<User>
     {
         public string Id { get; set; }
 
@@ -13,15 +14,5 @@ namespace Pharmacy.Application.Common.DTO.Out
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
-
-        public List<OrderDto> Orders { get; set; }
-
-        public List<BasketItemOutDto> BasketItems { get; set; }
-
-        public UserOutDto()
-        {
-            Orders = new List<OrderDto>();
-            BasketItems = new List<BasketItemOutDto>();
-        }
     }
 }

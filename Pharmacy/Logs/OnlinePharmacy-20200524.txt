@@ -1,0 +1,111 @@
+05/24/2020 14:27:53 [Information]  App is starting up.
+05/24/2020 14:35:27 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 14591.6118 ms
+05/24/2020 15:12:48 [Information]  App is starting up.
+05/24/2020 15:14:48 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 543.0173 ms
+System.InvalidOperationException: Unable to resolve service for type 'Pharmacy.Application.Common.Interfaces.ITokenService' while attempting to activate 'Pharmacy.Api.Controllers.TokenController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+05/24/2020 15:14:48 [Error]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Pharmacy.Application.Common.Interfaces.ITokenService' while attempting to activate 'Pharmacy.Api.Controllers.TokenController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Pharmacy.Application.Middlewares.TokenMiddleware.InvokeAsync(HttpContext context, IConfiguration configuration) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Middlewares\TokenMiddleware.cs:line 24
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+05/24/2020 15:16:20 [Information]  App is starting up.
+05/24/2020 15:16:29 [Error] Pharmacy.Api.Controllers.TokenController.RefreshToken (Pharmacy.Api) Value cannot be null. (Parameter 'key')
+System.ArgumentNullException: Value cannot be null. (Parameter 'key')
+   at Microsoft.AspNetCore.Http.RequestCookieCollection.get_Item(String key)
+   at Pharmacy.Api.Services.CookieService.GetCookieValue(String cookieName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Services\CookieService.cs:line 47
+   at Pharmacy.Api.Controllers.TokenController.RefreshToken() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\TokenController.cs:line 35
+05/24/2020 15:16:29 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 677.7512 ms
+05/24/2020 15:20:06 [Information]  App is starting up.
+05/24/2020 15:20:38 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 5800.1378 ms
+05/24/2020 15:20:49 [Error] Pharmacy.Api.Controllers.TokenController.RefreshToken (Pharmacy.Api) Value cannot be null. (Parameter 'key')
+System.ArgumentNullException: Value cannot be null. (Parameter 'key')
+   at Microsoft.AspNetCore.Http.RequestCookieCollection.get_Item(String key)
+   at Pharmacy.Api.Services.CookieService.GetCookieValue(String cookieName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Services\CookieService.cs:line 47
+   at Pharmacy.Api.Controllers.TokenController.RefreshToken() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\TokenController.cs:line 35
+05/24/2020 15:20:49 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 188.7011 ms
+05/24/2020 15:22:12 [Information]  App is starting up.
+05/24/2020 15:22:22 [Error] Pharmacy.Api.Controllers.TokenController.RefreshToken (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'accessToken')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'accessToken')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 18
+   at Pharmacy.Application.Services.TokenService.RefreshToken(String accessToken, String refreshToken) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\TokenService.cs:line 25
+   at Pharmacy.Api.Controllers.TokenController.RefreshToken() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\TokenController.cs:line 38
+05/24/2020 15:22:23 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 1169.3057 ms
+05/24/2020 15:22:39 [Error] Pharmacy.Api.Controllers.TokenController.RefreshToken (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'accessToken')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'accessToken')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 18
+   at Pharmacy.Application.Services.TokenService.RefreshToken(String accessToken, String refreshToken) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\TokenService.cs:line 25
+   at Pharmacy.Api.Controllers.TokenController.RefreshToken() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\TokenController.cs:line 38
+05/24/2020 15:22:39 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 216.1283 ms
+05/24/2020 15:30:59 [Information]  App is starting up.
+05/24/2020 15:31:54 [Error] Pharmacy.Api.Controllers.TokenController.RefreshToken (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'accessToken')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'accessToken')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 18
+   at Pharmacy.Application.Services.TokenService.RefreshToken(String accessToken, String refreshToken) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\TokenService.cs:line 25
+   at Pharmacy.Api.Controllers.TokenController.RefreshToken() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\TokenController.cs:line 38
+05/24/2020 15:32:08 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 49321.5807 ms
+05/24/2020 15:33:05 [Information]  App is starting up.
+05/24/2020 15:34:58 [Error] Pharmacy.Api.Controllers.TokenController.RefreshToken (Pharmacy.Api) String argument can not be null or empty.  (Parameter 'accessToken')
+System.ArgumentException: String argument can not be null or empty.  (Parameter 'accessToken')
+   at Pharmacy.Application.Common.Validators.StringArgumentValidator.ValidateStringArgument(String stringArgument, String argumentName) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Common\Validators\StringArgumentValidator.cs:line 18
+   at Pharmacy.Application.Services.TokenService.RefreshToken(String accessToken, String refreshToken) in C:\Users\vynar\source\repos\Pharmacy\Pharmacy.Application\Services\TokenService.cs:line 25
+   at Pharmacy.Api.Controllers.TokenController.RefreshToken() in C:\Users\vynar\source\repos\Pharmacy\Pharmacy\Controllers\TokenController.cs:line 38
+05/24/2020 15:35:06 [Error]  HTTP "PUT" "/api/Token/refresh" responded 500 in 95301.3047 ms
+05/24/2020 15:35:49 [Information]  App is starting up.
+05/24/2020 15:36:27 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 4729.7014 ms
+05/24/2020 15:39:26 [Information]  App is starting up.
+05/24/2020 15:39:44 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 4917.7637 ms
+05/24/2020 15:40:12 [Information]  HTTP "PUT" "/api/Token/refresh" responded 200 in 16903.6203 ms
+05/24/2020 15:41:20 [Information]  App is starting up.
+05/24/2020 15:41:47 [Information]  HTTP "GET" "/api/User/get/user" responded 200 in 5205.2105 ms
+05/24/2020 15:42:19 [Information]  HTTP "PUT" "/api/User/assign/d113d35b-37bb-4f88-9cc6-876758c3f52d?role=admin" responded 200 in 541.7589 ms
+05/24/2020 15:42:33 [Information]  HTTP "GET" "/api/User/get/user" responded 200 in 77.1214 ms
+05/24/2020 15:42:39 [Information]  HTTP "GET" "/api/User/get/admin" responded 200 in 15.1155 ms
+05/24/2020 15:43:06 [Information]  HTTP "PUT" "/api/User/assign/d113d35b-37bb-4f88-9cc6-876758c3f52d?role=mainadmin" responded 400 in 269.9045 ms
+05/24/2020 15:43:33 [Information]  HTTP "DELETE" "/api/User/delete/d113d35b-37bb-4f88-9cc6-876758c3f52d" responded 200 in 110.0719 ms
+05/24/2020 15:43:47 [Information]  HTTP "GET" "/api/User/get/admin" responded 200 in 49.4894 ms
+05/24/2020 18:50:07 [Information]  App is starting up.
+05/24/2020 18:54:13 [Information]  HTTP "PUT" "/api/Token/refresh" responded 200 in 6423.7321 ms
+05/24/2020 18:54:43 [Information]  HTTP "GET" "/api/User/get/mainadmin" responded 200 in 293.9466 ms
+05/24/2020 18:55:02 [Information]  HTTP "PUT" "/api/User/promote/d5bfe12f-e8eb-4417-837c-937d72d7fac7?role=admin" responded 200 in 163.2892 ms
+05/24/2020 18:55:43 [Information]  HTTP "GET" "/api/User/get/admin" responded 200 in 88.8178 ms
+05/24/2020 19:46:40 [Information]  App is starting up.
+05/24/2020 19:47:12 [Information]  HTTP "PUT" "/api/Token/refresh" responded 200 in 6266.7789 ms
+05/24/2020 19:47:50 [Information]  HTTP "GET" "/api/User/get/admin" responded 200 in 244.7905 ms
+05/24/2020 19:48:07 [Information]  HTTP "PUT" "/api/User/demote/d5bfe12f-e8eb-4417-837c-937d72d7fac7?role=admin" responded 400 in 283.3651 ms
+05/24/2020 19:48:18 [Information]  HTTP "DELETE" "/api/User/delete/d5bfe12f-e8eb-4417-837c-937d72d7fac7" responded 400 in 287.3015 ms

@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces.HelpersInterfaces;
+using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,11 @@ namespace Pharmacy.Application.Helpers
 {
     public class TokenHelper: ITokenHelper
     {
-        private readonly UserManager<User> _userManager;
+        private readonly IUserManager _userManager;
 
         private readonly IConfiguration _configuration;
 
-        public TokenHelper(UserManager<User> userManager, IConfiguration configuration)
+        public TokenHelper(IUserManager userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
@@ -29,7 +30,7 @@ namespace Pharmacy.Application.Helpers
 
         public async Task<string> GenerateAccessToken(User user)
         {
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetUserRolesAsync(user);
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),

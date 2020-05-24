@@ -23,7 +23,7 @@ namespace Pharmacy.Api.Services
 
             if (isPersistent)
             {
-                CookieOptions.MaxAge = TimeSpan.FromDays(Convert.ToDouble(_configuration["CookieSettings:ExpireDays"]));
+                CookieOptions.MaxAge = TimeSpan.FromDays(Convert.ToDouble(_configuration["CookieSettings:ExpireMinutes"]));
 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append(_configuration["CookieSettings:AccessTokenCookieName"], accessToken, CookieOptions);
                 _httpContextAccessor.HttpContext.Response.Cookies.Append(_configuration["CookieSettings:RefreshTokenCookieName"], refreshToken, CookieOptions);

@@ -5,7 +5,7 @@ namespace Pharmacy.Application.Common.Interfaces
 {
     public interface ITokenService
     {
-        Task<Tokens> RefreshToken(Tokens userToken);
+        Task<Tokens> RefreshToken(string accessToken, string refreshToken);
 
         Task Revoke(string userEmail);
     }

@@ -20,6 +20,11 @@ namespace Pharmacy.Infrastructure.Services
             await _manager.AddToRoleAsync(user, role);
         }
 
+        public async Task RemoveUserFromRoleAsync(User user, string role)
+        {
+            await _manager.RemoveFromRoleAsync(user, role);
+        }
+
         public async  Task<bool> ConfirmEmailAsync(User user, string token)
         {
             return (await _manager.ConfirmEmailAsync(user, token)).Succeeded;
