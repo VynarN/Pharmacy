@@ -49,28 +49,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "ad293b40-6e93-46f3-bf6d-6028374a8ac7",
+                            ConcurrencyStamp = "c91dd417-a292-442a-8b19-fe7c91a90c50",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "373c29a0-f9b8-4af4-b283-95744e5e07ff",
+                            ConcurrencyStamp = "2ddc9d41-df19-4f6a-83de-3eaf2e296e47",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "5b0faf5c-c892-4269-bfaf-7152f1463d8d",
+                            ConcurrencyStamp = "43e747cb-1cd0-4ba8-8ff3-77d8d985f0f9",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "b53c5871-415d-4307-9e7f-6de5495455a2",
+                            ConcurrencyStamp = "28504b4f-1e46-4092-af16-376d7ee0bd98",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -916,8 +916,8 @@ namespace Pharmacy.Infrastructure.Migrations
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.PaymentRequest", b =>
                 {
-                    b.HasOne("Pharmacy.Domain.Entites.Address", "DeliveryAddress")
-                        .WithMany()
+                    b.HasOne("Pharmacy.Domain.Entites.DeliveryAddress", "DeliveryAddress")
+                        .WithMany("PaymentRequests")
                         .HasForeignKey("DeliveryAddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

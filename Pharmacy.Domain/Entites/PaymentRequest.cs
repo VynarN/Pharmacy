@@ -18,7 +18,7 @@ namespace Pharmacy.Domain.Entites
         public int Quantity { get; set; }
 
         public int DeliveryAddressId { get; set; }
-        public Address DeliveryAddress { get; set; }
+        public DeliveryAddress DeliveryAddress { get; set; }
 
         public decimal Total { get; set; }
 

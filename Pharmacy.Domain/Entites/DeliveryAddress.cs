@@ -18,9 +18,12 @@ namespace Pharmacy.Domain.Entites
 
         public List<Order> Orders { get; set; }
 
+        public List<PaymentRequest> PaymentRequests { get; set; }
+
         public DeliveryAddress()
         {
             Orders = new List<Order>();
+            PaymentRequests = new List<PaymentRequest>();
         }
 
         public override bool Equals(object obj)

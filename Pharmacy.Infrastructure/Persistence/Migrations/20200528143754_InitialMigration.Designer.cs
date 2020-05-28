@@ -10,7 +10,7 @@ using Pharmacy.Infrastructure;
 namespace Pharmacy.Infrastructure.Migrations
 {
     [DbContext(typeof(PharmacyContext))]
-    [Migration("20200519113728_InitialMigration")]
+    [Migration("20200528143754_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,28 +51,28 @@ namespace Pharmacy.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "6601960e-2fcb-4b4f-b7c2-47fac9f8d25a",
+                            ConcurrencyStamp = "c91dd417-a292-442a-8b19-fe7c91a90c50",
                             Name = "mainadmin",
                             NormalizedName = "MAINADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "555d4813-7474-4254-8e9a-8a1458244125",
+                            ConcurrencyStamp = "2ddc9d41-df19-4f6a-83de-3eaf2e296e47",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "63a8a3f8-0f67-49a1-818b-0d6fdb80b4de",
+                            ConcurrencyStamp = "43e747cb-1cd0-4ba8-8ff3-77d8d985f0f9",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "e758f602-fc54-47b3-9e21-088f790c9819",
+                            ConcurrencyStamp = "28504b4f-1e46-4092-af16-376d7ee0bd98",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -487,12 +487,20 @@ namespace Pharmacy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebSite")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
+
+                    b.HasIndex("WebSite")
+                        .IsUnique()
+                        .HasFilter("[WebSite] IS NOT NULL");
 
                     b.ToTable("Manufacturers");
                 });
@@ -910,8 +918,8 @@ namespace Pharmacy.Infrastructure.Migrations
 
             modelBuilder.Entity("Pharmacy.Domain.Entites.PaymentRequest", b =>
                 {
-                    b.HasOne("Pharmacy.Domain.Entites.Address", "DeliveryAddress")
-                        .WithMany()
+                    b.HasOne("Pharmacy.Domain.Entites.DeliveryAddress", "DeliveryAddress")
+                        .WithMany("PaymentRequests")
                         .HasForeignKey("DeliveryAddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

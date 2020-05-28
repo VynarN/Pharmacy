@@ -500,9 +500,9 @@ namespace Pharmacy.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_PaymentRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PaymentRequests_Addresses_DeliveryAddressId",
+                        name: "FK_PaymentRequests_DeliveryAddresses_DeliveryAddressId",
                         column: x => x.DeliveryAddressId,
-                        principalTable: "Addresses",
+                        principalTable: "DeliveryAddresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -543,10 +543,10 @@ namespace Pharmacy.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "6601960e-2fcb-4b4f-b7c2-47fac9f8d25a", "mainadmin", "MAINADMIN" },
-                    { "2", "555d4813-7474-4254-8e9a-8a1458244125", "admin", "ADMIN" },
-                    { "3", "63a8a3f8-0f67-49a1-818b-0d6fdb80b4de", "manager", "MANAGER" },
-                    { "4", "e758f602-fc54-47b3-9e21-088f790c9819", "user", "USER" }
+                    { "1", "c91dd417-a292-442a-8b19-fe7c91a90c50", "mainadmin", "MAINADMIN" },
+                    { "2", "2ddc9d41-df19-4f6a-83de-3eaf2e296e47", "admin", "ADMIN" },
+                    { "3", "43e747cb-1cd0-4ba8-8ff3-77d8d985f0f9", "manager", "MANAGER" },
+                    { "4", "28504b4f-1e46-4092-af16-376d7ee0bd98", "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -627,6 +627,20 @@ namespace Pharmacy.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Manufacturers_PhoneNumber",
+                table: "Manufacturers",
+                column: "PhoneNumber",
+                unique: true,
+                filter: "[PhoneNumber] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Manufacturers_WebSite",
+                table: "Manufacturers",
+                column: "WebSite",
+                unique: true,
+                filter: "[WebSite] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Medicaments_AllowedForEntityId",
                 table: "Medicaments",
                 column: "AllowedForEntityId");
@@ -685,6 +699,9 @@ namespace Pharmacy.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -725,9 +742,6 @@ namespace Pharmacy.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "DeliveryAddresses");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Medicaments");

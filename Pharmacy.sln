@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy.Application", "Pha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy.Domain", "Pharmacy.Domain\Pharmacy.Domain.csproj", "{28CD0003-977A-4CF2-BED2-05EAF502570C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacy.Application.Tests", "Pharmacy.Application.Tests\Pharmacy.Application.Tests.csproj", "{F76072F4-3ED0-424E-A7F5-6E399E1FECE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy.Tests", "Pharmacy.Application.Tests\Pharmacy.Tests.csproj", "{F76072F4-3ED0-424E-A7F5-6E399E1FECE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

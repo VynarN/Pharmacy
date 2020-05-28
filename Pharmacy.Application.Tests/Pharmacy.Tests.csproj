@@ -19,8 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="TestData\" />
+    <Folder Include="Application\Helpers\" />
+    <Folder Include="Api\" />
+    <Folder Include="Application\Services\AccountService\" />
   </ItemGroup>
 
   <ItemGroup>
