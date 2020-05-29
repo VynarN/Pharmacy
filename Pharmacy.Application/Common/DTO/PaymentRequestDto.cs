@@ -12,7 +12,7 @@ namespace Pharmacy.Application.Common.DTO
 
         public int Quantity { get; set; }
 
-        public AddressDto DeliveryAddress { get; set; }
+        public DeliveryAddressDto DeliveryAddress { get; set; }
 
         public decimal Total { get; set; }
 

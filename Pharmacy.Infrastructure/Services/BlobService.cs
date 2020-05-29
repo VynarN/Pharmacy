@@ -43,7 +43,7 @@ namespace Pharmacy.Infrastructure.Services
 
         public async Task<IEnumerable<string>>  GetBlobsNamesAsync()
         {
-            var containerClient = _blobServiceClient.GetBlobContainerClient(_configuration["AzureBlobName"]);
+            var containerClient = _blobServiceClient.GetBlobContainerClient(_configuration["BlobContainer"]);
 
             var items = new List<string>();
 
