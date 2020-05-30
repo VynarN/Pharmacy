@@ -1,6 +1,7 @@
 ﻿using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Entites;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,5 +27,11 @@ namespace Pharmacy.Application.Services
         {
             await _repository.Update(manufacturer);
         }
+
+        public IEnumerable<Manufacturer> GetManufacturers()
+        {
+            return _repository.GetWithInclude(obj => obj.Address);
+        }
+
     }
 }

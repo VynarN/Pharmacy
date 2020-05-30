@@ -60,6 +60,10 @@ namespace Pharmacy.Api.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch (ObjectException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
@@ -117,6 +121,9 @@ namespace Pharmacy.Api.Controllers
 
                 var receiver = await _userHelper.FindUserByIdAsync(_currentUser.UserId);
 
+                if (sender.Id.Equals(_currentUser.UserId))
+                    return Forbid();
+
                 await _paymentRequestService.AcceptPaymentRequest(sender.Id, receiver.Email, createdAt);
 
                 return Ok();
@@ -124,6 +131,10 @@ namespace Pharmacy.Api.Controllers
             catch (ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (ObjectException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (ArgumentException ex)
             {
@@ -144,6 +155,9 @@ namespace Pharmacy.Api.Controllers
 
                 var receiver = await _userHelper.FindUserByIdAsync(_currentUser.UserId);
 
+                if (sender.Id.Equals(_currentUser.UserId))
+                    return Forbid();
+
                 await _paymentRequestService.DeclinePaymentRequest(sender.Id, receiver.Email, createdAt);
 
                 return Ok();
@@ -151,6 +165,10 @@ namespace Pharmacy.Api.Controllers
             catch (ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (ObjectException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (ArgumentException ex)
             {
@@ -180,6 +198,10 @@ namespace Pharmacy.Api.Controllers
                 return NotFound(ex.Message);
             }
             catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ObjectException ex)
             {
                 return BadRequest(ex.Message);
             }

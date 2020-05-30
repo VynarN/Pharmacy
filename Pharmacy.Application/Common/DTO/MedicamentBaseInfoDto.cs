@@ -20,15 +20,10 @@ namespace Pharmacy.Application.Common.DTO
 
         public List<ImageOutDto> Images { get; set; }
 
-        public MedicamentBaseInfoDto()
-        {
-            Images = new List<ImageOutDto>();
-        }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Medicament, MedicamentBaseInfoDto>()
-                .ForMember(m => m.Images, mf => mf.MapFrom(p => p.Images));
+                .ForMember(m => m.Images, mf => mf.MapFrom(p => p.Images)).ReverseMap();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Pharmacy.Api.Controllers
         private readonly ILogger<ApplicationMethodController> _logger;
         private readonly IApplicationMethodService _applicationMethodService;
 
-        public ApplicationMethodController(ILogger<ApplicationMethodController> logger, IApplicationMethodService applicationMethodService, ICategoryService categoryService, IMapper mapper)
+        public ApplicationMethodController(ILogger<ApplicationMethodController> logger, IApplicationMethodService applicationMethodService, IMapper mapper)
         {
             _applicationMethodService = applicationMethodService;
             _logger = logger;

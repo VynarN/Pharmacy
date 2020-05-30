@@ -4,7 +4,6 @@ using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Domain.Common.ValueObjects;
 using Pharmacy.Domain.Entites;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;

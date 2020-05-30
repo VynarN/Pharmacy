@@ -20,7 +20,7 @@ namespace Pharmacy.Application.Common.DTO
         {
             profile.CreateMap<PaymentRequest, PaymentRequestDto>()
                     .ForMember(dto => dto.DeliveryAddress, mf => mf.MapFrom(obj => obj.DeliveryAddress))
-                    .ForMember(dto => dto.Medicament, mf => mf.MapFrom(obj => obj.Medicament));
+                    .ForMember(dto => dto.Medicament, mf => mf.MapFrom(obj => obj.Medicament)).ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Pharmacy.Domain.Entites;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
@@ -8,5 +9,7 @@ namespace Pharmacy.Application.Common.Interfaces.ApplicationInterfaces
         Task<int> CreateManufacturer(Manufacturer manufacturer);
 
         Task UpdateManufacturer(Manufacturer manufacturer);
+
+        IEnumerable<Manufacturer> GetManufacturers();
     }
 }

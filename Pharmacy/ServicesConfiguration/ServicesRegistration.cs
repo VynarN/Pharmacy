@@ -10,7 +10,6 @@ using Pharmacy.Application.Common.Queries;
 using Pharmacy.Application.Helpers;
 using Pharmacy.Application.Services;
 using Pharmacy.Domain.Entites;
-using Pharmacy.Infrastructure;
 using Pharmacy.Infrastructure.Persistence.Repositories;
 using Pharmacy.Infrastructure.Services;
 
@@ -46,6 +45,7 @@ namespace Pharmacy.Api.ServicesConfiguration
             services.AddTransient<IInstructionService, InstructionService>();
             services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
             services.AddTransient<IApplicationMethodService, ApplicationMethodService>();
+            services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IMedicamentFormService, MedicamentFormService>();
             services.AddTransient<IAllowedForEntityService, AllowedForEntityService>();
             services.AddTransient<IPaginationService, PaginationService>();

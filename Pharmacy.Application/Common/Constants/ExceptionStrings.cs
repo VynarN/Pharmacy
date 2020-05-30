@@ -18,5 +18,7 @@
         public const string FileUploading = "An error occured while uploading a file. ";
         public const string Exception = "Oops... Something went wrong. Please contact support.";
         public const string Permission = "You do not have any permission to manage specified user's account. ";
+        public const string EmptyPaymentRequests = "List of payment requests is empty. ";
+        public const string EmptyBasketItems = "Basket is empty. ";
     }
 }

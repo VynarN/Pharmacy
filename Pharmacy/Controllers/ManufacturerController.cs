@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.DTO.In.ManufacturerIn;
+using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Domain.Entites;
 
@@ -37,6 +39,24 @@ namespace Pharmacy.Api.Controllers
                 var createdManufacturerId = await _manufacturerService.CreateManufacturer(manufacturer);
 
                 return Ok(createdManufacturerId);
+            }
+            catch (Exception ex)
+            {
+                return ControllersAuxiliary.LogExceptionAndReturnError(ex, _logger, Response);
+            }
+        }
+
+        [Authorize(Roles = "manager,admin,mainadmin")]
+        [HttpGet("get")]
+        public IActionResult GetManufacturers()
+        {
+            try
+            {
+                var manufacturers = _manufacturerService.GetManufacturers();
+
+                var mappedManufacturers = _mapper.Map<IEnumerable<ManufacturerBaseInfoOutDto>>(manufacturers);
+
+                return Ok(mappedManufacturers);
             }
             catch (Exception ex)
             {

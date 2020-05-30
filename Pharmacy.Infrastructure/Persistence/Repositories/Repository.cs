@@ -99,12 +99,12 @@ namespace Pharmacy.Infrastructure.Persistence.Repositories
         {
             var query = Include(includeProperties);
 
-            return query.Where(predicate).AsQueryable().AsNoTracking();
+            return query.Where(predicate).AsQueryable();
         }
 
         private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = context.Set<TEntity>().AsNoTracking();
+            IQueryable<TEntity> query = context.Set<TEntity>();
             return includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }

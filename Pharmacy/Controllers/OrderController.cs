@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Api.Auxiliary;
 using Pharmacy.Application.Common.DTO;
+using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
@@ -50,6 +51,10 @@ namespace Pharmacy.Api.Controllers
                 return Ok();
             }
             catch (ProductException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ObjectException ex)
             {
                 return BadRequest(ex.Message);
             }

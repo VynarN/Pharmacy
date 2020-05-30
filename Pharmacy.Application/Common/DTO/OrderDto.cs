@@ -9,7 +9,7 @@ namespace Pharmacy.Application.Common.DTO
     {
         public int Id { get; set; }
 
-        public MedicamentOutDto Medicament { get; set; }
+        public MedicamentBaseInfoDto Medicament { get; set; }
 
         public int Quantity { get; set; }
 

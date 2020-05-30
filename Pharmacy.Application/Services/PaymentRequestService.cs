@@ -1,4 +1,6 @@
-﻿using Pharmacy.Application.Common.Constants;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy.Application.Common.Constants;
+using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
@@ -20,7 +22,7 @@ namespace Pharmacy.Application.Services
         private readonly IDeliveryAddressService _deliveryAddressService;
         private readonly IOrderService _orderService;
 
-        public PaymentRequestService(IRepository<PaymentRequest> paymentRequestRepo, IRepository<BasketItem> basketItemRepo, 
+        public PaymentRequestService(IRepository<PaymentRequest> paymentRequestRepo, IRepository<BasketItem> basketItemRepo,
                                      IDeliveryAddressService deliveryAddressService, IOrderService orderService)
         {
             _basketItemRepo = basketItemRepo;
@@ -32,6 +34,9 @@ namespace Pharmacy.Application.Services
         public async Task CreatePaymentRequest(string senderId, string receiverEmail, DeliveryAddress deliveryAddress)
         {
             var senderBasketItems = _basketItemRepo.GetWithInclude(bi => bi.UserId.Equals(senderId), bi => bi.Medicament);
+
+            if (!senderBasketItems.Any())
+                throw new ObjectException(ExceptionStrings.EmptyBasketItems);
 
             var addressId = deliveryAddress.Id != 0 ? deliveryAddress.Id : await _deliveryAddressService.CreateDeliveryAddress(deliveryAddress);
 
@@ -48,8 +53,6 @@ namespace Pharmacy.Application.Services
             });
 
             await _paymentRequestRepo.Create(paymentRequests);
-
-            await _basketItemRepo.Delete(senderBasketItems);
         }
 
         public async Task AcceptPaymentRequest(string senderId, string receiverEmail, string createdAt)
@@ -58,31 +61,38 @@ namespace Pharmacy.Application.Services
 
             await _orderService.CreateOrderFromPaymentRequest(requests);
 
+            var updatedRequests = new List<PaymentRequest>();
+
             foreach (var request in requests)
             {
                 request.RequestStatus = RequestStatus.Accepted;
+                updatedRequests.Add(request);
             }
 
-            await _paymentRequestRepo.Update(requests);
+            await _paymentRequestRepo.Update(updatedRequests.AsQueryable().AsTracking());
         }
 
         public async Task DeclinePaymentRequest(string senderId, string receiverEmail, string createdAt)
         {
             var requests = GetRequests(senderId, receiverEmail, createdAt);
 
+            var updatedRequests = new List<PaymentRequest>();
+
             foreach (var request in requests)
             {
                 request.RequestStatus = RequestStatus.Declined;
+                updatedRequests.Add(request);
             }
 
-            await _paymentRequestRepo.Update(requests);
+            await _paymentRequestRepo.Update(updatedRequests);
         }
 
         public async Task DeletePaymentRequest(string senderId, string receiverEmail, string createdAt)
         {
             var requests = GetRequests(senderId, receiverEmail, createdAt);
 
-            await _paymentRequestRepo.Delete(requests);
+            if (requests.All(r => r.RequestStatus == RequestStatus.Pending))
+                await _paymentRequestRepo.Delete(requests);
         }
 
         public IEnumerable<GroupedIncomingPaymentRequest> GetIncoming(out int totalCount, string receiverEmail, PaginationQuery paginationQuery)
@@ -146,10 +156,12 @@ namespace Pharmacy.Application.Services
                 throw new ArgumentException(ModelValidationStrings.DateTime, nameof(createdAt));
             }
 
-            return _paymentRequestRepo.GetWithInclude(pr => pr.SenderId.Equals(senderId) &&
+            var requests =  _paymentRequestRepo.GetWithInclude(pr => pr.SenderId.Equals(senderId) &&
                                                             pr.ReceiverEmail.Equals(receiverEmail), obj => obj.Medicament)
                                       .AsEnumerable()
                                       .Where(pr => pr.RequestedAt.ToString(StringConstants.DateTimeFormat).Equals(createdAt));
+
+            return requests.Any() ? requests : throw new ObjectException(ExceptionStrings.EmptyPaymentRequests);
         }
     }
 }

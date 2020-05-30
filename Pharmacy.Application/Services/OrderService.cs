@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy.Application.Common.Constants;
+using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
 using Pharmacy.Application.Common.Queries;
@@ -33,6 +34,9 @@ namespace Pharmacy.Application.Services
         public async Task CreateOrder(string userId, DeliveryAddress deliveryAddress)
         {
             var userBasketItems = _basketItemsRepo.GetWithInclude(bi => bi.UserId.Equals(userId), bi => bi.Medicament).AsEnumerable();
+            
+            if (!userBasketItems.Any())
+                throw new ObjectException(ExceptionStrings.EmptyBasketItems);
 
             var addressId = deliveryAddress.Id != 0 ? deliveryAddress.Id : await _deliveryAddressService.CreateDeliveryAddress(deliveryAddress);
 
@@ -72,17 +76,37 @@ namespace Pharmacy.Application.Services
 
         public async Task CreateOrderFromPaymentRequest(IEnumerable<PaymentRequest> paymentRequests)
         {
-            var orders = paymentRequests.Select(pr => new Order()
+            var ordersAndMedicaments = paymentRequests.Select(pr => new
             {
-                DeliveryAddressId = pr.DeliveryAddressId,
-                MedicamentId = pr.MedicamentId,
-                UserId = pr.SenderId,
-                Quantity = pr.Quantity,
-                Total = pr.Total,
-                Status = OrderStatus.Pending
+                Order = new Order()
+                {
+                    DeliveryAddressId = pr.DeliveryAddressId,
+                    MedicamentId = pr.MedicamentId,
+                    UserId = pr.SenderId,
+                    Quantity = pr.Medicament.QuantityInStock >= pr.Quantity
+                             ? pr.Quantity
+                             : throw new ProductException(string.Format(ModelValidationStrings.ProductQuantity,
+                                                                 pr.Medicament.Name, pr.Medicament.QuantityInStock)),
+                    Total = pr.Total,
+                    Status = OrderStatus.Pending
+                },
+                pr.Medicament
             });
 
+            var medicaments = new List<Medicament>();
+
+            foreach (var orderAndMedicament in ordersAndMedicaments)
+            {
+                orderAndMedicament.Medicament.Offtake += orderAndMedicament.Order.Quantity;
+                orderAndMedicament.Medicament.QuantityInStock -= orderAndMedicament.Order.Quantity;
+                medicaments.Add(orderAndMedicament.Medicament);
+            }
+
+            var orders = ordersAndMedicaments.Select(om => om.Order);
+
             await _orderRepository.Create(orders);
+
+            await _medicamentRepo.Update(medicaments);
         }
 
         public async Task UpdateOrder(string userId, string createdAt, string orderStatus)
@@ -106,7 +130,7 @@ namespace Pharmacy.Application.Services
 
         public IEnumerable<GroupedOrders> GetUserOrders(out int totalOrderCount, PaginationQuery paginationQuery, string userId)
         {
-            var groupedOrders = _orderRepository.GetWithInclude(obj => obj.DeliveryAddress, obj => obj.Medicament)
+            var groupedOrders = _orderRepository.GetWithInclude(obj => obj.DeliveryAddress, obj => obj.Medicament, obj => obj.Medicament.Images)
                                    .Where(order => order.UserId.Equals(userId))
                                    .AsEnumerable()
                                    .GroupBy(order => new

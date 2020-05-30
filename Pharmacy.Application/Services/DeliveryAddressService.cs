@@ -33,7 +33,7 @@ namespace Pharmacy.Application.Services
         {
             return _orderRepository.GetWithInclude(order => order.DeliveryAddress)
                 .Where(order => order.UserId.Equals(userId))
-                .Select(order => order.DeliveryAddress);
+                .Select(order => order.DeliveryAddress).Distinct();
         }
     }
 }
