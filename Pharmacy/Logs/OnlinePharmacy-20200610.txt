@@ -1,0 +1,45 @@
+06/10/2020 14:54:35 [Information]  App is starting up.
+06/10/2020 14:57:15 [Information]  HTTP "GET" "/swagger/swagger-ui.css.map" responded 404 in 5716.7409 ms
+06/10/2020 14:57:15 [Information]  HTTP "GET" "/swagger/swagger-ui.css.map" responded 404 in 5730.8045 ms
+06/10/2020 14:57:15 [Information]  HTTP "GET" "/swagger/swagger-ui-standalone-preset.js.map" responded 404 in 5672.2396 ms
+06/10/2020 14:57:15 [Information]  HTTP "GET" "/swagger/swagger-ui-bundle.js.map" responded 404 in 5672.0482 ms
+06/10/2020 14:57:15 [Information]  HTTP "GET" "/swagger/swagger-ui-bundle.js.map" responded 404 in 0.1483 ms
+06/10/2020 14:57:15 [Information]  HTTP "GET" "/swagger/swagger-ui-standalone-preset.js.map" responded 404 in 0.1516 ms
+06/10/2020 15:10:33 [Information]  HTTP "POST" "/api/Account/forgot/vynar.n.i%40gmail.com?returnUrl=https%3A%2F%2Flocalhost%3A44337%2Fswagger%2Findex.html" responded 202 in 40914.1425 ms
+06/10/2020 15:13:23 [Information]  HTTP "POST" "/api/Account/login" responded 200 in 1501.3940 ms
+06/10/2020 15:13:33 [Information]  HTTP "GET" "/api/PaymentRequest/get/outcoming" responded 200 in 297.7615 ms
+06/10/2020 15:13:45 [Information]  HTTP "GET" "/api/PaymentRequest/get/incoming" responded 200 in 67.9223 ms
+06/10/2020 15:37:44 [Information]  App is starting up.
+06/10/2020 15:38:06 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 3962.2690 ms
+06/10/2020 15:38:54 [Information]  HTTP "PUT" "/api/BasketItem/update" responded 200 in 624.0588 ms
+06/10/2020 15:39:46 [Information]  HTTP "POST" "/api/Order/create" responded 400 in 22563.1323 ms
+06/10/2020 15:42:42 [Information]  App is starting up.
+06/10/2020 15:43:27 [Information]  HTTP "POST" "/api/Order/create" responded 400 in 28957.3478 ms
+06/10/2020 15:51:07 [Information]  App is starting up.
+06/10/2020 15:51:18 [Information]  HTTP "POST" "/api/Order/create" responded 401 in 533.2883 ms
+06/10/2020 15:51:33 [Information]  HTTP "PUT" "/api/Token/refresh" responded 200 in 3895.6086 ms
+06/10/2020 15:51:41 [Information]  HTTP "POST" "/api/Order/create" responded 400 in 974.8958 ms
+06/10/2020 15:55:49 [Information]  App is starting up.
+06/10/2020 15:56:54 [Information]  HTTP "POST" "/api/Order/create" responded 400 in 3649.0752 ms
+06/10/2020 16:00:32 [Information]  HTTP "POST" "/api/Order/create" responded 400 in 122582.8569 ms
+06/10/2020 16:05:36 [Information]  HTTP "POST" "/api/Order/create" responded 400 in 297111.2781 ms
+06/10/2020 16:05:36 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 170962.3449 ms
+06/10/2020 16:27:57 [Information]  App is starting up.
+06/10/2020 16:28:07 [Information]  HTTP "PUT" "/api/Token/refresh" responded 200 in 3591.6819 ms
+06/10/2020 16:28:19 [Information]  HTTP "POST" "/api/Order/create" responded 200 in 658.7268 ms
+06/10/2020 16:28:30 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 103.6186 ms
+06/10/2020 16:29:59 [Information]  HTTP "GET" "/api/Medicament/get" responded 200 in 136.3378 ms
+06/10/2020 16:30:24 [Information]  HTTP "GET" "/api/Medicament/get/3" responded 200 in 213.1609 ms
+06/10/2020 16:31:27 [Information]  HTTP "POST" "/api/BasketItem/add" responded 200 in 30.7116 ms
+06/10/2020 16:31:52 [Information]  HTTP "POST" "/api/PaymentRequest/create/vynar137%40gmail.com" responded 200 in 112.4902 ms
+06/10/2020 16:32:01 [Information]  HTTP "GET" "/api/BasketItem/get" responded 200 in 15.0894 ms
+06/10/2020 16:32:56 [Information]  HTTP "GET" "/api/User/get/user" responded 200 in 125.5049 ms
+06/10/2020 16:33:16 [Information]  HTTP "GET" "/api/Order/get/2a4124b0-04c6-432b-a2ae-fb28b503a6db" responded 200 in 103.3030 ms
+06/10/2020 16:33:21 [Information]  HTTP "GET" "/api/Order/get/2a4124b0-04c6-432b-a2ae-fb28b503a6db" responded 200 in 15.4372 ms
+06/10/2020 16:33:39 [Information]  HTTP "GET" "/api/User/get/mainadmin" responded 200 in 15.7883 ms
+06/10/2020 16:34:00 [Information]  HTTP "GET" "/api/Order/get/31cbaf77-2a99-43d3-a0fa-16f27d30adf1" responded 200 in 68.4562 ms
+06/10/2020 16:35:07 [Information]  HTTP "GET" "/api/PaymentRequest/get/outcoming" responded 200 in 113.3024 ms
+06/10/2020 16:40:28 [Information]  App is starting up.
+06/10/2020 17:26:06 [Information]  HTTP "GET" "/api/PaymentRequest/get/outcoming" responded 401 in 800.2966 ms
+06/10/2020 17:26:22 [Information]  HTTP "PUT" "/api/Token/refresh" responded 200 in 3136.0351 ms
+06/10/2020 17:26:25 [Information]  HTTP "GET" "/api/PaymentRequest/get/outcoming" responded 200 in 377.6935 ms

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Pharmacy.Application.Common.DTO.Out;
 using Pharmacy.Domain.Entites;
 using static Pharmacy.Application.Common.Mappings.IMapFrom;
 

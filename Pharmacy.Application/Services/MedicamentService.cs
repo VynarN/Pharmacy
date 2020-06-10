@@ -49,6 +49,7 @@ namespace Pharmacy.Application.Services
             return _repository.GetWithInclude(obj => obj.Id == medicamentId, obj => obj.Images,
                                                                              obj => obj.Instruction,
                                                                              obj => obj.Manufacturer,
+                                                                             obj => obj.Manufacturer.Address,
                                                                              obj => obj.MedicamentForm,
                                                                              obj => obj.ApplicationMethod,
                                                                              obj => obj.Category,

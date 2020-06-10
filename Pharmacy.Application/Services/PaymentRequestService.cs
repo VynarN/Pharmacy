@@ -53,6 +53,8 @@ namespace Pharmacy.Application.Services
             });
 
             await _paymentRequestRepo.Create(paymentRequests);
+
+            await _basketItemRepo.Delete(senderBasketItems);
         }
 
         public async Task AcceptPaymentRequest(string senderId, string receiverEmail, string createdAt)
@@ -97,7 +99,9 @@ namespace Pharmacy.Application.Services
 
         public IEnumerable<GroupedIncomingPaymentRequest> GetIncoming(out int totalCount, string receiverEmail, PaginationQuery paginationQuery)
         {
-            var requests = _paymentRequestRepo.GetWithInclude(pr => pr.ReceiverEmail.Equals(receiverEmail), pr => pr.Sender)
+            var requests = _paymentRequestRepo.GetWithInclude(pr => pr.ReceiverEmail.Equals(receiverEmail), pr => pr.Sender, 
+                                                                                                            pr => pr.Medicament, 
+                                                                                                            pr => pr.DeliveryAddress)
                                                .AsEnumerable()
                                                .GroupBy(obj => new
                                                {
@@ -120,7 +124,9 @@ namespace Pharmacy.Application.Services
 
         public IEnumerable<GroupedOutcomingPaymentRequest> GetOutcoming(out int totalCount, string senderId, PaginationQuery paginationQuery)
         {
-            var requests = _paymentRequestRepo.GetWithInclude(pr => pr.SenderId.Equals(senderId), pr => pr.Sender)
+            var requests = _paymentRequestRepo.GetWithInclude(pr => pr.SenderId.Equals(senderId), pr => pr.Sender,
+                                                                                                        pr => pr.Medicament,
+                                                                                                        pr => pr.DeliveryAddress)
                                               .AsEnumerable()
                                               .GroupBy(obj => new
                                               {

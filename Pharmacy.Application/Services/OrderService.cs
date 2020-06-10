@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pharmacy.Application.Common.Constants;
+﻿using Pharmacy.Application.Common.Constants;
 using Pharmacy.Application.Common.Exceptions;
 using Pharmacy.Application.Common.Interfaces.ApplicationInterfaces;
 using Pharmacy.Application.Common.Interfaces.InfrastructureInterfaces;
@@ -55,7 +54,7 @@ namespace Pharmacy.Application.Services
                     Status = OrderStatus.Pending
                 },
                 basketItem.Medicament
-            });
+            }).ToList();
 
             var medicaments = new List<Medicament>();
 
@@ -71,6 +70,8 @@ namespace Pharmacy.Application.Services
             await _orderRepository.Create(orders);
 
             await _medicamentRepo.Update(medicaments);
+
+            await _basketItemsRepo.Delete(userBasketItems);
 
         }
 
@@ -91,7 +92,7 @@ namespace Pharmacy.Application.Services
                     Status = OrderStatus.Pending
                 },
                 pr.Medicament
-            });
+            }).ToList();
 
             var medicaments = new List<Medicament>();
 
