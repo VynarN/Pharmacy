@@ -1,1 +1,1 @@
-This is a web API solution that provides pharmacy online service for people.
+This project is created for educational purposes and it represents the server part of an online pharmacy web application.
